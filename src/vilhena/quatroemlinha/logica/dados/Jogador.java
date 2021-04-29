@@ -1,0 +1,35 @@
+package vilhena.quatroemlinha.logica.dados;
+
+public class Jogador {
+    String nome;
+    Boolean human;
+    boolean pecaEspecial;
+    boolean jogou;
+
+    public Jogador(String nome, Boolean human) {
+        this.nome = nome;
+        this.human = human;
+        this.pecaEspecial = false;
+        this.jogou = false;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Boolean getHuman() {
+        return human;
+    }
+
+    public boolean isPecaEspecial() {
+        return pecaEspecial;
+    }
+
+    public boolean getJogou() {
+        return jogou;
+    }
+
+    public void setJogou(boolean jogou) {
+        this.jogou = jogou;
+    }
+}
