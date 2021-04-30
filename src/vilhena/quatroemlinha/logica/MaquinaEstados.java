@@ -38,6 +38,7 @@ public class MaquinaEstados {
         return data.getNomeJogadorAtual();
     }
 
+    public String getCorJogador() {return data.getCorJogador();}
 
     public Situacao getSituacaoAtual() {
         return atual.getSituacao();

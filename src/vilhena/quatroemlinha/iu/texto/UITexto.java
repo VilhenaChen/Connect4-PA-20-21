@@ -97,8 +97,7 @@ public class UITexto implements Util {
         System.out.println("-----------------------------------------");
         desenhaTabuleiro();
         System.out.println("Turno: " + maquinaEstados.getTurno());
-        System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual());
-        //Mostrar board
+        System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
         System.out.println("1 -> Jogar Peca Normal");
         System.out.println("2 -> Jogar Peca Especial");
         System.out.print("> ");

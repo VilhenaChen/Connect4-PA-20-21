@@ -2,9 +2,9 @@ package vilhena.quatroemlinha.logica.dados;
 
 public class Jogador {
     String nome;
-    Boolean human;
-    boolean pecaEspecial;
-    boolean jogou;
+    Boolean human; //Boolean para saber se e um humano ou nao
+    boolean pecaEspecial; //Boolean para saber se o jogador tem ou nao peca especial
+    boolean jogou; //Booelan para saber se o jogador ja efetou a sua jogada neste turno
 
     public Jogador(String nome, Boolean human) {
         this.nome = nome;

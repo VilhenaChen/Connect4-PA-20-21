@@ -12,20 +12,27 @@ public class Espera_Peca_Normal extends EstadoAdapter{
     @Override
     public IEstado jogaPecaNormal() {
         int jogadorAtual = data.getJoga();
-        boolean flag;
         if(jogadorAtual == J1) {
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
-                data.setTurno(data.getTurno() + 1);
+                if (data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
+                    return new GameOver(data);
+                else{
+                    //data.setTurno(data.getTurno() + 1);
+                    //data.setJoga(J2);
+                }
             }
-            data.setJoga(J2);
         }
         else {
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
-                data.setTurno(data.getTurno() + 1);
+                if(data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
+                    return new GameOver(data);
+                else {
+                   // data.setTurno(data.getTurno() + 1);
+                   // data.setJoga(J1);
+                }
             }
-            data.setJoga(J1);
         }
         return new Espera_Jogada(data);
     }

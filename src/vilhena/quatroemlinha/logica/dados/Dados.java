@@ -41,6 +41,8 @@ public class Dados implements Util {
         }
     }
 
+    //-------------------------------- FUNCOES DO JOGO --------------------------------------
+
     public int getTurno() {
         return turno;
     }
@@ -51,7 +53,7 @@ public class Dados implements Util {
 
     public int getJoga() {
         return joga;
-    }
+    } //funcao para ver quem joga
 
     public void setJoga(int joga) {
         this.joga = joga;
@@ -65,10 +67,17 @@ public class Dados implements Util {
         return jogadores.get(jog).getJogou();
     }
 
-    public void setJogou(int jog, boolean jogou) {
+    public void setJogou(int jog, boolean jogou) {  //Funcao para sinalizar que naquele turno o jogador ja efetou o seu movimento
         jogadores.get(jog).setJogou(jogou);
     }
 
+    public String getCorJogador() {
+        if(joga == J1)
+            return corJ1;
+        return corJ2;
+    }
+
+    //-------------------------------- FUNCOES DO ARRAY --------------------------------------
     public void escrevePosArray(int coluna, int player) {
         if(player == J1)
             for(int i = 0; i < ALTURA; i ++) {
@@ -89,5 +98,16 @@ public class Dados implements Util {
 
     public char lePosArray(int col, int linha) {
         return board.get(col).get(linha);
+    }
+
+    public boolean isBoardFull() { //Verificar se o tabuleiro ta cheio
+        for(int i = 0; i < ALTURA; i++) {
+            System.out.print(i + 1);
+            for(int j = 0; j < LARGURA; j++) {
+                if(lePosArray(j,i) == ' ')
+                    return false;
+            }
+        }
+        return true;
     }
 }
