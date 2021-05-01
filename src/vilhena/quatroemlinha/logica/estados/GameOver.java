@@ -10,6 +10,11 @@ public class GameOver extends EstadoAdapter{
     }
 
     @Override
+    public IEstado jogaOutraVez() {
+        return new Inicio(data); //Corrigir isto
+    }
+
+    @Override
     public Situacao getSituacao() {
         return Situacao.GameOver;
     }

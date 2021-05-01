@@ -78,22 +78,24 @@ public class Dados implements Util {
     }
 
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
-    public void escrevePosArray(int coluna, int player) {
+
+    public boolean escrevePosArray(int coluna, int player) { //Return true, caso consiga jogar naquela coluna, caso contrario da return false
         if(player == J1)
             for(int i = 0; i < ALTURA; i ++) {
                 if(board.get(coluna).get(5-i) == ' ') {
                     board.get(coluna).set(5 - i, CORJ1);
-                    break;
+                    return true;
                 }
             }
         else {
             for(int i = 0; i < ALTURA; i ++) {
                 if(board.get(coluna).get(5-i) == ' ') {
                     board.get(coluna).set(5-i,CORJ2);
-                    break;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public char lePosArray(int col, int linha) {

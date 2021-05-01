@@ -119,19 +119,22 @@ public class UITexto implements Util {
 
     private void uiPecaNormal() {
         int col;
-        System.out.println("Escolha a coluna para lancar a peca: ");
-        System.out.print("> ");
-        while (!sc.hasNextInt())
-            sc.next();
-        col = sc.nextInt();
-        if(maquinaEstados.getJoga() == J1) {
-            maquinaEstados.escrevePosArray(col - 1, J1);
-            maquinaEstados.jogaPecaNormal();
-        }
-        else {
-            maquinaEstados.escrevePosArray(col - 1, J2);
-            maquinaEstados.jogaPecaNormal();
-        }
+        boolean flag; //Util para saber se a peca pode ou na ser joagda
+        do {
+            System.out.println("Escolha a coluna para lancar a peca: ");
+            System.out.print("> ");
+            while (!sc.hasNextInt())
+                sc.next();
+            col = sc.nextInt();
+            if (maquinaEstados.getJoga() == J1) {
+                flag = maquinaEstados.escrevePosArray(col - 1, J1);
+            } else {
+                flag = maquinaEstados.escrevePosArray(col - 1, J2);
+            }
+            if (flag == false)
+                System.out.println("COLUNA CHEIA, ESCOLHA OUTRA COLUNA!");
+        }while(flag == false);
+        maquinaEstados.jogaPecaNormal();
     }
 
     private void uiPecaEspecial() {
@@ -143,8 +146,29 @@ public class UITexto implements Util {
     }
 
     private void uiGameOver() {
+        int op;
+        System.out.println("GAME OVER!!!!");
+        System.out.println("1 -> Jogar Outra vez");
+        System.out.println("0 -> Sair");
+        System.out.print("> ");
+        while (!sc.hasNextInt())
+            sc.next();
+        op = sc.nextInt();
+        switch (op){
+            case 1:
+                maquinaEstados.jogaOutraVez();
+                break;
+            case 0:
+                sair = true;
+                break;
+            default:
+                System.out.println("Insira uma opcao valida!!!!");
+                break;
+        }
 
     }
+
+
 
 
     private void desenhaTabuleiro() { //Funcao para desenhar o tabuleiro

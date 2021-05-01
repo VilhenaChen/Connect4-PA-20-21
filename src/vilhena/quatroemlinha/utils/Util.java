@@ -19,6 +19,6 @@ public interface Util {
     char CORJ1 = 'V';
     char CORJ2 = 'A';
     String corJ1 = "Vermelho(V)";
-    String corJ2 = "Vermelho(V)";
+    String corJ2 = "Amarelo(A)";
 
 }

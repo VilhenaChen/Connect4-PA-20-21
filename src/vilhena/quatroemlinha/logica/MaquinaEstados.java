@@ -15,6 +15,7 @@ public class MaquinaEstados {
     }
 
     //-------------------------------- AVANCAR NOS ESTADOS --------------------------------------
+
     public void comeca(String nome1, String nome2,int GameMode) {
         atual = atual.comecaJogo(nome1,nome2,GameMode);
     }
@@ -25,6 +26,10 @@ public class MaquinaEstados {
 
     public void jogaPecaEspecial() {
         atual = atual.jogaPecaEspecial();
+    }
+
+    public void jogaOutraVez() {
+        atual = atual.jogaOutraVez();
     }
 
 
@@ -44,8 +49,8 @@ public class MaquinaEstados {
         return atual.getSituacao();
     }
 
-    public void escrevePosArray(int coluna, int player) {
-        data.escrevePosArray(coluna, player);
+    public boolean escrevePosArray(int coluna, int player) {
+        return data.escrevePosArray(coluna, player);
     }
 
     public char lePosArray(int col, int linha) {
