@@ -79,7 +79,7 @@ public class Dados implements Util {
 
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
 
-    public boolean escrevePosArray(int coluna, int player) { //Return true, caso consiga jogar naquela coluna, caso contrario da return false
+    public boolean jogaPeca(int coluna, int player) { //Return true, caso consiga jogar naquela coluna, caso contrario da return false
         if(player == J1)
             for(int i = 0; i < ALTURA; i ++) {
                 if(board.get(coluna).get(5-i) == ' ') {
@@ -113,12 +113,17 @@ public class Dados implements Util {
 
     public boolean isBoardFull() { //Verificar se o tabuleiro ta cheio
         for(int i = 0; i < ALTURA; i++) {
-            System.out.print(i + 1);
             for(int j = 0; j < LARGURA; j++) {
                 if(lePosArray(j,i) == ' ')
                     return false;
             }
         }
         return true;
+    }
+
+    public void limpaColuna(int col) { //Util para a peca especial
+        for(int i = 0; i < ALTURA; i++) {
+            board.get(col).set(i, ' ');
+        }
     }
 }

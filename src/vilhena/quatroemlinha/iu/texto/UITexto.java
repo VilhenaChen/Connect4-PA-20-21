@@ -127,8 +127,8 @@ public class UITexto implements Util {
                 sc.next();
             col = sc.nextInt();
             if(col < 7 || col >= 1) {
-                if (maquinaEstados.verificaColuna(col) == true) {
-                    maquinaEstados.pecaJogada(col);
+                if (maquinaEstados.verificaColuna(col - 1) == true) {
+                    maquinaEstados.pecaJogada(col - 1);
                     flag = true;
                 }
                 else {
@@ -144,7 +144,29 @@ public class UITexto implements Util {
     }
 
     private void uiPecaEspecial() {
-
+        int col;
+        boolean flag = false;
+        do {
+            System.out.println("Escolha a coluna para lancar a peca: ");
+            System.out.print("> ");
+            while (!sc.hasNextInt())
+                sc.next();
+            col = sc.nextInt();
+            if(col < 7 || col >= 1) {
+                if (maquinaEstados.verificaColuna(col - 1) == true) {
+                    maquinaEstados.pecaJogada(col - 1);
+                    flag = true;
+                }
+                else {
+                    System.out.println("ERRO!! A Coluna onde pretendo jogar ja se encontra cheia!!!");
+                    flag = false;
+                }
+            }
+            else {
+                System.out.println("ERRO!!O valor digitado deve ser entre 1 e 7!!!");
+                flag = false;
+            }
+        }while(flag == false);
     }
 
     private void uiMiniJogo() {

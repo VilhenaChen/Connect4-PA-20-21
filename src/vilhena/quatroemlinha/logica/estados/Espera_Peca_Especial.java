@@ -10,35 +10,31 @@ public class Espera_Peca_Especial extends EstadoAdapter{
     }
 
     @Override
-    public IEstado jogaPecaEspecial() {
+    public IEstado pecaJogada(int col) {
         int jogadorAtual = data.getJoga();
         if(jogadorAtual == J1) {
+            data.limpaColuna(col);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
                 data.setJogou(J1, false);
                 data.setJogou(J1, false);
                 data.setTurno(data.getTurno() + 1);
-            }
-            //
-            if (data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
-                return new GameOver(data);
-            else{
                 data.setJoga(J2);
             }
+            else
+                data.setJoga(J2);
         }
         else {
+            data.limpaColuna(col);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
                 data.setJogou(J1, false);
                 data.setJogou(J1, false);
                 data.setTurno(data.getTurno() + 1);
-            }
-            //
-            if(data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
-                return new GameOver(data);
-            else {
                 data.setJoga(J1);
             }
+            else
+                data.setJoga(J1);
         }
         return new Espera_Jogada(data);
     }

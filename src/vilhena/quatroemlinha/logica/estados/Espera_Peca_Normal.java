@@ -13,7 +13,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
     public IEstado pecaJogada(int col) {
         int jogadorAtual = data.getJoga();
         if(jogadorAtual == J1) {
-            data.escrevePosArray(col - 1, J1);
+            data.jogaPeca(col, J1);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
                 data.setJogou(J1, false);
@@ -27,7 +27,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
             }
         }
         else {
-            data.escrevePosArray(col - 1, J2);
+            data.jogaPeca(col, J2);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
                 data.setJogou(J1, false);
