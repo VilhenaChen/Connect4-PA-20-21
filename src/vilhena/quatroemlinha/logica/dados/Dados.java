@@ -102,6 +102,15 @@ public class Dados implements Util {
         return board.get(col).get(linha);
     }
 
+    public boolean verificaColuna(int coluna) {
+        for (int i = 0; i < ALTURA; i++) {
+            if (board.get(coluna).get(5 - i) == ' ') {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isBoardFull() { //Verificar se o tabuleiro ta cheio
         for(int i = 0; i < ALTURA; i++) {
             System.out.print(i + 1);

@@ -28,6 +28,10 @@ public class MaquinaEstados {
         atual = atual.jogaPecaEspecial();
     }
 
+    public void pecaJogada(int col) {
+        atual = atual.pecaJogada(col);
+    }
+
     public void jogaOutraVez() {
         atual = atual.jogaOutraVez();
     }
@@ -49,12 +53,12 @@ public class MaquinaEstados {
         return atual.getSituacao();
     }
 
-    public boolean escrevePosArray(int coluna, int player) {
-        return data.escrevePosArray(coluna, player);
-    }
-
     public char lePosArray(int col, int linha) {
         return data.lePosArray(col, linha);
+    }
+
+    public boolean verificaColuna(int col) {
+        return  data.verificaColuna(col);
     }
 
     public int getJoga() {

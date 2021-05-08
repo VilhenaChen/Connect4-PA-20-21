@@ -119,22 +119,28 @@ public class UITexto implements Util {
 
     private void uiPecaNormal() {
         int col;
-        boolean flag; //Util para saber se a peca pode ou na ser joagda
+        boolean flag = false;
         do {
             System.out.println("Escolha a coluna para lancar a peca: ");
             System.out.print("> ");
             while (!sc.hasNextInt())
                 sc.next();
             col = sc.nextInt();
-            if (maquinaEstados.getJoga() == J1) {
-                flag = maquinaEstados.escrevePosArray(col - 1, J1);
-            } else {
-                flag = maquinaEstados.escrevePosArray(col - 1, J2);
+            if(col < 7 || col >= 1) {
+                if (maquinaEstados.verificaColuna(col) == true) {
+                    maquinaEstados.pecaJogada(col);
+                    flag = true;
+                }
+                else {
+                    System.out.println("ERRO!! A Coluna onde pretendo jogar ja se encontra cheia!!!");
+                    flag = false;
+                }
             }
-            if (flag == false)
-                System.out.println("COLUNA CHEIA, ESCOLHA OUTRA COLUNA!");
+            else {
+                System.out.println("ERRO!!O valor digitado deve ser entre 1 e 7!!!");
+                flag = false;
+            }
         }while(flag == false);
-        maquinaEstados.jogaPecaNormal();
     }
 
     private void uiPecaEspecial() {

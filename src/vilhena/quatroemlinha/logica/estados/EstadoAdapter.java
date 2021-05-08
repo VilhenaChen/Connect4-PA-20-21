@@ -27,7 +27,7 @@ public abstract class EstadoAdapter implements IEstado, Util {
     }
 
     @Override
-    public IEstado pecaJogada() {
+    public IEstado pecaJogada(int col) {
         return this;
     }
 

@@ -10,7 +10,7 @@ public interface IEstado {
 
     IEstado jogaPecaNormal();
 
-    IEstado pecaJogada();
+    IEstado pecaJogada(int col);
 
     IEstado jogaMiniJogo();
 
