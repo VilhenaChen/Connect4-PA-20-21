@@ -22,7 +22,7 @@ public class UITexto implements Util {
                     uiInicio();
                     break;
                 case Espera_Jogada:
-                    uiJoga();
+                    uiJogador();
                     break;
                 case Espera_Peca_Normal:
                     uiPecaNormal();
@@ -92,55 +92,73 @@ public class UITexto implements Util {
         }
     }
 
-    private void uiJoga() {
+    private void uiJogador() {
         int op;
         System.out.println("-----------------------------------------");
-        desenhaTabuleiro();
-        System.out.println("Turno: " + maquinaEstados.getTurno());
-        System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
-        System.out.println("1 -> Jogar Peca Normal");
-        System.out.println("2 -> Jogar Peca Especial");
-        System.out.print("> ");
-        while (!sc.hasNextInt())
-            sc.next();
-        op = sc.nextInt();
-        switch (op) {
-            case 1:
-                maquinaEstados.jogaPecaNormal();
-                break;
-            case 2:
-                maquinaEstados.jogaPecaEspecial();
-                break;
-            default:
-                System.out.println("Insira uma opcao valida!!!!");
-                break;
+        if(maquinaEstados.isHuman() == false) {
+            desenhaTabuleiro();
+            System.out.println("Turno: " + maquinaEstados.getTurno());
+            System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
+            maquinaEstados.jogaPecaNormal();
+        }
+        else {
+            desenhaTabuleiro();
+            System.out.println("Turno: " + maquinaEstados.getTurno());
+            System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
+            System.out.println("1 -> Jogar Peca Normal");
+            System.out.println("2 -> Jogar Peca Especial");
+            System.out.print("> ");
+            while (!sc.hasNextInt())
+                sc.next();
+            op = sc.nextInt();
+            switch (op) {
+                case 1:
+                    maquinaEstados.jogaPecaNormal();
+                    break;
+                case 2:
+                    maquinaEstados.jogaPecaEspecial();
+                    break;
+                default:
+                    System.out.println("Insira uma opcao valida!!!!");
+                    break;
+            }
         }
     }
 
     private void uiPecaNormal() {
+        sc = new Scanner(System.in);
         int col;
         boolean flag = false;
-        do {
-            System.out.println("Escolha a coluna para lancar a peca: ");
-            System.out.print("> ");
-            while (!sc.hasNextInt())
-                sc.next();
-            col = sc.nextInt();
-            if(col < 7 || col >= 1) {
-                if (maquinaEstados.verificaColuna(col - 1) == true) {
-                    maquinaEstados.pecaJogada(col - 1);
-                    flag = true;
-                }
-                else {
-                    System.out.println("ERRO!! A Coluna onde pretendo jogar ja se encontra cheia!!!");
+        if(maquinaEstados.isHuman() == false) {
+            do {
+                col = (int) (Math.random() * 7);
+            }while(maquinaEstados.verificaColuna(col) == false);
+            System.out.println("Lancei a peca na coluna " + col);
+            System.out.println("Press Enter to continue");
+            sc.nextLine();
+            maquinaEstados.pecaJogada(col);
+        }
+        else {
+            do {
+                System.out.println("Escolha a coluna para lancar a peca: ");
+                System.out.print("> ");
+                while (!sc.hasNextInt())
+                    sc.next();
+                col = sc.nextInt();
+                if (col < 7 || col >= 1) {
+                    if (maquinaEstados.verificaColuna(col - 1) == true) {
+                        maquinaEstados.pecaJogada(col - 1);
+                        flag = true;
+                    } else {
+                        System.out.println("ERRO!! A Coluna onde pretendo jogar ja se encontra cheia!!!");
+                        flag = false;
+                    }
+                } else {
+                    System.out.println("ERRO!!O valor digitado deve ser entre 1 e 7!!!");
                     flag = false;
                 }
-            }
-            else {
-                System.out.println("ERRO!!O valor digitado deve ser entre 1 e 7!!!");
-                flag = false;
-            }
-        }while(flag == false);
+            } while (flag == false);
+        }
     }
 
     private void uiPecaEspecial() {

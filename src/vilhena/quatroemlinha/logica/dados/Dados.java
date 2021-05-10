@@ -77,6 +77,10 @@ public class Dados implements Util {
         return corJ2;
     }
 
+    public boolean isHuman() {
+        return jogadores.get(joga).getHuman();
+    }
+
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
 
     public boolean jogaPeca(int coluna, int player) { //Return true, caso consiga jogar naquela coluna, caso contrario da return false

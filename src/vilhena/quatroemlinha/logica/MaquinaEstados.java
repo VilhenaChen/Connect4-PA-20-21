@@ -65,4 +65,8 @@ public class MaquinaEstados {
         return data.getJoga();
     }
 
+    public boolean isHuman() {
+        return data.isHuman();
+    }
+
 }
