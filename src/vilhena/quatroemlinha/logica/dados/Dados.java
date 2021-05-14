@@ -8,7 +8,7 @@ public class Dados implements Util {
     ArrayList<Jogador> jogadores;
     int turno;
     int joga;
-    ArrayList<ArrayList<Character>> board;
+    ArrayList<ArrayList<Character>> board; //[Largura][Altura]
 
     public Dados() {
         this.jogadores = new ArrayList<>();
@@ -77,6 +77,12 @@ public class Dados implements Util {
         return corJ2;
     }
 
+    public char getCharCorJogador() {
+        if(joga == J1)
+            return CORJ1;
+        return CORJ2;
+    }
+
     public boolean isHuman() {
         return jogadores.get(joga).getHuman();
     }
@@ -87,6 +93,33 @@ public class Dados implements Util {
 
     public void jogoPalavras() {
 
+    }
+
+    public boolean isVencedor() {
+        char cor = getCharCorJogador();
+
+        //Verifica Coluna
+        for (int i = 0; i < LARGURA; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board.get(i).get(5 - j) == cor &&
+                        board.get(i).get(5 - (j + 1)) == cor &&
+                        board.get(i).get(5 - (j + 2)) == cor &&
+                        board.get(i).get(5 - (j + 3)) == cor)
+                    return true;
+            }
+        }
+
+        //Verifica Linha
+        for (int j = 0; j < ALTURA; j++) {
+            for (int i = 0; i < 5; i++) {
+                if (board.get(i).get(5- j) == cor &&
+                        board.get(i+1).get(5 - j) == cor &&
+                        board.get(i+2).get(5 - j) == cor &&
+                        board.get(i+3).get(5 - j) == cor)
+                    return true;
+            }
+        }
+        return false;
     }
 
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
