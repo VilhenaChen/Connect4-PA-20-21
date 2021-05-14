@@ -3,13 +3,13 @@ package vilhena.quatroemlinha.logica.dados;
 public class Jogador {
     String nome;
     Boolean human; //Boolean para saber se e um humano ou nao
-    boolean pecaEspecial; //Boolean para saber se o jogador tem ou nao peca especial
+    int pecaEspecial; //saber quantas pecas especiais tem
     boolean jogou; //Booelan para saber se o jogador ja efetou a sua jogada neste turno
 
     public Jogador(String nome, Boolean human) {
         this.nome = nome;
         this.human = human;
-        this.pecaEspecial = false;
+        this.pecaEspecial = 0;
         this.jogou = false;
     }
 
@@ -21,8 +21,12 @@ public class Jogador {
         return human;
     }
 
-    public boolean isPecaEspecial() {
+    public int getPecaEspecial() {
         return pecaEspecial;
+    }
+
+    public void setPecaEspecial(int pecaEspecial) {
+        this.pecaEspecial = pecaEspecial;
     }
 
     public boolean getJogou() {

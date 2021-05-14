@@ -22,7 +22,7 @@ public class Espera_Jogada extends EstadoAdapter{
 
     @Override
     public IEstado jogaMiniJogo() {
-        return super.jogaMiniJogo();
+        return new Joga_MiniJogo(data);
     }
 
     @Override

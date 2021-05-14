@@ -81,6 +81,14 @@ public class Dados implements Util {
         return jogadores.get(joga).getHuman();
     }
 
+    public void jogoNumeros() {
+
+    }
+
+    public void jogoPalavras() {
+
+    }
+
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
 
     public boolean jogaPeca(int coluna, int player) { //Return true, caso consiga jogar naquela coluna, caso contrario da return false

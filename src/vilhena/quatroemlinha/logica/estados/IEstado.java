@@ -14,9 +14,7 @@ public interface IEstado {
 
     IEstado jogaMiniJogo();
 
-    IEstado ganhaMiniJogo();
-
-    IEstado perdeMiniJoog();
+    IEstado fimMiniJogo();
 
     IEstado ganha();
 
