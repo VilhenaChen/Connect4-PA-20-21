@@ -2,7 +2,10 @@ package vilhena.quatroemlinha.logica.dados;
 
 import vilhena.quatroemlinha.utils.Util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Dados implements Util {
     ArrayList<Jogador> jogadores;
@@ -92,7 +95,29 @@ public class Dados implements Util {
     }
 
     public void jogoPalavras() {
-
+        //Ler o Ficheiro
+        int count = 0;
+        String[] palavras = new String[100];
+        String[] escolhidas = new String[5];
+        try {
+            File ficheiro = new File("palavras.txt");
+            Scanner sc = new Scanner(ficheiro);
+            while(sc.hasNextLine()) {
+                palavras[count] = sc.nextLine();
+                count++;
+            }
+        }catch (FileNotFoundException e) {
+            System.out.println("Problema a abrir o ficheiro");
+        }
+        for(int i = 0; i < 5; i++)
+            escolhidas[i] = palavras[(int) (Math.random() * 100)];
+        double start = System.currentTimeMillis() / 1000;
+        System.out.println(start);
+        //float end =
+        System.out.println(escolhidas[0] + " " +  escolhidas[1] + " " + escolhidas[2] + " " + escolhidas[3] + " " + escolhidas[4]);
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+        System.out.println("tempo: " + ((System.currentTimeMillis() / 1000)- start));
     }
 
     public boolean isVencedor() {
@@ -112,14 +137,26 @@ public class Dados implements Util {
         //Verifica Linha
         for (int j = 0; j < ALTURA; j++) {
             for (int i = 0; i < 5; i++) {
-                if (board.get(i).get(5- j) == cor &&
+                if (board.get(i).get(5 - j) == cor &&
                         board.get(i+1).get(5 - j) == cor &&
                         board.get(i+2).get(5 - j) == cor &&
                         board.get(i+3).get(5 - j) == cor)
                     return true;
             }
         }
+
+        //Verifica Diagonais
         return false;
+    }
+
+    public boolean isBoardFull() { //Verificar se o tabuleiro ta cheio
+        for(int i = 0; i < ALTURA; i++) {
+            for(int j = 0; j < LARGURA; j++) {
+                if(lePosArray(j,i) == ' ')
+                    return false;
+            }
+        }
+        return true;
     }
 
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
@@ -154,16 +191,6 @@ public class Dados implements Util {
             }
         }
         return false;
-    }
-
-    public boolean isBoardFull() { //Verificar se o tabuleiro ta cheio
-        for(int i = 0; i < ALTURA; i++) {
-            for(int j = 0; j < LARGURA; j++) {
-                if(lePosArray(j,i) == ' ')
-                    return false;
-            }
-        }
-        return true;
     }
 
     public void limpaColuna(int col) { //Util para a peca especial
