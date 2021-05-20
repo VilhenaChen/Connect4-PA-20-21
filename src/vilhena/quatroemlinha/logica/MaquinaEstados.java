@@ -69,4 +69,16 @@ public class MaquinaEstados {
         return data.isHuman();
     }
 
+    public int getCreditos() {
+        return data.getCreditos();
+    }
+
+    public void tiraCreditos(int nr) {
+        data.tiraCreditos(nr);
+    }
+
+    public boolean veSeGanhou() {
+        return data.veSeGanhou();
+    }
+
 }

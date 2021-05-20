@@ -105,8 +105,10 @@ public class UITexto implements Util {
             desenhaTabuleiro();
             System.out.println("Turno: " + maquinaEstados.getTurno());
             System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
+            System.out.println("Creditos: " + maquinaEstados.getCreditos());
             System.out.println("1 -> Jogar Peca Normal");
             System.out.println("2 -> Jogar Peca Especial");
+            System.out.println("3 -> Usar Creditos");
             System.out.print("> ");
             while (!sc.hasNextInt())
                 sc.next();
@@ -117,6 +119,11 @@ public class UITexto implements Util {
                     break;
                 case 2:
                     maquinaEstados.jogaPecaEspecial();
+                    break;
+                case 3:
+                    if(maquinaEstados.getCreditos() == 0)
+                        System.out.println("Nao possui mais creditos");
+
                     break;
                 default:
                     System.out.println("Insira uma opcao valida!!!!");
@@ -194,6 +201,8 @@ public class UITexto implements Util {
     private void uiGameOver() {
         int op;
         System.out.println("GAME OVER!!!!");
+        if(maquinaEstados.veSeGanhou() == true)
+            System.out.println("O vencedor foi o jogador " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
         System.out.println("1 -> Jogar Outra vez");
         System.out.println("0 -> Sair");
         System.out.print("> ");

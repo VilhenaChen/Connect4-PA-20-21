@@ -90,15 +90,103 @@ public class Dados implements Util {
         return jogadores.get(joga).getHuman();
     }
 
-    public void jogoNumeros() {
-
+    public int getCreditos() {
+        return jogadores.get(joga).getCreditos();
     }
 
-    public void jogoPalavras() {
+    public void tiraCreditos(int nr) {
+        jogadores.get(joga).setCreditos(jogadores.get(joga).getCreditos() - nr);
+    }
+
+    public void setGanhou() {
+        jogadores.get(joga).setGanhou(true);
+    }
+
+    public boolean veSeGanhou() {
+        return jogadores.get(joga).isGanhou();
+    }
+
+
+    public boolean jogoNumeros() {
+        double start = System.currentTimeMillis() / 1000;
+        double tempo;
+        int num1;
+        int num2;
+        double resultado;
+        double user;
+        int corretas = 0;
+        Scanner sc;
+        do {
+            num1 = (int) (Math.random() * 10) + 1;
+            num2 = (int) (Math.random() * 10) + 1;
+            int operador = (int) (Math.random() * 4);
+            switch (operador) {
+                case 0:
+                    resultado = num1 + num2;
+                    System.out.println(num1 + "+" + num2);
+                    System.out.println("resutado: ");
+                    sc = new Scanner(System.in);
+                    user = sc.nextDouble();
+                    if(resultado == user){
+                        System.out.println("Acertei");
+                        corretas++;
+                    }
+                    break;
+                case 1:
+                    resultado = num1 - num2;
+                    System.out.println(num1 + "-" + num2);
+                    System.out.println("resutado: ");
+                    sc = new Scanner(System.in);
+                    user = sc.nextDouble();
+                    if(resultado == user){
+                        System.out.println("Acertei");
+                        corretas++;
+                    }
+                    break;
+                case 2:
+                    resultado = num1 * num2;
+                    System.out.println(num1 + "*" + num2);
+                    System.out.println("resutado: ");
+                    sc = new Scanner(System.in);
+                    user = sc.nextDouble();
+                    if(resultado == user){
+                        System.out.println("Acertei");
+                        corretas++;
+                    }
+                    break;
+                case 3:
+                    resultado = num1 / num2;
+                    System.out.println(num1 + "/" + num2);
+                    System.out.println("resutado: ");
+                    sc = new Scanner(System.in);
+                    user = sc.nextDouble();
+                    if(resultado == user){
+                        System.out.println("Acertei");
+                        corretas++;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            tempo = ((System.currentTimeMillis() / 1000)- start);
+            System.out.println(tempo);
+            if(corretas == 5)
+                return true;
+        } while(tempo <= 30);
+        return false;
+    }
+
+    public boolean jogoPalavras() {
         //Ler o Ficheiro
         int count = 0;
+        String line;
         String[] palavras = new String[100];
         String[] escolhidas = new String[5];
+        String[] lidas = new String[5];
+        StringBuilder escolhi = new StringBuilder();
+        double start;
+        double tempo;
+        double end;
         try {
             File ficheiro = new File("palavras.txt");
             Scanner sc = new Scanner(ficheiro);
@@ -108,16 +196,32 @@ public class Dados implements Util {
             }
         }catch (FileNotFoundException e) {
             System.out.println("Problema a abrir o ficheiro");
+            return false;
         }
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 5; i++) {
             escolhidas[i] = palavras[(int) (Math.random() * 100)];
-        double start = System.currentTimeMillis() / 1000;
+            escolhi.append(escolhidas[i]);
+            if(i != 4)
+                escolhi.append(" ");
+        }
+
+        //comecar o jogo
+        start = System.currentTimeMillis() / 1000;
         System.out.println(start);
-        //float end =
-        System.out.println(escolhidas[0] + " " +  escolhidas[1] + " " + escolhidas[2] + " " + escolhidas[3] + " " + escolhidas[4]);
+        end = (escolhi.length() / 2);
+        System.out.println(escolhi);
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        line = sc.nextLine();
+        lidas = line.split(" ");
+        for(int i = 0; i < 5; i++) {
+            if(!lidas[i].equals(escolhidas[i]))
+                return false;
+        }
+        tempo = ((System.currentTimeMillis() / 1000)- start);
         System.out.println("tempo: " + ((System.currentTimeMillis() / 1000)- start));
+        if(tempo < end)
+            return true;
+        return false;
     }
 
     public boolean isVencedor() {
@@ -146,6 +250,28 @@ public class Dados implements Util {
         }
 
         //Verifica Diagonais
+        for(int i = LARGURA-1; i >= 3; i--){ //Diagonal Asc
+            for(int j = 0; j < ALTURA-3; j++){
+                if(board.get(i).get(j) == cor &&
+                        board.get(i-1).get(j+1) == cor &&
+                        board.get(i-2).get(j+2) == cor &&
+                        board.get(i-3).get(j+3) == cor){
+                    return true;
+                }
+            }
+        }
+
+        for(int i = 0; i < LARGURA-3; i++){ //Diagonal Dsc
+            for(int j = 0; j < ALTURA-3; j++){
+                if(board.get(i).get(j) == cor &&
+                        board.get(i+1).get(j+1) == cor &&
+                        board.get(i+2).get(j+2) == cor &&
+                        board.get(i+3).get(j+3) == cor){
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 

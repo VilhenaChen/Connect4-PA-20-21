@@ -22,9 +22,11 @@ public class Espera_Peca_Normal extends EstadoAdapter{
             }
             if (data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
                 return new GameOver(data);
-            else{
-                if(data.isVencedor()) //Verifica se o Jogador ganhou
+            else {
+                if (data.isVencedor()) { //Verifica se o Jogador ganhou
+                    data.setGanhou();
                     return new GameOver(data);
+                }
                 else {
                     data.setJoga(J2);
                 }
@@ -41,8 +43,10 @@ public class Espera_Peca_Normal extends EstadoAdapter{
             if(data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
                 return new GameOver(data);
             else {
-                if(data.isVencedor()) //Verifica se o Jogador ganhou
+                if(data.isVencedor()) { //Verifica se o Jogador ganhou
+                    data.setGanhou();
                     return new GameOver(data);
+                }
                 else {
                     data.setJoga(J1);
                 }
