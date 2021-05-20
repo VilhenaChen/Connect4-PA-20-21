@@ -90,6 +90,10 @@ public class Dados implements Util {
         return jogadores.get(joga).getHuman();
     }
 
+    public int getPecaEspecial() {
+        return jogadores.get(joga).getPecaEspecial();
+    }
+
     public int getCreditos() {
         return jogadores.get(joga).getCreditos();
     }

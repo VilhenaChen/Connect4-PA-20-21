@@ -69,6 +69,10 @@ public class MaquinaEstados {
         return data.isHuman();
     }
 
+    public int getPecaEspecial() {
+        return data.getPecaEspecial();
+    }
+
     public int getCreditos() {
         return data.getCreditos();
     }

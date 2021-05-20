@@ -118,12 +118,20 @@ public class UITexto implements Util {
                     maquinaEstados.jogaPecaNormal();
                     break;
                 case 2:
-                    maquinaEstados.jogaPecaEspecial();
+                    if(maquinaEstados.getPecaEspecial() == 0) {
+                        System.out.println("Nao possui nenhuma peca especial");
+                    }
+                    else {
+                        maquinaEstados.jogaPecaEspecial();
+                    }
                     break;
                 case 3:
-                    if(maquinaEstados.getCreditos() == 0)
+                    if(maquinaEstados.getCreditos() == 0) {
                         System.out.println("Nao possui mais creditos");
+                    }
+                    else {
 
+                    }
                     break;
                 default:
                     System.out.println("Insira uma opcao valida!!!!");
