@@ -16,6 +16,7 @@ public class Espera_Peca_Especial extends EstadoAdapter{
             data.limpaColuna(col);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J1, false);
                 data.setTurno(data.getTurno() + 1);
@@ -28,6 +29,7 @@ public class Espera_Peca_Especial extends EstadoAdapter{
             data.limpaColuna(col);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J1, false);
                 data.setTurno(data.getTurno() + 1);

@@ -93,7 +93,7 @@ public class UITexto implements Util {
     }
 
     private void uiJogador() {
-        int op;
+        int op = 0;
         System.out.println("-----------------------------------------");
         if(maquinaEstados.isHuman() == false) {
             desenhaTabuleiro();
@@ -102,10 +102,33 @@ public class UITexto implements Util {
             maquinaEstados.jogaPecaNormal();
         }
         else {
+            if(maquinaEstados.getBonus() == 4) {
+                sc = new Scanner(System.in);
+                System.out.println(maquinaEstados.getNomeJogadorAtual() +" Deseja Jogar um Minijogo para ganhar uma peca especial?");
+                System.out.println("1 -> Sim");
+                System.out.println("2 -> Nao");
+                System.out.print("> ");
+                while (!sc.hasNextInt())
+                    sc.next();
+                op = sc.nextInt();
+                switch (op) {
+                    case 1:
+                        maquinaEstados.jogaMiniJogo();
+                        return;
+                    case 2:
+                        break;
+                    default:
+                        System.out.println("Insira uma opcao valida!!!!");
+                        break;
+                }
+            }
+            op = 0;
+            sc = new Scanner(System.in);
             desenhaTabuleiro();
             System.out.println("Turno: " + maquinaEstados.getTurno());
             System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
             System.out.println("Creditos: " + maquinaEstados.getCreditos());
+            System.out.println("Pecas Especiais: " + maquinaEstados.getPecaEspecial());
             System.out.println("1 -> Jogar Peca Normal");
             System.out.println("2 -> Jogar Peca Especial");
             System.out.println("3 -> Usar Creditos");
@@ -203,12 +226,17 @@ public class UITexto implements Util {
     }
 
     private void uiMiniJogo() {
-
+        int jogo = (int)(Math.random() *2) +1;
+        System.out.println("-----------------------------------------");
+        maquinaEstados.fimMinijogo(jogo);
     }
 
     private void uiGameOver() {
         int op;
+        System.out.println("-----------------------------------------");
         System.out.println("GAME OVER!!!!");
+        System.out.println("Tabuleiro Final");
+        desenhaTabuleiro();
         if(maquinaEstados.veSeGanhou() == true)
             System.out.println("O vencedor foi o jogador " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
         System.out.println("1 -> Jogar Outra vez");

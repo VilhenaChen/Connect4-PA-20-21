@@ -7,6 +7,7 @@ public class Jogador {
     int creditos; //Saber o numero de creditos
     boolean jogou; //Booelan para saber se o jogador ja efetou a sua jogada neste turno
     boolean ganhou;
+    int bonus;
 
     public Jogador(String nome, Boolean human) {
         this.nome = nome;
@@ -18,6 +19,7 @@ public class Jogador {
             this.creditos = 0;
         this.jogou = false;
         this.ganhou = false;
+        this.bonus = 1;
     }
 
     public String getNome() {
@@ -58,5 +60,13 @@ public class Jogador {
 
     public void setGanhou(boolean ganhou) {
         this.ganhou = ganhou;
+    }
+
+    public int getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
     }
 }

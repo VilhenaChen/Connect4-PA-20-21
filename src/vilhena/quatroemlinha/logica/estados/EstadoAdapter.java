@@ -37,7 +37,7 @@ public abstract class EstadoAdapter implements IEstado, Util {
     }
 
     @Override
-    public IEstado fimMiniJogo() {
+    public IEstado fimMiniJogo(int jogo) {
         return this;
     }
 
@@ -52,7 +52,7 @@ public abstract class EstadoAdapter implements IEstado, Util {
     }
 
     @Override
-    public IEstado jogaOutraVez() {
+    public IEstado jogaOutraVez(Dados data) {
         return this;
     }
 }

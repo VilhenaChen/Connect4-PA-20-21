@@ -10,8 +10,8 @@ public class GameOver extends EstadoAdapter{
     }
 
     @Override
-    public IEstado jogaOutraVez() {
-        return new Inicio(data); //Corrigir isto
+    public IEstado jogaOutraVez(Dados newData) {
+        return new Inicio(newData); //Corrigir isto
     }
 
     @Override

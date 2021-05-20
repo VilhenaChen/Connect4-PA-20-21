@@ -11,7 +11,6 @@ public class MaquinaEstados {
     public MaquinaEstados() {
         this.data = new Dados();
         this.atual = new Inicio(data);
-
     }
 
     //-------------------------------- AVANCAR NOS ESTADOS --------------------------------------
@@ -32,8 +31,13 @@ public class MaquinaEstados {
         atual = atual.pecaJogada(col);
     }
 
+    public void jogaMiniJogo() { atual = atual.jogaMiniJogo();}
+
+    public void fimMinijogo(int jogo) { atual = atual.fimMiniJogo(jogo);}
+
     public void jogaOutraVez() {
-        atual = atual.jogaOutraVez();
+        this.data = new Dados();
+        atual = atual.jogaOutraVez(data);
     }
 
 
@@ -60,6 +64,8 @@ public class MaquinaEstados {
     public boolean verificaColuna(int col) {
         return  data.verificaColuna(col);
     }
+
+    public int getBonus() {return data.getBonus();}
 
     public int getJoga() {
         return data.getJoga();

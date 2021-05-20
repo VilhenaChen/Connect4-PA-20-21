@@ -1,6 +1,7 @@
 package vilhena.quatroemlinha.logica.estados;
 
 import vilhena.quatroemlinha.logica.Situacao;
+import vilhena.quatroemlinha.logica.dados.Dados;
 
 public interface IEstado {
 
@@ -14,13 +15,13 @@ public interface IEstado {
 
     IEstado jogaMiniJogo();
 
-    IEstado fimMiniJogo();
+    IEstado fimMiniJogo(int jogo);
 
     IEstado ganha();
 
     IEstado QuadroCheio();
 
-    IEstado jogaOutraVez();
+    IEstado jogaOutraVez(Dados data);
 
     Situacao getSituacao();
 

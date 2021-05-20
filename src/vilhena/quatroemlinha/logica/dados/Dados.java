@@ -74,6 +74,19 @@ public class Dados implements Util {
         jogadores.get(jog).setJogou(jogou);
     }
 
+    public int getBonus() {
+        return jogadores.get(joga).getBonus();
+    }
+
+    public void setBonusJogador(int bonus) {
+        jogadores.get(joga).setBonus(bonus);
+    }
+
+    public void setBonusTodos(int bonus) {
+        jogadores.get(J1).setBonus(bonus);
+        jogadores.get(J2).setBonus(bonus);
+    }
+
     public String getCorJogador() {
         if(joga == J1)
             return corJ1;
@@ -92,6 +105,10 @@ public class Dados implements Util {
 
     public int getPecaEspecial() {
         return jogadores.get(joga).getPecaEspecial();
+    }
+
+    public void adicionaPecaEspecial() {
+        jogadores.get(joga).setPecaEspecial(getPecaEspecial() + 1);
     }
 
     public int getCreditos() {
@@ -165,7 +182,6 @@ public class Dados implements Util {
                     sc = new Scanner(System.in);
                     user = sc.nextDouble();
                     if(resultado == user){
-                        System.out.println("Acertei");
                         corretas++;
                     }
                     break;
@@ -173,10 +189,12 @@ public class Dados implements Util {
                     break;
             }
             tempo = ((System.currentTimeMillis() / 1000)- start);
-            System.out.println(tempo);
-            if(corretas == 5)
+            if(corretas == 5 && tempo <= 30) {
+                System.out.println("Ganhou uma Peca Especial");
                 return true;
+            }
         } while(tempo <= 30);
+        System.out.println("Perdeu!!");
         return false;
     }
 
@@ -186,7 +204,7 @@ public class Dados implements Util {
         String line;
         String[] palavras = new String[100];
         String[] escolhidas = new String[5];
-        String[] lidas = new String[5];
+        String[] lidas;
         StringBuilder escolhi = new StringBuilder();
         double start;
         double tempo;
@@ -211,7 +229,6 @@ public class Dados implements Util {
 
         //comecar o jogo
         start = System.currentTimeMillis() / 1000;
-        System.out.println(start);
         end = (escolhi.length() / 2);
         System.out.println(escolhi);
         Scanner sc = new Scanner(System.in);
@@ -222,9 +239,12 @@ public class Dados implements Util {
                 return false;
         }
         tempo = ((System.currentTimeMillis() / 1000)- start);
-        System.out.println("tempo: " + ((System.currentTimeMillis() / 1000)- start));
-        if(tempo < end)
+        System.out.println("Demorou: " + ((System.currentTimeMillis() / 1000)- start));
+        if(tempo < end) {
+            System.out.println("Ganhou uma Peca Especial");
             return true;
+        }
+        System.out.println("Perdeu!!");
         return false;
     }
 
