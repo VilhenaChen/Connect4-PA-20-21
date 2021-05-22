@@ -1,6 +1,8 @@
 package vilhena.quatroemlinha.logica.dados;
 
-public class Jogador implements Cloneable {
+import java.io.Serializable;
+
+public class Jogador implements Cloneable, Serializable {
     String nome;
     Boolean human; //Boolean para saber se e um humano ou nao
     int pecaEspecial; //saber quantas pecas especiais tem

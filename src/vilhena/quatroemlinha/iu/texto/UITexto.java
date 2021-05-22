@@ -16,6 +16,7 @@ public class UITexto implements Util {
 
     public void corre() {
         sair = false;
+        maquinaEstados.leHistoricoFicheiro();
         while(!sair) {
             switch (maquinaEstados.getSituacaoAtual()) {
                 case Inicio:
@@ -33,12 +34,17 @@ public class UITexto implements Util {
                 case Joga_MiniJogo:
                     uiMiniJogo();
                     break;
+                case Ver_Historico:
+                    uiEscolheHistorico();
+                    break;
                 case GameOver:
                     maquinaEstados.guardaHistorico();
                     uiGameOver();
                     break;
             }
         }
+        maquinaEstados.guardaHistoricoFicheiro();
+        System.out.println("Obrigado por Jogar o 4 em Linha");
     }
 
     private void uiInicio() {
@@ -86,7 +92,7 @@ public class UITexto implements Util {
                 maquinaEstados.comeca(nome1,nome2,CPU_CPU);
                 break;
             case 4:
-                uiEscolheHistorico();
+                maquinaEstados.verHistorico();
                 break;
             case 0:
                 sair = true;
@@ -100,7 +106,7 @@ public class UITexto implements Util {
     private void uiJogador() {
         int op = 0;
         System.out.println("-----------------------------------------");
-        if(maquinaEstados.isHuman() == false) {
+        if(!maquinaEstados.isHuman()) {
             desenhaTabuleiro();
             System.out.println("Turno: " + maquinaEstados.getTurno());
             System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
@@ -121,6 +127,7 @@ public class UITexto implements Util {
                         maquinaEstados.jogaMiniJogo();
                         return;
                     case 2:
+                        maquinaEstados.setBonusJogAtual(1);
                         break;
                     default:
                         System.out.println("Insira uma opcao valida!!!!");
@@ -158,7 +165,7 @@ public class UITexto implements Util {
                         System.out.println("Nao possui mais creditos");
                     }
                     else {
-
+                        //Usar os creditos
                     }
                     break;
                 default:
@@ -172,10 +179,10 @@ public class UITexto implements Util {
         sc = new Scanner(System.in);
         int col;
         boolean flag = false;
-        if(maquinaEstados.isHuman() == false) {
+        if(!maquinaEstados.isHuman()) {
             do {
                 col = (int) (Math.random() * 7);
-            }while(maquinaEstados.verificaColuna(col) == false);
+            }while(!maquinaEstados.verificaColuna(col));
             System.out.println("Lancei a peca na coluna " + (col + 1));
             System.out.println("Press Enter to continue");
             sc.nextLine();
@@ -189,7 +196,7 @@ public class UITexto implements Util {
                     sc.next();
                 col = sc.nextInt();
                 if (col < 7 || col >= 1) {
-                    if (maquinaEstados.verificaColuna(col - 1) == true) {
+                    if (maquinaEstados.verificaColuna(col - 1)) {
                         maquinaEstados.pecaJogada(col - 1);
                         flag = true;
                     } else {
@@ -200,7 +207,7 @@ public class UITexto implements Util {
                     System.out.println("ERRO!!O valor digitado deve ser entre 1 e 7!!!");
                     flag = false;
                 }
-            } while (flag == false);
+            } while (!flag);
         }
         maquinaEstados.GuardaEstado();
     }
@@ -215,7 +222,7 @@ public class UITexto implements Util {
                 sc.next();
             col = sc.nextInt();
             if(col < 7 || col >= 1) {
-                if (maquinaEstados.verificaColuna(col - 1) == true) {
+                if (maquinaEstados.verificaColuna(col - 1)) {
                     maquinaEstados.pecaJogada(col - 1);
                     flag = true;
                 }
@@ -228,7 +235,7 @@ public class UITexto implements Util {
                 System.out.println("ERRO!!O valor digitado deve ser entre 1 e 7!!!");
                 flag = false;
             }
-        }while(flag == false);
+        }while(!flag);
         maquinaEstados.GuardaEstado();
     }
 
@@ -236,34 +243,6 @@ public class UITexto implements Util {
         int jogo = (int)(Math.random() *2) +1;
         System.out.println("-----------------------------------------");
         maquinaEstados.fimMinijogo(jogo);
-    }
-
-    private void uiGameOver() {
-        int op;
-        System.out.println("-----------------------------------------");
-        System.out.println("GAME OVER!!!!");
-        System.out.println("Tabuleiro Final");
-        desenhaTabuleiro();
-        if(maquinaEstados.veSeGanhou() == true)
-            System.out.println("O vencedor foi o jogador " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
-        System.out.println("1 -> Jogar Outra vez");
-        System.out.println("0 -> Sair");
-        System.out.print("> ");
-        while (!sc.hasNextInt())
-            sc.next();
-        op = sc.nextInt();
-        switch (op){
-            case 1:
-                maquinaEstados.jogaOutraVez();
-                break;
-            case 0:
-                sair = true;
-                break;
-            default:
-                System.out.println("Insira uma opcao valida!!!!");
-                break;
-        }
-
     }
 
     private void uiEscolheHistorico() {
@@ -277,18 +256,18 @@ public class UITexto implements Util {
             while (!sc.hasNextInt())
                 sc.next();
             op = sc.nextInt();
-                if(op > maquinaEstados.getHistoricoSize()) {
-                    System.out.println("Insira um valor valido");
-                    flag = false;
-                }
-                else {
-                    if (op == 0) {
-                        flag = true;
-                        return;
-                    }
+            if(op > maquinaEstados.getHistoricoSize()) {
+                System.out.println("Insira um valor valido");
+                flag = false;
+            }
+            else {
+                if (op == 0) {
                     flag = true;
+                    return;
                 }
-        }while(flag != true);
+                flag = true;
+            }
+        }while(!flag);
         maquinaEstados.iniciaHistorico(op - 1);
         uiHistorico();
     }
@@ -327,11 +306,40 @@ public class UITexto implements Util {
                     }
                     break;
                 case 0:
+                    flag = false;
                     break;
                 default:
                     break;
             }
         }while(flag);
+        maquinaEstados.sairHistorico();
+    }
+
+    private void uiGameOver() {
+        int op;
+        System.out.println("-----------------------------------------");
+        System.out.println("GAME OVER!!!!");
+        System.out.println("Tabuleiro Final");
+        desenhaTabuleiro();
+        if(maquinaEstados.veSeGanhou())
+            System.out.println("O vencedor foi o jogador " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
+        System.out.println("1 -> Jogar Outra vez");
+        System.out.println("0 -> Sair");
+        System.out.print("> ");
+        while (!sc.hasNextInt())
+            sc.next();
+        op = sc.nextInt();
+        switch (op){
+            case 1:
+                maquinaEstados.jogaOutraVez();
+                break;
+            case 0:
+                sair = true;
+                break;
+            default:
+                System.out.println("Insira uma opcao valida!!!!");
+                break;
+        }
     }
 
     private void desenhaTabuleiro() { //Funcao para desenhar o tabuleiro

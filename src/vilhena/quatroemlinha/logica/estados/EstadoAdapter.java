@@ -42,6 +42,16 @@ public abstract class EstadoAdapter implements IEstado, Util {
     }
 
     @Override
+    public IEstado verHistorico() {
+        return this;
+    }
+
+    @Override
+    public IEstado sairHistorico(Dados newData) {
+        return this;
+    }
+
+    @Override
     public IEstado jogaOutraVez(Dados data) {
         return this;
     }

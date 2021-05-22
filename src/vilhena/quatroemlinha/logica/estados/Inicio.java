@@ -17,6 +17,11 @@ public class Inicio extends EstadoAdapter {
     }
 
     @Override
+    public IEstado verHistorico() {
+        return new Ver_Historico(data);
+    }
+
+    @Override
     public Situacao getSituacao() {
         return Situacao.Inicio;
     }

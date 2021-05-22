@@ -5,9 +5,10 @@ import vilhena.quatroemlinha.logica.estados.IEstado;
 import vilhena.quatroemlinha.logica.estados.Inicio;
 import vilhena.quatroemlinha.utils.Util;
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class MaquinaEstados implements Util {
+public class MaquinaEstados implements Util, Serializable {
     IEstado atual;
     Dados data;
     ArrayList<ArrayList<Dados>> historico;
@@ -43,6 +44,12 @@ public class MaquinaEstados implements Util {
     public void jogaMiniJogo() { atual = atual.jogaMiniJogo();}
 
     public void fimMinijogo(int jogo) { atual = atual.fimMiniJogo(jogo);}
+
+    public void verHistorico() { atual = atual.verHistorico(); }
+
+    public void sairHistorico() {
+        data = new Dados();
+        atual = atual.sairHistorico(data);}
 
     public void jogaOutraVez() {
         this.data = new Dados();
@@ -100,6 +107,16 @@ public class MaquinaEstados implements Util {
         return data.veSeGanhou();
     }
 
+    public void setBonusJogAtual(int bonus) {
+        data.setBonusJogador(bonus);
+    }
+
+    //-------------------------------- FUNCOES DO HISTORICO --------------------------------
+
+    public void resetJogo() {
+        data = new Dados();
+    }
+
     public String getJogoHistorico(int pos) {
         return historico.get(pos).get(0).toString();
     }
@@ -154,4 +171,42 @@ public class MaquinaEstados implements Util {
         }
     }
 
+    public void guardaHistoricoFicheiro() {
+        try{
+            FileOutputStream file = new FileOutputStream("historico.dat");
+            ObjectOutputStream obj = new ObjectOutputStream(file);
+            obj.writeObject(historico);
+            obj.close();
+        } catch (IOException e) {
+            System.out.println("ERRO!!!");
+            e.printStackTrace();
+        }
+    }
+
+    public void leHistoricoFicheiro() {
+        FileInputStream file = null;
+        try {
+            file = new FileInputStream("historico.dat");
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+        if(file != null) {
+            ObjectInputStream ois = null;
+            try {
+                ois = new ObjectInputStream(file);
+                if(ois != null){
+                    try{
+                        historico = (ArrayList<ArrayList<Dados>>) ois.readObject();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

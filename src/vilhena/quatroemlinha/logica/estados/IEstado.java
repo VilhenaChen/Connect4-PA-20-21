@@ -19,6 +19,10 @@ public interface IEstado {
 
     IEstado jogaOutraVez(Dados data);
 
+    IEstado verHistorico();
+
+    IEstado sairHistorico(Dados newData);
+
     Situacao getSituacao();
 
 }

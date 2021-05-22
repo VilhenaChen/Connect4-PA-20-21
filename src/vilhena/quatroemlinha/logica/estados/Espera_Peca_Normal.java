@@ -15,7 +15,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
         if(jogadorAtual == J1) {
             data.jogaPeca(col, J1);
             data.setJogou(jogadorAtual, true);
-            if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+            if(data.getJogou(J1) && data.getJogou(J2)) {
                 data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J2, false);
@@ -37,7 +37,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
         else {
             data.jogaPeca(col, J2);
             data.setJogou(jogadorAtual, true);
-            if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+            if(data.getJogou(J1) && data.getJogou(J2)) {
                 data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J2, false);
