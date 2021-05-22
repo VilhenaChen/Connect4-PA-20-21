@@ -1,6 +1,6 @@
 package vilhena.quatroemlinha.logica.dados;
 
-public class Jogador {
+public class Jogador implements Cloneable {
     String nome;
     Boolean human; //Boolean para saber se e um humano ou nao
     int pecaEspecial; //saber quantas pecas especiais tem
@@ -68,5 +68,20 @@ public class Jogador {
 
     public void setBonus(int bonus) {
         this.bonus = bonus;
+    }
+
+    @Override
+    protected Object clone(){
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

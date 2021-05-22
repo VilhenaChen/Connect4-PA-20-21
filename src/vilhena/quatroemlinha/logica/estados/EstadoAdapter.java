@@ -42,16 +42,6 @@ public abstract class EstadoAdapter implements IEstado, Util {
     }
 
     @Override
-    public IEstado ganha() {
-        return this;
-    }
-
-    @Override
-    public IEstado QuadroCheio() {
-        return this;
-    }
-
-    @Override
     public IEstado jogaOutraVez(Dados data) {
         return this;
     }

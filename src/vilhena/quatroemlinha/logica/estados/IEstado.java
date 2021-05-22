@@ -17,10 +17,6 @@ public interface IEstado {
 
     IEstado fimMiniJogo(int jogo);
 
-    IEstado ganha();
-
-    IEstado QuadroCheio();
-
     IEstado jogaOutraVez(Dados data);
 
     Situacao getSituacao();

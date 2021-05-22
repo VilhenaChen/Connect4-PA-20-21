@@ -21,4 +21,7 @@ public interface Util {
     String corJ1 = "Vermelho(V)";
     String corJ2 = "Amarelo(A)";
 
+    int AVANCAR = 1;
+    int RECUAR =  -1;
+
 }

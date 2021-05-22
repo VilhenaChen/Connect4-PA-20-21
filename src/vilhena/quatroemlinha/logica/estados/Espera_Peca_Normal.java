@@ -21,11 +21,12 @@ public class Espera_Peca_Normal extends EstadoAdapter{
                 data.setJogou(J2, false);
                 data.setTurno(data.getTurno() + 1);
             }
-            if (data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
+            if (data.isVencedor()) { //Verifica se o Jogador ganhou
+                data.setGanhou();
                 return new GameOver(data);
+            }
             else {
-                if (data.isVencedor()) { //Verifica se o Jogador ganhou
-                    data.setGanhou();
+                if (data.isBoardFull()) { //Verificar se o Tabuleiro ja esta cheio
                     return new GameOver(data);
                 }
                 else {
@@ -42,11 +43,12 @@ public class Espera_Peca_Normal extends EstadoAdapter{
                 data.setJogou(J2, false);
                 data.setTurno(data.getTurno() + 1);
             }
-            if(data.isBoardFull()) //Verificar se o Tabuleiro ja esta cheio
+            if(data.isVencedor()) { //Verifica se o Jogador ganhou
+                data.setGanhou();
                 return new GameOver(data);
+            }
             else {
-                if(data.isVencedor()) { //Verifica se o Jogador ganhou
-                    data.setGanhou();
+                if(data.isBoardFull()) {//Verificar se o Tabuleiro ja esta cheio
                     return new GameOver(data);
                 }
                 else {

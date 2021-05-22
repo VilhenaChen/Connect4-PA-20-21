@@ -3,14 +3,23 @@ package vilhena.quatroemlinha.logica;
 import vilhena.quatroemlinha.logica.dados.Dados;
 import vilhena.quatroemlinha.logica.estados.IEstado;
 import vilhena.quatroemlinha.logica.estados.Inicio;
+import vilhena.quatroemlinha.utils.Util;
 
-public class MaquinaEstados {
+import java.util.ArrayList;
+
+public class MaquinaEstados implements Util {
     IEstado atual;
     Dados data;
+    ArrayList<ArrayList<Dados>> historico;
+    ArrayList<Dados> temporario;
+    int jogoHistorico;
+    int turnoHistorico;
 
     public MaquinaEstados() {
         this.data = new Dados();
         this.atual = new Inicio(data);
+        historico = new ArrayList<>();
+        temporario = new ArrayList<>();
     }
 
     //-------------------------------- AVANCAR NOS ESTADOS --------------------------------------
@@ -51,7 +60,7 @@ public class MaquinaEstados {
         return data.getNomeJogadorAtual();
     }
 
-    public String getCorJogador() {return data.getCorJogador();}
+    public String getCorJogador() {return data.getCorJogadorAtual();}
 
     public Situacao getSituacaoAtual() {
         return atual.getSituacao();
@@ -89,6 +98,60 @@ public class MaquinaEstados {
 
     public boolean veSeGanhou() {
         return data.veSeGanhou();
+    }
+
+    public String getJogoHistorico(int pos) {
+        return historico.get(pos).get(0).toString();
+    }
+
+    public int getHistoricoSize() {
+        return historico.size();
+    }
+
+    public String getHistorico() { //Mostarr a lista de jogos guardados
+        StringBuilder hist = new StringBuilder();
+        if(historico.size() == 0) {
+            //acabar isto
+        }
+        for(int i = 0; i < historico.size(); i++) {
+            hist.append("Jogo " + (i + 1) + " " + getJogoHistorico(i) + "\n");
+        }
+        return hist.toString();
+    }
+
+    public void iniciaHistorico(int jogo) { //Comeca a mostrar o historico
+        jogoHistorico = jogo;
+        turnoHistorico = 0;
+        data = historico.get(jogoHistorico).get(0);
+        replayHistorico(0);
+    }
+
+    public String replayHistorico(int num) { //Andar com o Historico para a frente
+        StringBuilder sb = new StringBuilder();
+        if(num == AVANCAR) {
+            turnoHistorico++;
+        }
+        else if(num == RECUAR && turnoHistorico != -1) {
+            turnoHistorico--;
+        }
+        try {
+            data = historico.get(jogoHistorico).get(turnoHistorico);
+            sb.append("Turno " + data.getTurno() + "\n");
+        }catch (IndexOutOfBoundsException e) {
+            throw e;
+        }
+        return sb.toString();
+    }
+
+    public void GuardaEstado() {
+        temporario.add((Dados) data.clone());
+    }
+
+    public void guardaHistorico() {
+        historico.add(temporario);
+        if(historico.size() > 5) {
+            historico.remove(0);
+        }
     }
 
 }

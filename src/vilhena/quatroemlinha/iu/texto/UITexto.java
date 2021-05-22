@@ -34,6 +34,7 @@ public class UITexto implements Util {
                     uiMiniJogo();
                     break;
                 case GameOver:
+                    maquinaEstados.guardaHistorico();
                     uiGameOver();
                     break;
             }
@@ -48,6 +49,7 @@ public class UITexto implements Util {
         System.out.println("1 -> Humano vs Humano");
         System.out.println("2 -> Humano vs CPU");
         System.out.println("3 -> CPU vs CPU");
+        System.out.println("4 -> Ver Historico");
         System.out.println("0 -> Sair");
         System.out.print(">");
         while (!sc.hasNextInt())
@@ -82,6 +84,9 @@ public class UITexto implements Util {
                 nome1 = "CPU1";
                 nome2 = "CPU2";
                 maquinaEstados.comeca(nome1,nome2,CPU_CPU);
+                break;
+            case 4:
+                uiEscolheHistorico();
                 break;
             case 0:
                 sair = true;
@@ -171,7 +176,7 @@ public class UITexto implements Util {
             do {
                 col = (int) (Math.random() * 7);
             }while(maquinaEstados.verificaColuna(col) == false);
-            System.out.println("Lancei a peca na coluna " + col);
+            System.out.println("Lancei a peca na coluna " + (col + 1));
             System.out.println("Press Enter to continue");
             sc.nextLine();
             maquinaEstados.pecaJogada(col);
@@ -197,6 +202,7 @@ public class UITexto implements Util {
                 }
             } while (flag == false);
         }
+        maquinaEstados.GuardaEstado();
     }
 
     private void uiPecaEspecial() {
@@ -223,6 +229,7 @@ public class UITexto implements Util {
                 flag = false;
             }
         }while(flag == false);
+        maquinaEstados.GuardaEstado();
     }
 
     private void uiMiniJogo() {
@@ -257,6 +264,74 @@ public class UITexto implements Util {
                 break;
         }
 
+    }
+
+    private void uiEscolheHistorico() {
+        int op;
+        boolean flag = false;
+        sc = new Scanner(System.in);
+        do {
+            System.out.println(maquinaEstados.getHistorico());
+            System.out.println("Escolha um dos jogos (0 para sair)");
+            System.out.print("> ");
+            while (!sc.hasNextInt())
+                sc.next();
+            op = sc.nextInt();
+                if(op > maquinaEstados.getHistoricoSize()) {
+                    System.out.println("Insira um valor valido");
+                    flag = false;
+                }
+                else {
+                    if (op == 0) {
+                        flag = true;
+                        return;
+                    }
+                    flag = true;
+                }
+        }while(flag != true);
+        maquinaEstados.iniciaHistorico(op - 1);
+        uiHistorico();
+    }
+
+    private void uiHistorico() {
+        boolean flag = true;
+        System.out.println("-----------------------------------------");
+        desenhaTabuleiro();
+        do {
+            int op;
+            sc = new Scanner(System.in);
+            System.out.println("-----------------------------------------");
+            System.out.println("1 -> Avancar");
+            System.out.println("2 -> Recuar");
+            System.out.println("0 -> Sair");
+            System.out.print("> ");
+            while (!sc.hasNextInt())
+                sc.next();
+            op = sc.nextInt();
+            switch (op) {
+                case 1:
+                    try {
+                        System.out.println(maquinaEstados.replayHistorico(AVANCAR));
+                        desenhaTabuleiro();
+                    }catch(IndexOutOfBoundsException e) {
+                        System.out.println("Fim do Historico");
+                        flag = false;
+                    }
+                    break;
+                case 2:
+                    try {
+                        System.out.println(maquinaEstados.replayHistorico(RECUAR));
+                        desenhaTabuleiro();
+                    }catch (IndexOutOfBoundsException e) {
+                        System.out.println("Nao existem jogadas anteriores a esta");
+                    }
+                    break;
+                case 0:
+                    break;
+                default:
+                    break;
+            }
+        }while(flag);
     }
 
     private void desenhaTabuleiro() { //Funcao para desenhar o tabuleiro

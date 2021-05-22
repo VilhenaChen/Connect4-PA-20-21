@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Dados implements Util {
+public class Dados implements Util, Cloneable {
     ArrayList<Jogador> jogadores;
     int turno;
     int joga;
@@ -54,9 +54,9 @@ public class Dados implements Util {
         this.turno = turno;
     }
 
-    public int getJoga() {
+    public int getJoga() { //funcao para ver quem joga
         return joga;
-    } //funcao para ver quem joga
+    }
 
     public void setJoga(int joga) {
         this.joga = joga;
@@ -87,14 +87,20 @@ public class Dados implements Util {
         jogadores.get(J2).setBonus(bonus);
     }
 
-    public String getCorJogador() {
+    public String getCorJogadorAtual() {
         if(joga == J1)
             return corJ1;
         return corJ2;
     }
 
-    public char getCharCorJogador() {
+    public char getCharCorJogadorAtual() {
         if(joga == J1)
+            return CORJ1;
+        return CORJ2;
+    }
+
+    public char getCharCorJogador(int pos) {
+        if(pos == J1)
             return CORJ1;
         return CORJ2;
     }
@@ -176,7 +182,7 @@ public class Dados implements Util {
                     }
                     break;
                 case 3:
-                    resultado = num1 / num2;
+                    resultado = (double)(num1 / num2);
                     System.out.println(num1 + "/" + num2);
                     System.out.println("resutado: ");
                     sc = new Scanner(System.in);
@@ -249,7 +255,7 @@ public class Dados implements Util {
     }
 
     public boolean isVencedor() {
-        char cor = getCharCorJogador();
+        char cor = getCharCorJogadorAtual();
 
         //Verifica Coluna
         for (int i = 0; i < LARGURA; i++) {
@@ -264,7 +270,7 @@ public class Dados implements Util {
 
         //Verifica Linha
         for (int j = 0; j < ALTURA; j++) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 3; i++) {
                 if (board.get(i).get(5 - j) == cor &&
                         board.get(i+1).get(5 - j) == cor &&
                         board.get(i+2).get(5 - j) == cor &&
@@ -347,5 +353,37 @@ public class Dados implements Util {
         for(int i = 0; i < ALTURA; i++) {
             board.get(col).set(i, ' ');
         }
+    }
+
+    @Override
+    public Object clone() {
+        Dados clone = null;
+        try {
+            clone =(Dados) super.clone();
+            clone.joga = this.joga;
+            clone.turno = this.turno;
+            ArrayList<Jogador> cloneJogador = new ArrayList<>(jogadores.size());
+            for(Jogador i: jogadores) {
+                cloneJogador.add( (Jogador) i.clone());
+            }
+            clone.jogadores = cloneJogador;
+
+            ArrayList<ArrayList<Character>> cloneTabuleiro = new ArrayList<>();
+            for(int i = 0; i < LARGURA; i++) {
+                cloneTabuleiro.add(new ArrayList<>());
+                for(int j = 0; j < ALTURA; j++) {
+                    cloneTabuleiro.get(i).add(board.get(i).get(j));
+                }
+            }
+            clone.board = cloneTabuleiro;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return clone;
+    }
+
+    @Override
+    public String toString() {
+        return jogadores.get(0).toString() + " " + getCharCorJogador(0) + " vs " + jogadores.get(1).toString() + " " + getCharCorJogador(1);
     }
 }
