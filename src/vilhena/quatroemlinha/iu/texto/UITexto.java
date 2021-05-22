@@ -56,6 +56,7 @@ public class UITexto implements Util {
         System.out.println("2 -> Humano vs CPU");
         System.out.println("3 -> CPU vs CPU");
         System.out.println("4 -> Ver Historico");
+        System.out.println("5 -> Carregar Jogo");
         System.out.println("0 -> Sair");
         System.out.print(">");
         while (!sc.hasNextInt())
@@ -94,6 +95,12 @@ public class UITexto implements Util {
             case 4:
                 maquinaEstados.verHistorico();
                 break;
+            case 5:
+                System.out.println("Insira o nome do Ficheiro: ");
+                System.out.println("> ");
+                String nome = sc.nextLine();
+                maquinaEstados.carregaJogo(nome);
+                break;
             case 0:
                 sair = true;
                 break;
@@ -104,6 +111,7 @@ public class UITexto implements Util {
     }
 
     private void uiJogador() {
+        String nome;
         int op = 0;
         System.out.println("-----------------------------------------");
         if(!maquinaEstados.isHuman()) {
@@ -144,6 +152,8 @@ public class UITexto implements Util {
             System.out.println("1 -> Jogar Peca Normal");
             System.out.println("2 -> Jogar Peca Especial");
             System.out.println("3 -> Usar Creditos");
+            System.out.println("4 -> Gravar Jogo");
+            System.out.println("0 -> Sair");
             System.out.print("> ");
             while (!sc.hasNextInt())
                 sc.next();
@@ -167,6 +177,32 @@ public class UITexto implements Util {
                     else {
                         //Usar os creditos
                     }
+                    break;
+                case 4:
+                    sc = new Scanner(System.in);
+                    System.out.println("Insira o nome do ficheiro");
+                    System.out.print("> ");
+                    nome = sc.nextLine();
+                    maquinaEstados.gravaJogo(nome);
+                    break;
+                case 0:
+                    sc = new Scanner(System.in);
+                    int escolha;
+                    do {
+                        System.out.println("Deseja gravar o jogo?");
+                        System.out.println("1 -> Sim");
+                        System.out.println("2 -> Nao");
+                        System.out.print("> ");
+                        escolha = sc.nextInt();
+                    }while(escolha != 1 && escolha != 2);
+                    if(escolha == 1) {
+                        sc = new Scanner(System.in);
+                        System.out.println("Insira o nome do ficheiro");
+                        System.out.print("> ");
+                        nome = sc.nextLine();
+                        maquinaEstados.gravaJogo(nome);
+                    }
+                    maquinaEstados.jogaOutraVez();
                     break;
                 default:
                     System.out.println("Insira uma opcao valida!!!!");
@@ -263,6 +299,7 @@ public class UITexto implements Util {
             else {
                 if (op == 0) {
                     flag = true;
+                    maquinaEstados.sairHistorico();
                     return;
                 }
                 flag = true;

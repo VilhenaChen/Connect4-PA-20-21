@@ -26,6 +26,11 @@ public class Espera_Jogada extends EstadoAdapter{
     }
 
     @Override
+    public IEstado jogaOutraVez(Dados data) {
+        return new Inicio(data);
+    }
+
+    @Override
     public Situacao getSituacao() {
         return Situacao.Espera_Jogada;
     }

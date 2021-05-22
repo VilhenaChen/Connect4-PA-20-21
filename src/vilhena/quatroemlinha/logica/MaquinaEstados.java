@@ -1,6 +1,7 @@
 package vilhena.quatroemlinha.logica;
 
 import vilhena.quatroemlinha.logica.dados.Dados;
+import vilhena.quatroemlinha.logica.estados.Espera_Jogada;
 import vilhena.quatroemlinha.logica.estados.IEstado;
 import vilhena.quatroemlinha.logica.estados.Inicio;
 import vilhena.quatroemlinha.utils.Util;
@@ -113,10 +114,6 @@ public class MaquinaEstados implements Util, Serializable {
 
     //-------------------------------- FUNCOES DO HISTORICO --------------------------------
 
-    public void resetJogo() {
-        data = new Dados();
-    }
-
     public String getJogoHistorico(int pos) {
         return historico.get(pos).get(0).toString();
     }
@@ -178,7 +175,7 @@ public class MaquinaEstados implements Util, Serializable {
             obj.writeObject(historico);
             obj.close();
         } catch (IOException e) {
-            System.out.println("ERRO!!!");
+            System.out.println("ERRO A GUARDAR HISTORICO!!!");
             e.printStackTrace();
         }
     }
@@ -209,4 +206,45 @@ public class MaquinaEstados implements Util, Serializable {
             }
         }
     }
+
+    //-------------------------------- FUNCOES DE GRAVAR E CARREGR JOGO --------------------------------
+
+    public void gravaJogo(String filename) {
+        try{
+            FileOutputStream file = new FileOutputStream(filename + ".dat");
+            ObjectOutputStream obj = new ObjectOutputStream(file);
+            obj.writeObject(data);
+            obj.close();
+        } catch (IOException e) {
+            System.out.println("ERRO A GUARDAR JOGO!!!");
+            e.printStackTrace();
+        }
+    }
+
+    public void carregaJogo(String filename) {
+        FileInputStream file = null;
+        try {
+            file = new FileInputStream(filename + ".dat");
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+        if(file != null) {
+            ObjectInputStream ois = null;
+            try {
+                ois = new ObjectInputStream(file);
+                if(ois != null){
+                    try{
+                        data = (Dados) ois.readObject();
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        atual = new Espera_Jogada(data);
+    }
+
 }
