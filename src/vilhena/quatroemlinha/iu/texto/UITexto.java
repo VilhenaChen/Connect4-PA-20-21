@@ -39,11 +39,11 @@ public class UITexto implements Util {
                     break;
                 case GameOver:
                     maquinaEstados.guardaHistorico();
+                    maquinaEstados.guardaHistoricoFicheiro();
                     uiGameOver();
                     break;
             }
         }
-        maquinaEstados.guardaHistoricoFicheiro();
         System.out.println("Obrigado por Jogar o 4 em Linha");
     }
 
@@ -132,9 +132,11 @@ public class UITexto implements Util {
                 op = sc.nextInt();
                 switch (op) {
                     case 1:
+                        maquinaEstados.addLog("Joga Minijogo");
                         maquinaEstados.jogaMiniJogo();
                         return;
                     case 2:
+                        maquinaEstados.addLog("Nao Joga Minijogo");
                         maquinaEstados.setBonusJogAtual(1);
                         break;
                     default:
@@ -153,6 +155,7 @@ public class UITexto implements Util {
             System.out.println("2 -> Jogar Peca Especial");
             System.out.println("3 -> Usar Creditos");
             System.out.println("4 -> Gravar Jogo");
+            System.out.println("5 -> Ver Logs");
             System.out.println("0 -> Sair");
             System.out.print("> ");
             while (!sc.hasNextInt())
@@ -184,6 +187,9 @@ public class UITexto implements Util {
                     System.out.print("> ");
                     nome = sc.nextLine();
                     maquinaEstados.gravaJogo(nome);
+                    break;
+                case 5:
+                    System.out.println(maquinaEstados.getLog());
                     break;
                 case 0:
                     sc = new Scanner(System.in);
@@ -358,8 +364,13 @@ public class UITexto implements Util {
         System.out.println("GAME OVER!!!!");
         System.out.println("Tabuleiro Final");
         desenhaTabuleiro();
-        if(maquinaEstados.veSeGanhou())
+        if(maquinaEstados.veSeGanhou()) {
             System.out.println("O vencedor foi o jogador " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
+            maquinaEstados.addLog("Game Over vencedor" + maquinaEstados.getNomeJogadorAtual());
+        }
+        else {
+            maquinaEstados.addLog("Game Over");
+        }
         System.out.println("1 -> Jogar Outra vez");
         System.out.println("0 -> Sair");
         System.out.print("> ");

@@ -16,25 +16,30 @@ public class MaquinaEstados implements Util, Serializable {
     ArrayList<Dados> temporario;
     int jogoHistorico;
     int turnoHistorico;
+    ArrayList<String> log;
 
     public MaquinaEstados() {
         this.data = new Dados();
         this.atual = new Inicio(data);
         historico = new ArrayList<>();
         temporario = new ArrayList<>();
+        log = new ArrayList<>();
     }
 
     //-------------------------------- AVANCAR NOS ESTADOS --------------------------------------
 
     public void comeca(String nome1, String nome2,int GameMode) {
+        addLog(Situacao.Inicio.toString());
         atual = atual.comecaJogo(nome1,nome2,GameMode);
     }
 
     public void jogaPecaNormal() {
+        addLog(Situacao.Espera_Peca_Normal.toString());
         atual = atual.jogaPecaNormal();
     }
 
     public void jogaPecaEspecial() {
+        addLog(Situacao.Espera_Peca_Especial.toString());
         atual = atual.jogaPecaEspecial();
     }
 
@@ -46,13 +51,17 @@ public class MaquinaEstados implements Util, Serializable {
 
     public void fimMinijogo(int jogo) { atual = atual.fimMiniJogo(jogo);}
 
-    public void verHistorico() { atual = atual.verHistorico(); }
+    public void verHistorico() {
+        addLog(Situacao.Ver_Historico.toString());
+        atual = atual.verHistorico(); }
 
     public void sairHistorico() {
+        addLog(Situacao.Inicio.toString());
         data = new Dados();
         atual = atual.sairHistorico(data);}
 
     public void jogaOutraVez() {
+        addLog(Situacao.Inicio.toString());
         this.data = new Dados();
         atual = atual.jogaOutraVez(data);
     }
@@ -245,6 +254,14 @@ public class MaquinaEstados implements Util, Serializable {
             }
         }
         atual = new Espera_Jogada(data);
+    }
+
+    public void addLog(String texto) {
+        log.add(texto);
+    }
+
+    public String getLog() {
+        return log.toString();
     }
 
 }
