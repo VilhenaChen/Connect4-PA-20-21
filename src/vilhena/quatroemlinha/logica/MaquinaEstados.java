@@ -9,13 +9,13 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class MaquinaEstados implements Util, Serializable {
-    IEstado atual;
-    Dados data;
-    ArrayList<ArrayList<Dados>> historico;
-    ArrayList<Dados> temporario;
-    int jogoHistorico;
-    int turnoHistorico;
-    ArrayList<String> log;
+    IEstado atual; //Estado atual
+    Dados data; //Dados do jogo
+    ArrayList<ArrayList<Dados>> historico; //Array para o Historico
+    ArrayList<Dados> temporario; //Array temporario do Historico
+    int jogoHistorico; //Variavel util para saber que jogo do historico estamos a ver
+    int turnoHistorico; //Variavel util para saber que turno do historico estamos a ver
+    ArrayList<String> log; //Logs
 
     public MaquinaEstados() {
         this.data = new Dados();
@@ -92,10 +92,6 @@ public class MaquinaEstados implements Util, Serializable {
 
     public int getBonus() {return data.getBonus();}
 
-    public int getJoga() {
-        return data.getJoga();
-    }
-
     public boolean isHuman() {
         return data.isHuman();
     }
@@ -108,10 +104,6 @@ public class MaquinaEstados implements Util, Serializable {
         return data.getCreditos();
     }
 
-    public void tiraCreditos(int nr) {
-        data.tiraCreditos(nr);
-    }
-
     public boolean veSeGanhou() {
         return data.veSeGanhou();
     }
@@ -119,6 +111,10 @@ public class MaquinaEstados implements Util, Serializable {
     public void setBonusJogAtual(int bonus) {
         data.setBonusJogador(bonus);
     }
+
+    public int getMinijogoJogado() { return data.getMinijogoJogado();}
+
+    public void setMinijogoJogado(int valor) { data.setMinijogoJogado(valor);}
 
     //-------------------------------- FUNCOES DO HISTORICO --------------------------------
 
@@ -148,7 +144,7 @@ public class MaquinaEstados implements Util, Serializable {
         replayHistorico(0);
     }
 
-    public String replayHistorico(int num) { //Andar com o Historico para a frente
+    public String replayHistorico(int num) { //Andar com o Historico
         StringBuilder sb = new StringBuilder();
         if(num == AVANCAR) {
             turnoHistorico++;
@@ -167,16 +163,16 @@ public class MaquinaEstados implements Util, Serializable {
 
     public void GuardaEstado() {
         temporario.add((Dados) data.clone());
-    }
+    } //Guardar no temporario a cada iteracao do jogo
 
-    public void guardaHistorico() {
+    public void guardaHistorico() { //Guardar para o arrau de historico no final
         historico.add(temporario);
         if(historico.size() > 5) {
             historico.remove(0);
         }
     }
 
-    public void guardaHistoricoFicheiro() {
+    public void guardaHistoricoFicheiro() { //Guardar o Historico no ficheiro
         try{
             FileOutputStream file = new FileOutputStream("historico.dat");
             ObjectOutputStream obj = new ObjectOutputStream(file);
@@ -184,11 +180,10 @@ public class MaquinaEstados implements Util, Serializable {
             obj.close();
         } catch (IOException e) {
             System.out.println("ERRO A GUARDAR HISTORICO!!!");
-            e.printStackTrace();
         }
     }
 
-    public void leHistoricoFicheiro() {
+    public void leHistoricoFicheiro() { //Ler o Historico no ficheiro
         FileInputStream file = null;
         try {
             file = new FileInputStream("historico.dat");
@@ -216,7 +211,7 @@ public class MaquinaEstados implements Util, Serializable {
 
     //-------------------------------- FUNCOES DE GRAVAR E CARREGR JOGO --------------------------------
 
-    public void gravaJogo(String filename) {
+    public void gravaJogo(String filename) { //Gravar o jogo num ficheiro
         try{
             FileOutputStream file = new FileOutputStream(filename + ".dat");
             ObjectOutputStream obj = new ObjectOutputStream(file);
@@ -224,17 +219,15 @@ public class MaquinaEstados implements Util, Serializable {
             obj.close();
         } catch (IOException e) {
             System.out.println("ERRO A GUARDAR JOGO!!!");
-            e.printStackTrace();
         }
     }
 
-    public void carregaJogo(String filename) {
+    public boolean carregaJogo(String filename) { //Carregar o Jogo do ficheiro passado como paramentro
         FileInputStream file = null;
         try {
             file = new FileInputStream(filename + ".dat");
         }catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return;
+            return false;
         }
         if(file != null) {
             ObjectInputStream ois = null;
@@ -244,29 +237,32 @@ public class MaquinaEstados implements Util, Serializable {
                     try{
                         data = (Dados) ois.readObject();
                     } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
+                        return false;
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                return false;
             }
         }
         atual = new Espera_Jogada(data);
+        return true;
     }
 
     //-------------------------------- LOGS --------------------------------
+
     public void addLog(String texto) {
         log.add(texto);
-    }
+    } //Adicionar ao log as msgs
 
     public String getLog() {
         return log.toString();
-    }
+    } //Returna o Log
 
     //-------------------------------- FUNCOES DA MAQUINA DO TEMPO --------------------------------
-    public boolean usarCreditos(int creditos) {
-        Dados dataTemp;
-        if(data.getTurnosCreditos() < creditos) {
+
+    public boolean usarCreditos(int creditos) { //Usar os creditos
+        Dados dataTemp; //variavel temporaria
+        if(data.getTurnosCreditos() < creditos) { //Caso nao haja turnos suficientes
             return false;
         }
         try {
@@ -275,9 +271,11 @@ public class MaquinaEstados implements Util, Serializable {
             return false;
         }
         dataTemp.tiraCreditos(creditos);
+        dataTemp.setBonusJogador(0); //Reset ao contador de Minijogos
         data = dataTemp;
         data.resetTurnosCreditos();
         atual = new Espera_Jogada(data);
+        addLog("Usados " + creditos + " creditos" );
         return true;
     }
 }

@@ -13,11 +13,11 @@ public class Dados implements Util, Cloneable, Serializable {
     @Serial
     private static final long serialVersionUID = 4L;
 
-    ArrayList<Jogador> jogadores;
-    int turno;
-    int joga;
-    ArrayList<ArrayList<Character>> board; //[Largura][Altura]
-    int turnosCreditos;
+    ArrayList<Jogador> jogadores; //Array de Jogadores
+    int turno; //Turno
+    int joga; //Variavel para saber que jogador esta a jogar 0 - Jogador1 / 1 - Jogador2
+    ArrayList<ArrayList<Character>> board; //tabuleiro de jogo [Largura][Altura]
+    int turnosCreditos; //Variavel de controlo para saber quando e possivel voltar atras
 
     public Dados() {
         this.jogadores = new ArrayList<>();
@@ -152,6 +152,9 @@ public class Dados implements Util, Cloneable, Serializable {
         return jogadores.get(joga).isGanhou();
     }
 
+    public int getMinijogoJogado() { return jogadores.get(joga).getMinijogo(); }
+
+    public void setMinijogoJogado(int valor) {  jogadores.get(joga).setMinijogo(valor); }
 
     public boolean jogoNumeros() {
         double start = System.currentTimeMillis() / 1000;
@@ -223,56 +226,6 @@ public class Dados implements Util, Cloneable, Serializable {
         return false;
     }
 
-    public boolean jogoPalavras() {
-        //Ler o Ficheiro
-        int count = 0;
-        String line;
-        String[] palavras = new String[100];
-        String[] escolhidas = new String[5];
-        String[] lidas;
-        StringBuilder escolhi = new StringBuilder();
-        double start;
-        double tempo;
-        double end;
-        try {
-            File ficheiro = new File("palavras.txt");
-            Scanner sc = new Scanner(ficheiro);
-            while(sc.hasNextLine()) {
-                palavras[count] = sc.nextLine();
-                count++;
-            }
-        }catch (FileNotFoundException e) {
-            System.out.println("Problema a abrir o ficheiro");
-            return false;
-        }
-        for(int i = 0; i < 5; i++) {
-            escolhidas[i] = palavras[(int) (Math.random() * 100)];
-            escolhi.append(escolhidas[i]);
-            if(i != 4)
-                escolhi.append(" ");
-        }
-
-        //comecar o jogo
-        start = System.currentTimeMillis() / 1000;
-        end = (escolhi.length() / 2);
-        System.out.println(escolhi);
-        Scanner sc = new Scanner(System.in);
-        line = sc.nextLine();
-        lidas = line.split(" ");
-        for(int i = 0; i < 5; i++) {
-            if(!lidas[i].equals(escolhidas[i]))
-                return false;
-        }
-        tempo = ((System.currentTimeMillis() / 1000)- start);
-        System.out.println("Demorou: " + ((System.currentTimeMillis() / 1000)- start));
-        if(tempo < end) {
-            System.out.println("Ganhou uma Peca Especial");
-            return true;
-        }
-        System.out.println("Perdeu!!");
-        return false;
-    }
-
     public boolean isVencedor() {
         char cor = getCharCorJogadorAtual();
 
@@ -334,6 +287,57 @@ public class Dados implements Util, Cloneable, Serializable {
         return true;
     }
 
+    //-------------------------------- FUNCOES DOS MINIJOGOS --------------------------------------
+    public boolean jogoPalavras() {
+        //Ler o Ficheiro
+        int count = 0;
+        String line;
+        String[] palavras = new String[100];
+        String[] escolhidas = new String[5];
+        String[] lidas;
+        StringBuilder escolhi = new StringBuilder();
+        double start;
+        double tempo;
+        double end;
+        try {
+            File ficheiro = new File("palavras.txt");
+            Scanner sc = new Scanner(ficheiro);
+            while(sc.hasNextLine()) {
+                palavras[count] = sc.nextLine();
+                count++;
+            }
+        }catch (FileNotFoundException e) {
+            System.out.println("Problema a abrir o ficheiro");
+            return false;
+        }
+        for(int i = 0; i < 5; i++) {
+            escolhidas[i] = palavras[(int) (Math.random() * 100)];
+            escolhi.append(escolhidas[i]);
+            if(i != 4)
+                escolhi.append(" ");
+        }
+
+        //comecar o jogo
+        start = System.currentTimeMillis() / 1000;
+        end = (escolhi.length() / 2);
+        System.out.println(escolhi);
+        Scanner sc = new Scanner(System.in);
+        line = sc.nextLine();
+        lidas = line.split(" ");
+        for(int i = 0; i < 5; i++) {
+            if(!lidas[i].equals(escolhidas[i]))
+                return false;
+        }
+        tempo = ((System.currentTimeMillis() / 1000)- start);
+        System.out.println("Demorou: " + ((System.currentTimeMillis() / 1000)- start));
+        if(tempo < end) {
+            System.out.println("Ganhou uma Peca Especial");
+            return true;
+        }
+        System.out.println("Perdeu!!");
+        return false;
+    }
+
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
 
     public boolean jogaPeca(int coluna, int player) { //Return true, caso consiga jogar naquela coluna, caso contrario da return false
@@ -375,7 +379,7 @@ public class Dados implements Util, Cloneable, Serializable {
     }
 
     @Override
-    public Object clone() {
+    public Object clone() { //Criar um clone desta Classe
         Dados clone = null;
         try {
             clone =(Dados) super.clone();

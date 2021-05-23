@@ -99,7 +99,8 @@ public class UITexto implements Util {
                 System.out.println("Insira o nome do Ficheiro: ");
                 System.out.println("> ");
                 String nome = sc.nextLine();
-                maquinaEstados.carregaJogo(nome);
+                if(!maquinaEstados.carregaJogo(nome))
+                    System.out.println("Ficheiro nao Encontrado");
                 break;
             case 0:
                 sair = true;
@@ -294,7 +295,23 @@ public class UITexto implements Util {
     }
 
     private void uiMiniJogo() {
-        int jogo = (int)(Math.random() *2) +1;
+        int jogo = 0;
+        switch(maquinaEstados.getMinijogoJogado()) {
+            case 0:
+                jogo = (int)(Math.random() *2) +1;
+                maquinaEstados.setMinijogoJogado(jogo);
+                break;
+            case 1:
+                jogo = 2;
+                maquinaEstados.setMinijogoJogado(0);
+                break;
+            case 2:
+                jogo = 1;
+                maquinaEstados.setMinijogoJogado(0);
+                break;
+            default:
+                break;
+        }
         System.out.println("-----------------------------------------");
         maquinaEstados.fimMinijogo(jogo);
     }

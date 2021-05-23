@@ -14,6 +14,7 @@ public class Jogador implements Cloneable, Serializable {
     boolean jogou; //Booelan para saber se o jogador ja efetou a sua jogada neste turno
     boolean ganhou;
     int bonus;
+    int minijogo; //variavel para saber se o jogador ja jogou o minijogo dos numeros 1 ou o das palavras 2, ou nenhum 0
 
     public Jogador(String nome, Boolean human) {
         this.nome = nome;
@@ -26,6 +27,7 @@ public class Jogador implements Cloneable, Serializable {
         this.jogou = false;
         this.ganhou = false;
         this.bonus = 1;
+        this.minijogo = 0;
     }
 
     public String getNome() {
@@ -74,6 +76,14 @@ public class Jogador implements Cloneable, Serializable {
 
     public void setBonus(int bonus) {
         this.bonus = bonus;
+    }
+
+    public int getMinijogo() {
+        return minijogo;
+    }
+
+    public void setMinijogo(int minijogo) {
+        this.minijogo = minijogo;
     }
 
     @Override
