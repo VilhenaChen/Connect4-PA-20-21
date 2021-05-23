@@ -16,27 +16,33 @@ public class Espera_Peca_Especial extends EstadoAdapter{
             data.limpaColuna(col);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                data.adicionaTurnoCreditos();
                 data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J1, false);
                 data.setTurno(data.getTurno() + 1);
                 data.setJoga(J2);
             }
-            else
+            else {
+                data.adicionaTurnoCreditos();
                 data.setJoga(J2);
+            }
         }
         else {
             data.limpaColuna(col);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                data.adicionaTurnoCreditos();
                 data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J1, false);
                 data.setTurno(data.getTurno() + 1);
                 data.setJoga(J1);
             }
-            else
+            else {
+                data.adicionaTurnoCreditos();
                 data.setJoga(J1);
+            }
         }
         return new Espera_Jogada(data);
     }

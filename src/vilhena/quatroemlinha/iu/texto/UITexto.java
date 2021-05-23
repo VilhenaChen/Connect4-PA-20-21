@@ -174,11 +174,23 @@ public class UITexto implements Util {
                     }
                     break;
                 case 3:
+                    sc= new Scanner(System.in);
                     if(maquinaEstados.getCreditos() == 0) {
                         System.out.println("Nao possui mais creditos");
                     }
                     else {
-                        //Usar os creditos
+                        System.out.println("Insira o numero de creditos que pretende usar");
+                        System.out.print("> ");
+                        while (!sc.hasNextInt())
+                            sc.next();
+                         int creditos = sc.nextInt();
+                        if(maquinaEstados.getCreditos() < creditos) {
+                            System.out.println("Nao é dispoem dessa quantidade de creditos");
+                        }
+                        else {
+                            if(!maquinaEstados.usarCreditos(creditos))
+                                System.out.println("Nao foi possivel voltar atras");
+                        }
                     }
                     break;
                 case 4:

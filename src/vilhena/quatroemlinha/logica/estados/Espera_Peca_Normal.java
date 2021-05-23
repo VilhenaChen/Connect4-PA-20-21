@@ -16,6 +16,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
             data.jogaPeca(col, J1);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) && data.getJogou(J2)) {
+                data.adicionaTurnoCreditos();
                 data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J2, false);
@@ -30,6 +31,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
                     return new GameOver(data);
                 }
                 else {
+                    data.adicionaTurnoCreditos();
                     data.setJoga(J2);
                 }
             }
@@ -38,6 +40,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
             data.jogaPeca(col, J2);
             data.setJogou(jogadorAtual, true);
             if(data.getJogou(J1) && data.getJogou(J2)) {
+                data.adicionaTurnoCreditos();
                 data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
                 data.setJogou(J2, false);
@@ -52,6 +55,7 @@ public class Espera_Peca_Normal extends EstadoAdapter{
                     return new GameOver(data);
                 }
                 else {
+                    data.adicionaTurnoCreditos();
                     data.setJoga(J1);
                 }
             }

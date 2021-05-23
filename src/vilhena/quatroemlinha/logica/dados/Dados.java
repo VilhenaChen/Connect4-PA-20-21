@@ -4,15 +4,20 @@ import vilhena.quatroemlinha.utils.Util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dados implements Util, Cloneable, Serializable {
+    @Serial
+    private static final long serialVersionUID = 4L;
+
     ArrayList<Jogador> jogadores;
     int turno;
     int joga;
     ArrayList<ArrayList<Character>> board; //[Largura][Altura]
+    int turnosCreditos;
 
     public Dados() {
         this.jogadores = new ArrayList<>();
@@ -24,6 +29,7 @@ public class Dados implements Util, Cloneable, Serializable {
                 board.get(i).add(' ');
             }
         }
+        this.turnosCreditos = 0;
     }
 
     public void criaJogadores(String nome1, String nome2,int GameMode) {
@@ -104,6 +110,18 @@ public class Dados implements Util, Cloneable, Serializable {
         if(pos == J1)
             return CORJ1;
         return CORJ2;
+    }
+
+    public int getTurnosCreditos() {
+        return turnosCreditos;
+    }
+
+    public void adicionaTurnoCreditos() {
+        turnosCreditos = turnosCreditos + 1;
+    }
+
+    public void resetTurnosCreditos() {
+        this.turnosCreditos = 0;
     }
 
     public boolean isHuman() {

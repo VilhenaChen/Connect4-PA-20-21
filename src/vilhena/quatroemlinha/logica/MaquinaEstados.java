@@ -5,7 +5,6 @@ import vilhena.quatroemlinha.logica.estados.Espera_Jogada;
 import vilhena.quatroemlinha.logica.estados.IEstado;
 import vilhena.quatroemlinha.logica.estados.Inicio;
 import vilhena.quatroemlinha.utils.Util;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -194,7 +193,6 @@ public class MaquinaEstados implements Util, Serializable {
         try {
             file = new FileInputStream("historico.dat");
         }catch (FileNotFoundException e) {
-            e.printStackTrace();
             return;
         }
         if(file != null) {
@@ -256,6 +254,7 @@ public class MaquinaEstados implements Util, Serializable {
         atual = new Espera_Jogada(data);
     }
 
+    //-------------------------------- LOGS --------------------------------
     public void addLog(String texto) {
         log.add(texto);
     }
@@ -264,4 +263,21 @@ public class MaquinaEstados implements Util, Serializable {
         return log.toString();
     }
 
+    //-------------------------------- FUNCOES DA MAQUINA DO TEMPO --------------------------------
+    public boolean usarCreditos(int creditos) {
+        Dados dataTemp;
+        if(data.getTurnosCreditos() < creditos) {
+            return false;
+        }
+        try {
+            dataTemp = (Dados) temporario.get(temporario.size() - 1 - creditos).clone();
+        }catch (IndexOutOfBoundsException e) {
+            return false;
+        }
+        dataTemp.tiraCreditos(creditos);
+        data = dataTemp;
+        data.resetTurnosCreditos();
+        atual = new Espera_Jogada(data);
+        return true;
+    }
 }
