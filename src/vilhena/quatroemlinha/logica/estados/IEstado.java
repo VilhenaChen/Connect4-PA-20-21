@@ -15,7 +15,9 @@ public interface IEstado {
 
     IEstado jogaMiniJogo();
 
-    IEstado fimMiniJogo(int jogo);
+    IEstado naoJogaMiniJogo();
+
+    IEstado fimMiniJogo();
 
     IEstado jogaOutraVez(Dados data);
 

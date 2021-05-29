@@ -133,12 +133,10 @@ public class UITexto implements Util {
                 op = sc.nextInt();
                 switch (op) {
                     case 1:
-                        maquinaEstados.addLog("Joga Minijogo");
                         maquinaEstados.jogaMiniJogo();
                         return;
                     case 2:
-                        maquinaEstados.addLog("Nao Joga Minijogo");
-                        maquinaEstados.setBonusJogAtual(1);
+                        maquinaEstados.naoJogaMiniJogo();
                         break;
                     default:
                         System.out.println("Insira uma opcao valida!!!!");
@@ -295,25 +293,8 @@ public class UITexto implements Util {
     }
 
     private void uiMiniJogo() {
-        int jogo = 0;
-        switch(maquinaEstados.getMinijogoJogado()) {
-            case 0:
-                jogo = (int)(Math.random() *2) +1;
-                maquinaEstados.setMinijogoJogado(jogo);
-                break;
-            case 1:
-                jogo = 2;
-                maquinaEstados.setMinijogoJogado(0);
-                break;
-            case 2:
-                jogo = 1;
-                maquinaEstados.setMinijogoJogado(0);
-                break;
-            default:
-                break;
-        }
         System.out.println("-----------------------------------------");
-        maquinaEstados.fimMinijogo(jogo);
+        maquinaEstados.fimMinijogo();
     }
 
     private void uiEscolheHistorico() {

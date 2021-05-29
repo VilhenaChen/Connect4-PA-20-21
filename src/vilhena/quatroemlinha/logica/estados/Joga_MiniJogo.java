@@ -11,17 +11,34 @@ public class Joga_MiniJogo extends EstadoAdapter{
     }
 
     @Override
-    public IEstado fimMiniJogo(int jogo) {
+    public IEstado fimMiniJogo() {
         int joga = data.getJoga();
+        int miniJogo = data.getMinijogoJogado();
+        switch (miniJogo) {
+            case 0:
+                miniJogo = (int) ((Math.random() * 2)+ 1);
+                data.setMinijogoJogado(miniJogo);
+                break;
+            case 1:
+                miniJogo = 2;
+                data.setMinijogoJogado(0);
+                break;
+            case 2:
+                miniJogo = 1;
+                data.setMinijogoJogado(0);
+                break;
+            default:
+                break;
+        }
         data.setBonusJogador(1);
-        if(jogo == 1) {
-            if(data.jogoNumeros() == true) {
+        if(miniJogo == 1) {
+            if(data.jogoNumeros()) {
                 data.adicionaPecaEspecial();
             }
             else {
                 if(joga == J1) {
                     data.setJogou(joga,true);
-                    if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                    if(data.getJogou(J1) && data.getJogou(J2)) {
                         data.setJogou(J1, false);
                         data.setJogou(J2, false);
                         data.setTurno(data.getTurno() + 1);
@@ -30,7 +47,7 @@ public class Joga_MiniJogo extends EstadoAdapter{
                 }
                 else {
                     data.setJogou(joga,true);
-                    if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                    if(data.getJogou(J1) && data.getJogou(J2)) {
                         data.setJogou(J1, false);
                         data.setJogou(J2, false);
                         data.setTurno(data.getTurno() + 1);
@@ -40,13 +57,13 @@ public class Joga_MiniJogo extends EstadoAdapter{
             }
         }
         else {
-            if (data.jogoPalavras() == true) {
+            if (data.jogoPalavras()) {
                 data.adicionaPecaEspecial();
             }
             else {
                 if(joga == J1) {
                     data.setJogou(joga,true);
-                    if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                    if(data.getJogou(J1) && data.getJogou(J2)) {
                         data.setJogou(J1, false);
                         data.setJogou(J2, false);
                         data.setTurno(data.getTurno() + 1);
@@ -55,7 +72,7 @@ public class Joga_MiniJogo extends EstadoAdapter{
                 }
                 else {
                     data.setJogou(joga,true);
-                    if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+                    if(data.getJogou(J1) && data.getJogou(J2)) {
                         data.setJogou(J1, false);
                         data.setJogou(J2, false);
                         data.setTurno(data.getTurno() + 1);

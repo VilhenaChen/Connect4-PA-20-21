@@ -46,9 +46,17 @@ public class MaquinaEstados implements Util, Serializable {
         atual = atual.pecaJogada(col);
     }
 
-    public void jogaMiniJogo() { atual = atual.jogaMiniJogo();}
+    public void jogaMiniJogo() {
+        addLog("Jogou Minijogo");
+        atual = atual.jogaMiniJogo();
+    }
 
-    public void fimMinijogo(int jogo) { atual = atual.fimMiniJogo(jogo);}
+    public void naoJogaMiniJogo() {
+        addLog("Nao Joga Minijogo");
+        atual = atual.naoJogaMiniJogo();
+    }
+
+    public void fimMinijogo() { atual = atual.fimMiniJogo();}
 
     public void verHistorico() {
         addLog(Situacao.Ver_Historico.toString());
@@ -107,14 +115,6 @@ public class MaquinaEstados implements Util, Serializable {
     public boolean veSeGanhou() {
         return data.veSeGanhou();
     }
-
-    public void setBonusJogAtual(int bonus) {
-        data.setBonusJogador(bonus);
-    }
-
-    public int getMinijogoJogado() { return data.getMinijogoJogado();}
-
-    public void setMinijogoJogado(int valor) { data.setMinijogoJogado(valor);}
 
     //-------------------------------- FUNCOES DO HISTORICO --------------------------------
 
