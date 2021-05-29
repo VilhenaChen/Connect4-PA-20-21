@@ -136,6 +136,8 @@ public class Dados implements Util, Cloneable, Serializable {
         jogadores.get(joga).setPecaEspecial(getPecaEspecial() + 1);
     }
 
+    public void tiraPecaEspecial() {jogadores.get(joga).setPecaEspecial(getPecaEspecial() - 1);}
+
     public int getCreditos() {
         return jogadores.get(joga).getCreditos();
     }

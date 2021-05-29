@@ -12,10 +12,11 @@ public class Espera_Peca_Especial extends EstadoAdapter{
     @Override
     public IEstado pecaJogada(int col) {
         int jogadorAtual = data.getJoga();
+        data.tiraPecaEspecial();
         if(jogadorAtual == J1) {
             data.limpaColuna(col);
             data.setJogou(jogadorAtual, true);
-            if(data.getJogou(J1) == true && data.getJogou(J2) == true) {
+            if(data.getJogou(J1) && data.getJogou(J2)) {
                 data.adicionaTurnoCreditos();
                 data.setBonusTodos(data.getBonus() + 1);
                 data.setJogou(J1, false);
