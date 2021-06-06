@@ -158,6 +158,136 @@ public class Dados implements Util, Cloneable, Serializable {
 
     public void setMinijogoJogado(int valor) {  jogadores.get(joga).setMinijogo(valor); }
 
+    public boolean isVencedor() {
+        char cor = getCharCorJogadorAtual();
+
+        //Verifica Coluna
+        for (int i = 0; i < LARGURA; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board.get(i).get(5 - j) == cor &&
+                        board.get(i).get(5 - (j + 1)) == cor &&
+                        board.get(i).get(5 - (j + 2)) == cor &&
+                        board.get(i).get(5 - (j + 3)) == cor)
+                    return true;
+            }
+        }
+
+        //Verifica Linha
+        for (int j = 0; j < ALTURA; j++) {
+            for (int i = 0; i < 3; i++) {
+                if (board.get(i).get(5 - j) == cor &&
+                        board.get(i+1).get(5 - j) == cor &&
+                        board.get(i+2).get(5 - j) == cor &&
+                        board.get(i+3).get(5 - j) == cor)
+                    return true;
+            }
+        }
+
+        //Verifica Diagonais
+        for(int i = LARGURA-1; i >= 3; i--){ //Diagonal Asc
+            for(int j = 0; j < ALTURA-3; j++){
+                if(board.get(i).get(j) == cor &&
+                        board.get(i-1).get(j+1) == cor &&
+                        board.get(i-2).get(j+2) == cor &&
+                        board.get(i-3).get(j+3) == cor){
+                    return true;
+                }
+            }
+        }
+
+        for(int i = 0; i < LARGURA-3; i++){ //Diagonal Dsc
+            for(int j = 0; j < ALTURA-3; j++){
+                if(board.get(i).get(j) == cor &&
+                        board.get(i+1).get(j+1) == cor &&
+                        board.get(i+2).get(j+2) == cor &&
+                        board.get(i+3).get(j+3) == cor){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isBoardFull() { //Verificar se o tabuleiro ta cheio
+        for(int i = 0; i < ALTURA; i++) {
+            for(int j = 0; j < LARGURA; j++) {
+                if(lePosArray(j,i) == ' ')
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<Jogador> getJogadores() {
+        return jogadores;
+    }
+
+    public void setJogadores(ArrayList<Jogador> jogs) {
+        jogadores = jogs;
+    }
+
+    public ArrayList<ArrayList<Character>> getTabbuleiro() {
+        return board;
+    }
+
+    public void setTabuleiro(ArrayList<ArrayList<Character>> tab) {
+        board = tab;
+    }
+
+
+
+    //-------------------------------- FUNCOES DOS MINIJOGOS --------------------------------------
+    public boolean jogoPalavras() {
+        //Ler o Ficheiro
+        int count = 0;
+        String line;
+        String[] palavras = new String[100];
+        String[] escolhidas = new String[5];
+        String[] lidas;
+        StringBuilder escolhi = new StringBuilder();
+        double start;
+        double tempo;
+        double end;
+        try {
+            File ficheiro = new File("palavras.txt");
+            Scanner sc = new Scanner(ficheiro);
+            while(sc.hasNextLine()) {
+                palavras[count] = sc.nextLine();
+                count++;
+            }
+        }catch (FileNotFoundException e) {
+            System.out.println("Problema a abrir o ficheiro");
+            return false;
+        }
+        for(int i = 0; i < 5; i++) {
+            escolhidas[i] = palavras[(int) (Math.random() * 100)];
+            escolhi.append(escolhidas[i]);
+            if(i != 4)
+                escolhi.append(" ");
+        }
+
+        //comecar o jogo
+        start = System.currentTimeMillis() / 1000;
+        end = (escolhi.length() / 2);
+        System.out.println(escolhi);
+        Scanner sc = new Scanner(System.in);
+        line = sc.nextLine();
+        lidas = line.split(" ");
+        for(int i = 0; i < 5; i++) {
+            if(!lidas[i].equals(escolhidas[i]))
+                return false;
+        }
+        tempo = ((System.currentTimeMillis() / 1000)- start);
+        System.out.println("Demorou: " + ((System.currentTimeMillis() / 1000)- start));
+        if(tempo < end) {
+            System.out.println("Ganhou uma Peca Especial");
+            return true;
+        }
+        System.out.println("Perdeu!!");
+        return false;
+    }
+
     public boolean jogoNumeros() {
         double start = System.currentTimeMillis() / 1000;
         double tempo;
@@ -224,118 +354,6 @@ public class Dados implements Util, Cloneable, Serializable {
                 return true;
             }
         } while(tempo <= 30);
-        System.out.println("Perdeu!!");
-        return false;
-    }
-
-    public boolean isVencedor() {
-        char cor = getCharCorJogadorAtual();
-
-        //Verifica Coluna
-        for (int i = 0; i < LARGURA; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board.get(i).get(5 - j) == cor &&
-                        board.get(i).get(5 - (j + 1)) == cor &&
-                        board.get(i).get(5 - (j + 2)) == cor &&
-                        board.get(i).get(5 - (j + 3)) == cor)
-                    return true;
-            }
-        }
-
-        //Verifica Linha
-        for (int j = 0; j < ALTURA; j++) {
-            for (int i = 0; i < 3; i++) {
-                if (board.get(i).get(5 - j) == cor &&
-                        board.get(i+1).get(5 - j) == cor &&
-                        board.get(i+2).get(5 - j) == cor &&
-                        board.get(i+3).get(5 - j) == cor)
-                    return true;
-            }
-        }
-
-        //Verifica Diagonais
-        for(int i = LARGURA-1; i >= 3; i--){ //Diagonal Asc
-            for(int j = 0; j < ALTURA-3; j++){
-                if(board.get(i).get(j) == cor &&
-                        board.get(i-1).get(j+1) == cor &&
-                        board.get(i-2).get(j+2) == cor &&
-                        board.get(i-3).get(j+3) == cor){
-                    return true;
-                }
-            }
-        }
-
-        for(int i = 0; i < LARGURA-3; i++){ //Diagonal Dsc
-            for(int j = 0; j < ALTURA-3; j++){
-                if(board.get(i).get(j) == cor &&
-                        board.get(i+1).get(j+1) == cor &&
-                        board.get(i+2).get(j+2) == cor &&
-                        board.get(i+3).get(j+3) == cor){
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public boolean isBoardFull() { //Verificar se o tabuleiro ta cheio
-        for(int i = 0; i < ALTURA; i++) {
-            for(int j = 0; j < LARGURA; j++) {
-                if(lePosArray(j,i) == ' ')
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    //-------------------------------- FUNCOES DOS MINIJOGOS --------------------------------------
-    public boolean jogoPalavras() {
-        //Ler o Ficheiro
-        int count = 0;
-        String line;
-        String[] palavras = new String[100];
-        String[] escolhidas = new String[5];
-        String[] lidas;
-        StringBuilder escolhi = new StringBuilder();
-        double start;
-        double tempo;
-        double end;
-        try {
-            File ficheiro = new File("palavras.txt");
-            Scanner sc = new Scanner(ficheiro);
-            while(sc.hasNextLine()) {
-                palavras[count] = sc.nextLine();
-                count++;
-            }
-        }catch (FileNotFoundException e) {
-            System.out.println("Problema a abrir o ficheiro");
-            return false;
-        }
-        for(int i = 0; i < 5; i++) {
-            escolhidas[i] = palavras[(int) (Math.random() * 100)];
-            escolhi.append(escolhidas[i]);
-            if(i != 4)
-                escolhi.append(" ");
-        }
-
-        //comecar o jogo
-        start = System.currentTimeMillis() / 1000;
-        end = (escolhi.length() / 2);
-        System.out.println(escolhi);
-        Scanner sc = new Scanner(System.in);
-        line = sc.nextLine();
-        lidas = line.split(" ");
-        for(int i = 0; i < 5; i++) {
-            if(!lidas[i].equals(escolhidas[i]))
-                return false;
-        }
-        tempo = ((System.currentTimeMillis() / 1000)- start);
-        System.out.println("Demorou: " + ((System.currentTimeMillis() / 1000)- start));
-        if(tempo < end) {
-            System.out.println("Ganhou uma Peca Especial");
-            return true;
-        }
         System.out.println("Perdeu!!");
         return false;
     }

@@ -13,8 +13,6 @@ public class MaquinaEstados implements Util, Serializable {
     Dados data; //Dados do jogo
     ArrayList<ArrayList<Dados>> historico; //Array para o Historico
     ArrayList<Dados> temporario; //Array temporario do Historico
-    int jogoHistorico; //Variavel util para saber que jogo do historico estamos a ver
-    int turnoHistorico; //Variavel util para saber que turno do historico estamos a ver
     ArrayList<String> log; //Logs
 
     public MaquinaEstados() {
@@ -58,10 +56,13 @@ public class MaquinaEstados implements Util, Serializable {
 
     public void fimMinijogo() { atual = atual.fimMiniJogo();}
 
-    public void verHistorico() {
+    public void verHistorico(int jogo) {
         addLog(Situacao.Ver_Historico.toString());
-        atual = atual.verHistorico(); }
+        atual = atual.verHistorico(jogo); }
 
+    public void continuaHistorico(int num) {
+        atual = atual.continuaHistorico(historico,num);
+    }
     public void sairHistorico() {
         addLog(Situacao.Inicio.toString());
         data = new Dados();
@@ -135,30 +136,6 @@ public class MaquinaEstados implements Util, Serializable {
             hist.append("Jogo " + (i + 1) + " " + getJogoHistorico(i) + "\n");
         }
         return hist.toString();
-    }
-
-    public void iniciaHistorico(int jogo) { //Comeca a mostrar o historico
-        jogoHistorico = jogo;
-        turnoHistorico = 0;
-        data = historico.get(jogoHistorico).get(0);
-        replayHistorico(0);
-    }
-
-    public String replayHistorico(int num) { //Andar com o Historico
-        StringBuilder sb = new StringBuilder();
-        if(num == AVANCAR) {
-            turnoHistorico++;
-        }
-        else if(num == RECUAR && turnoHistorico != -1) {
-            turnoHistorico--;
-        }
-        try {
-            data = historico.get(jogoHistorico).get(turnoHistorico);
-            sb.append("Turno " + data.getTurno() + "\n");
-        }catch (IndexOutOfBoundsException e) {
-            throw e;
-        }
-        return sb.toString();
     }
 
     public void GuardaEstado() {

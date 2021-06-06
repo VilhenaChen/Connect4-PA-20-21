@@ -3,6 +3,8 @@ package vilhena.quatroemlinha.logica.estados;
 import vilhena.quatroemlinha.logica.dados.Dados;
 import vilhena.quatroemlinha.utils.Util;
 
+import java.util.ArrayList;
+
 public abstract class EstadoAdapter implements IEstado, Util {
 
     Dados data;
@@ -47,7 +49,12 @@ public abstract class EstadoAdapter implements IEstado, Util {
     }
 
     @Override
-    public IEstado verHistorico() {
+    public IEstado verHistorico(int jogo) {
+        return this;
+    }
+
+    @Override
+    public IEstado continuaHistorico(ArrayList<ArrayList<Dados>> historico, int num) {
         return this;
     }
 

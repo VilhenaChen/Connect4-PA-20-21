@@ -35,7 +35,7 @@ public class UITexto implements Util {
                     uiMiniJogo();
                     break;
                 case Ver_Historico:
-                    uiEscolheHistorico();
+                    uiHistorico();
                     break;
                 case GameOver:
                     maquinaEstados.guardaHistorico();
@@ -93,7 +93,7 @@ public class UITexto implements Util {
                 maquinaEstados.comeca(nome1,nome2,CPU_CPU);
                 break;
             case 4:
-                maquinaEstados.verHistorico();
+                uiEscolheHistorico();
                 break;
             case 5:
                 System.out.println("Insira o nome do Ficheiro: ");
@@ -118,7 +118,7 @@ public class UITexto implements Util {
         if(!maquinaEstados.isHuman()) {
             desenhaTabuleiro();
             System.out.println("Turno: " + maquinaEstados.getTurno());
-            System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " " + maquinaEstados.getCorJogador());
+            System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " cor: " + maquinaEstados.getCorJogador());
             maquinaEstados.jogaPecaNormal();
         }
         else {
@@ -321,8 +321,9 @@ public class UITexto implements Util {
                 flag = true;
             }
         }while(!flag);
-        maquinaEstados.iniciaHistorico(op - 1);
-        uiHistorico();
+        //maquinaEstados.iniciaHistorico(op - 1);
+        maquinaEstados.verHistorico(op - 1);
+        //uiHistorico();
     }
 
     private void uiHistorico() {
@@ -332,7 +333,6 @@ public class UITexto implements Util {
         do {
             int op;
             sc = new Scanner(System.in);
-            System.out.println("-----------------------------------------");
             System.out.println("1 -> Avancar");
             System.out.println("2 -> Recuar");
             System.out.println("0 -> Sair");
@@ -343,7 +343,9 @@ public class UITexto implements Util {
             switch (op) {
                 case 1:
                     try {
-                        System.out.println(maquinaEstados.replayHistorico(AVANCAR));
+                        //System.out.println(maquinaEstados.replayHistorico(AVANCAR));
+                        maquinaEstados.continuaHistorico(AVANCAR);
+                        System.out.println("Turno: " + maquinaEstados.getTurno() + " " + maquinaEstados.getNomeJogadorAtual());
                         desenhaTabuleiro();
                     }catch(IndexOutOfBoundsException e) {
                         System.out.println("Fim do Historico");
@@ -352,7 +354,9 @@ public class UITexto implements Util {
                     break;
                 case 2:
                     try {
-                        System.out.println(maquinaEstados.replayHistorico(RECUAR));
+                        //System.out.println(maquinaEstados.replayHistorico(RECUAR));
+                        maquinaEstados.continuaHistorico(RECUAR);
+                        System.out.println("Turno: " + maquinaEstados.getTurno() + " " + maquinaEstados.getNomeJogadorAtual());
                         desenhaTabuleiro();
                     }catch (IndexOutOfBoundsException e) {
                         System.out.println("Nao existem jogadas anteriores a esta");

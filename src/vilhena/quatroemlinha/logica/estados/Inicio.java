@@ -17,8 +17,8 @@ public class Inicio extends EstadoAdapter {
     }
 
     @Override
-    public IEstado verHistorico() {
-        return new Ver_Historico(data);
+    public IEstado verHistorico(int jogo) {
+        return new Ver_Historico(data, jogo);
     }
 
     @Override
