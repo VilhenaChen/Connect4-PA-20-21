@@ -34,6 +34,12 @@ public class UITexto implements Util {
                 case Joga_MiniJogo:
                     uiMiniJogo();
                     break;
+                case Minijogo_Contas:
+                    uiMiniJogoContas();
+                    break;
+                case Minijogo_Palavras:
+                    uiMiniJogoPalavras();
+                    break;
                 case Ver_Historico:
                     uiHistorico();
                     break;
@@ -294,7 +300,48 @@ public class UITexto implements Util {
 
     private void uiMiniJogo() {
         System.out.println("-----------------------------------------");
-        maquinaEstados.fimMinijogo();
+        maquinaEstados.comecaMinijogo();
+        //maquinaEstados.fimMinijogo();
+    }
+
+    private void uiMiniJogoContas() {
+        Scanner sc = new Scanner(System.in);
+        String num;
+        if(maquinaEstados.isWinnerMinijogoContas() == 1) {//ganhou
+            System.out.println("Ganhou o Minijogo e uma peca especial");
+            maquinaEstados.fimMinijogo(true);
+            return;
+        }
+        if(maquinaEstados.isWinnerMinijogoContas() == 2) {//perdeu
+            System.out.println("Perdeu o Minijogo");
+            maquinaEstados.fimMinijogo(false);
+            return;
+        }
+        System.out.println("-----------------------------------------");
+        System.out.println("Conta: " + maquinaEstados.getConta());
+        System.out.println("> ");
+        num = sc.next();
+        maquinaEstados.InputMinijogoContas(num);
+    }
+
+    private void uiMiniJogoPalavras() {
+        Scanner sc = new Scanner(System.in);
+        String num;
+        if(maquinaEstados.isWinnerMinijogoPalavras() == 1) {//ganhou
+            System.out.println("Ganhou o Minijogo e uma peca especial");
+            maquinaEstados.fimMinijogo(true);
+            return;
+        }
+        if(maquinaEstados.isWinnerMinijogoPalavras() == 2) {//perdeu
+            System.out.println("Perdeu o Minijogo");
+            maquinaEstados.fimMinijogo(false);
+            return;
+        }
+        System.out.println("-----------------------------------------");
+        System.out.println(maquinaEstados.getPalavras());
+        System.out.println("> ");
+        num = sc.nextLine();
+        maquinaEstados.InputMinijogoPalavras(num);
     }
 
     private void uiEscolheHistorico() {

@@ -51,10 +51,14 @@ public class MaquinaEstados implements Util, Serializable {
 
     public void naoJogaMiniJogo() {
         addLog("Nao Joga Minijogo");
-        atual = atual.naoJogaMiniJogo();
+        data.setBonusJogador(0);
     }
 
-    public void fimMinijogo() { atual = atual.fimMiniJogo();}
+    public void comecaMinijogo() {
+        atual = atual.comecaMinijogo();
+    }
+
+    public void fimMinijogo(Boolean ganhou) { atual = atual.fimMiniJogo(ganhou);}
 
     public void verHistorico(int jogo) {
         addLog(Situacao.Ver_Historico.toString());
@@ -115,6 +119,31 @@ public class MaquinaEstados implements Util, Serializable {
 
     public boolean veSeGanhou() {
         return data.veSeGanhou();
+    }
+
+    //-------------------------------- FUNCOES DOS MINIJOGOS --------------------------------
+    public String getConta() {
+        return data.getConta();
+    }
+
+    public void InputMinijogoContas(String num) {
+        atual = atual.submeterInput(num);
+    }
+
+    public int isWinnerMinijogoContas() {
+        return data.isWinnerMinijogoContas();
+    }
+
+    public String getPalavras() {
+        return data.getPalavras();
+    }
+
+    public void InputMinijogoPalavras(String num) {
+        atual = atual.submeterInput(num);
+    }
+
+    public int isWinnerMinijogoPalavras() {
+        return data.isWinnerMinijogoPalavras();
     }
 
     //-------------------------------- FUNCOES DO HISTORICO --------------------------------

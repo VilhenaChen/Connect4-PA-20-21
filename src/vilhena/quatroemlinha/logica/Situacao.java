@@ -6,6 +6,8 @@ public enum Situacao {
     Espera_Peca_Normal,
     Espera_Peca_Especial,
     Joga_MiniJogo,
+    Minijogo_Contas,
+    Minijogo_Palavras,
     Ver_Historico,
     GameOver
 }

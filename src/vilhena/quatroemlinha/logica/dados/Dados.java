@@ -1,5 +1,8 @@
 package vilhena.quatroemlinha.logica.dados;
 
+import vilhena.quatroemlinha.logica.dados.minijogos.MiniJogos;
+import vilhena.quatroemlinha.logica.dados.minijogos.Minijogo_Contas;
+import vilhena.quatroemlinha.logica.dados.minijogos.Minijogo_Palavras;
 import vilhena.quatroemlinha.utils.Util;
 
 import java.io.File;
@@ -18,6 +21,7 @@ public class Dados implements Util, Cloneable, Serializable {
     int joga; //Variavel para saber que jogador esta a jogar 0 - Jogador1 / 1 - Jogador2
     ArrayList<ArrayList<Character>> board; //tabuleiro de jogo [Largura][Altura]
     int turnosCreditos; //Variavel de controlo para saber quando e possivel voltar atras
+    ArrayList<MiniJogos> minijogos; //Array que contem os minijogos 0-> MiniJogo Contas 1-> MiniJogo Palavras
 
     public Dados() {
         this.jogadores = new ArrayList<>();
@@ -30,6 +34,9 @@ public class Dados implements Util, Cloneable, Serializable {
             }
         }
         this.turnosCreditos = 0;
+        minijogos = new ArrayList<>();
+        minijogos.add(new Minijogo_Contas());
+        minijogos.add(new Minijogo_Palavras());
     }
 
     public void criaJogadores(String nome1, String nome2,int GameMode) {
@@ -238,125 +245,42 @@ public class Dados implements Util, Cloneable, Serializable {
 
 
     //-------------------------------- FUNCOES DOS MINIJOGOS --------------------------------------
-    public boolean jogoPalavras() {
-        //Ler o Ficheiro
-        int count = 0;
-        String line;
-        String[] palavras = new String[100];
-        String[] escolhidas = new String[5];
-        String[] lidas;
-        StringBuilder escolhi = new StringBuilder();
-        double start;
-        double tempo;
-        double end;
-        try {
-            File ficheiro = new File("palavras.txt");
-            Scanner sc = new Scanner(ficheiro);
-            while(sc.hasNextLine()) {
-                palavras[count] = sc.nextLine();
-                count++;
-            }
-        }catch (FileNotFoundException e) {
-            System.out.println("Problema a abrir o ficheiro");
-            return false;
-        }
-        for(int i = 0; i < 5; i++) {
-            escolhidas[i] = palavras[(int) (Math.random() * 100)];
-            escolhi.append(escolhidas[i]);
-            if(i != 4)
-                escolhi.append(" ");
-        }
 
-        //comecar o jogo
-        start = System.currentTimeMillis() / 1000;
-        end = (escolhi.length() / 2);
-        System.out.println(escolhi);
-        Scanner sc = new Scanner(System.in);
-        line = sc.nextLine();
-        lidas = line.split(" ");
-        for(int i = 0; i < 5; i++) {
-            if(!lidas[i].equals(escolhidas[i]))
-                return false;
-        }
-        tempo = ((System.currentTimeMillis() / 1000)- start);
-        System.out.println("Demorou: " + ((System.currentTimeMillis() / 1000)- start));
-        if(tempo < end) {
-            System.out.println("Ganhou uma Peca Especial");
-            return true;
-        }
-        System.out.println("Perdeu!!");
-        return false;
+    //MiniJogo Contas
+    public void comecaContadorContas() {
+        minijogos.get(0).comecaTempo();
     }
 
-    public boolean jogoNumeros() {
-        double start = System.currentTimeMillis() / 1000;
-        double tempo;
-        int num1;
-        int num2;
-        double resultado;
-        double user;
-        int corretas = 0;
-        Scanner sc;
-        do {
-            num1 = (int) (Math.random() * 10) + 1;
-            num2 = (int) (Math.random() * 10) + 1;
-            int operador = (int) (Math.random() * 4);
-            switch (operador) {
-                case 0:
-                    resultado = num1 + num2;
-                    System.out.println(num1 + "+" + num2);
-                    System.out.println("resutado: ");
-                    sc = new Scanner(System.in);
-                    user = sc.nextDouble();
-                    if(resultado == user){
-                        System.out.println("Acertei");
-                        corretas++;
-                    }
-                    break;
-                case 1:
-                    resultado = num1 - num2;
-                    System.out.println(num1 + "-" + num2);
-                    System.out.println("resutado: ");
-                    sc = new Scanner(System.in);
-                    user = sc.nextDouble();
-                    if(resultado == user){
-                        System.out.println("Acertei");
-                        corretas++;
-                    }
-                    break;
-                case 2:
-                    resultado = num1 * num2;
-                    System.out.println(num1 + "*" + num2);
-                    System.out.println("resutado: ");
-                    sc = new Scanner(System.in);
-                    user = sc.nextDouble();
-                    if(resultado == user){
-                        System.out.println("Acertei");
-                        corretas++;
-                    }
-                    break;
-                case 3:
-                    resultado = (double)(num1 / num2);
-                    System.out.println(num1 + "/" + num2);
-                    System.out.println("resutado: ");
-                    sc = new Scanner(System.in);
-                    user = sc.nextDouble();
-                    if(resultado == user){
-                        corretas++;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            tempo = ((System.currentTimeMillis() / 1000)- start);
-            if(corretas == 5 && tempo <= 30) {
-                System.out.println("Ganhou uma Peca Especial");
-                return true;
-            }
-        } while(tempo <= 30);
-        System.out.println("Perdeu!!");
-        return false;
+    public String getConta() {
+        return minijogos.get(0).getPergunta();
     }
+
+    public void setUserInputContas(String num) {
+        minijogos.get(0).inputUser(num);
+    }
+
+    public int isWinnerMinijogoContas() {
+        return minijogos.get(0).isWinner();
+    }
+
+    //Minijogo Palavras
+    public void comecaContadorPalavras() {
+        minijogos.get(1).comecaTempo();
+    }
+
+    public String getPalavras() {
+        return minijogos.get(1).getPergunta();
+    }
+
+    public void setUserInputPalavras(String num) {
+        minijogos.get(1).inputUser(num);
+    }
+
+    public int isWinnerMinijogoPalavras() {
+        return minijogos.get(1).isWinner();
+    }
+
+
 
     //-------------------------------- FUNCOES DO ARRAY --------------------------------------
 
@@ -419,6 +343,12 @@ public class Dados implements Util, Cloneable, Serializable {
                 }
             }
             clone.board = cloneTabuleiro;
+
+            ArrayList<MiniJogos> cloneMinijogos = new ArrayList<>();
+            for(MiniJogos i: minijogos) {
+                cloneMinijogos.add((MiniJogos) i.clone());
+            }
+            clone.minijogos = cloneMinijogos;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

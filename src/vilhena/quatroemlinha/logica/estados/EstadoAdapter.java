@@ -39,12 +39,15 @@ public abstract class EstadoAdapter implements IEstado, Util {
     }
 
     @Override
-    public IEstado naoJogaMiniJogo() {
+    public IEstado comecaMinijogo() {
         return this;
     }
 
     @Override
-    public IEstado fimMiniJogo() {
+    public IEstado submeterInput(String resposta) { return this;}
+
+    @Override
+    public IEstado fimMiniJogo(Boolean ganhou) {
         return this;
     }
 
