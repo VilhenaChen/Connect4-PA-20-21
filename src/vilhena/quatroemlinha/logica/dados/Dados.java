@@ -4,13 +4,9 @@ import vilhena.quatroemlinha.logica.dados.minijogos.MiniJogos;
 import vilhena.quatroemlinha.logica.dados.minijogos.Minijogo_Contas;
 import vilhena.quatroemlinha.logica.dados.minijogos.Minijogo_Palavras;
 import vilhena.quatroemlinha.utils.Util;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Dados implements Util, Cloneable, Serializable {
     @Serial
