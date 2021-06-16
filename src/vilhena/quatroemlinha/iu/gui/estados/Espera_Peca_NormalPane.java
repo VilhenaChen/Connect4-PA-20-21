@@ -55,10 +55,14 @@ public class Espera_Peca_NormalPane extends VBox {
 
         getChildren().addAll(vbox);
         btnSubmeter.setOnAction((e)-> {
-            if(!observavel.getTipoJogador())
+            if(!observavel.getTipoJogador()) {
+                observavel.guardaEstado();
                 observavel.pecaJogada(col);
-            else
-                observavel.pecaJogada(((int)comboBox.getValue()) - 1);
+            }
+            else {
+                observavel.guardaEstado();
+                observavel.pecaJogada(((int) comboBox.getValue()) - 1);
+            }
         });
     }
 
@@ -71,6 +75,12 @@ public class Espera_Peca_NormalPane extends VBox {
                 number.setText(String.valueOf(col + 1)) ;
                 comboBox.setVisible(false);
                 btnSubmeter.setText("Avancar");
+            }
+            else {
+                info.setText("Indique a coluna");
+                comboBox.setVisible(true);
+                number.setText("");
+                btnSubmeter.setText("Submeter");
             }
         }
     }

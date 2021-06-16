@@ -117,6 +117,11 @@ public class Espera_JogadaPane extends VBox {
                 btnpecaEspecial.setVisible(false);
                 btnCreditos.setVisible(false);
             }
+            else {
+                btnpecaNormal.setText("Jogar Peca Normal");
+                btnpecaEspecial.setVisible(true);
+                btnCreditos.setVisible(true);
+            }
         }
     }
 

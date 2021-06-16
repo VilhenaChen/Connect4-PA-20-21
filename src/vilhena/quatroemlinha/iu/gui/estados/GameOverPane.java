@@ -49,7 +49,8 @@ public class GameOverPane extends VBox {
     private void atualiza() {
         this.setVisible(observavel.getSituacao() == GameOver);
         if(observavel.getSituacao() == GameOver) {
-
+            observavel.guardaHistorico();
+            observavel.guardaHistoricoFicheiro();
         }
     }
 }

@@ -368,9 +368,7 @@ public class UITexto implements Util {
                 flag = true;
             }
         }while(!flag);
-        //maquinaEstados.iniciaHistorico(op - 1);
         maquinaEstados.verHistorico(op - 1);
-        //uiHistorico();
     }
 
     private void uiHistorico() {
@@ -390,7 +388,6 @@ public class UITexto implements Util {
             switch (op) {
                 case 1:
                     try {
-                        //System.out.println(maquinaEstados.replayHistorico(AVANCAR));
                         maquinaEstados.continuaHistorico(AVANCAR);
                         System.out.println("Turno: " + maquinaEstados.getTurno() + " " + maquinaEstados.getNomeJogadorAtual());
                         desenhaTabuleiro();
@@ -401,7 +398,6 @@ public class UITexto implements Util {
                     break;
                 case 2:
                     try {
-                        //System.out.println(maquinaEstados.replayHistorico(RECUAR));
                         maquinaEstados.continuaHistorico(RECUAR);
                         System.out.println("Turno: " + maquinaEstados.getTurno() + " " + maquinaEstados.getNomeJogadorAtual());
                         desenhaTabuleiro();

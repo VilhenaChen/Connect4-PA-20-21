@@ -56,6 +56,23 @@ public class JogoObservavel {
         return maquinaEstados.isHuman();
     }
 
+    //HISTORICO
+    public void guardaEstado() {
+        maquinaEstados.GuardaEstado();
+    }
+
+    public void guardaHistorico() {
+        maquinaEstados.guardaHistorico();
+    }
+
+    public void guardaHistoricoFicheiro() {
+        maquinaEstados.guardaHistoricoFicheiro();
+    }
+
+    public void leHistoricoFicheiro() {
+        maquinaEstados.leHistoricoFicheiro();
+    }
+
     //Tansicoes
     public void comeca(String nome1, String nome2,int gameMode) {
         maquinaEstados.comeca(nome1,nome2,gameMode);

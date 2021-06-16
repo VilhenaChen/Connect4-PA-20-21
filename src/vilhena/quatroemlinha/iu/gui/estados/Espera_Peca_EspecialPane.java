@@ -47,7 +47,10 @@ public class Espera_Peca_EspecialPane extends VBox {
         vbox.setPadding(new Insets(200,0,0,0));
 
         getChildren().addAll(vbox);
-        btnSubmeter.setOnAction((e)-> observavel.pecaJogada(((int)comboBox.getValue()) - 1));
+        btnSubmeter.setOnAction((e)-> {
+            observavel.guardaEstado();
+            observavel.pecaJogada(((int)comboBox.getValue()) - 1);
+        });
     }
 
     private void atualiza() {

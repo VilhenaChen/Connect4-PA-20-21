@@ -53,6 +53,14 @@ public class InicioPane extends VBox {
         nomesJogadores.setPadding(new Insets(0,10,100,0));
         nomesJogadores.setSpacing(10);
 
+        VBox buttonsVBox = new VBox();
+        buttonsVBox.setSpacing(10);
+        buttonsVBox.setAlignment(Pos.CENTER);
+
+        HBox BotoesJogo = new HBox();
+        BotoesJogo.setSpacing(10);
+        BotoesJogo.setAlignment(Pos.CENTER);
+
         inicio = new VBox();
         inicio.setAlignment(Pos.CENTER);
 
@@ -62,6 +70,9 @@ public class InicioPane extends VBox {
         segundoJogadorLabel.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,15));
         TextField primeiroJogadorText = new TextField();
         TextField segundoJogadorText = new TextField();
+        primeiroJogadorText.setText("");
+        segundoJogadorText.setText("");
+        segundoJogadorText.setDisable(false);
 
         //Alertas
         Alert alertaAmbosOsNomes = new Alert(Alert.AlertType.ERROR);
@@ -77,27 +88,23 @@ public class InicioPane extends VBox {
         Button HvsHButton = new Button("Humano vs Humano");
         Button HvsCButton = new Button("Humano vs CPU");
         Button CvsCButton = new Button("CPU vs CPU");
+        Button btnHistorico = new Button("Historico");
         Button SairButton = new Button("Sair");
         Button btnComecar = new Button("Comecar");
+        Button btnRegressar = new Button("Regressar");
         btnComecar.setMinSize(30,30);
+        btnRegressar.setMinSize(30,30);
+        buttonsVBox.getChildren().addAll(HvsHButton,HvsCButton,CvsCButton,btnHistorico,SairButton);
+        BotoesJogo.getChildren().addAll(btnComecar,btnRegressar);
 
         titulo.getChildren().add(menuLabel);
         primeiroJogador.getChildren().addAll(primeiroJogadorLabel,primeiroJogadorText);
         segundoJogador.getChildren().addAll(segundoJogadorLabel,segundoJogadorText);
-        nomesJogadores.getChildren().addAll(primeiroJogador,segundoJogador,btnComecar);
+        nomesJogadores.getChildren().addAll(primeiroJogador,segundoJogador,BotoesJogo);
         setAlignment(Pos.CENTER);
-        inicio.getChildren().addAll(titulo,HvsHButton, HvsCButton,CvsCButton,SairButton);
+        inicio.getChildren().addAll(titulo,buttonsVBox);
         getChildren().addAll(inicio, nomesJogadores);
         HvsHButton.setOnAction((e)-> {
-            /*if(primeiroJogadorText.getText().isEmpty() || segundoJogadorText.getText().isEmpty()) {
-                alertaAmbosOsNomes.showAndWait();
-            }
-            else if(primeiroJogadorText.getText().equals(segundoJogadorText.getText())) {
-                alertaNomeIguais.showAndWait();
-            }
-            else {
-                observavel.comeca(primeiroJogadorText.getText(), segundoJogadorText.getText(), HUMANO_HUMANO);
-            }*/
             inicio.setVisible(false);
             nomesJogadores.setVisible(true);
         });
@@ -129,12 +136,20 @@ public class InicioPane extends VBox {
                 }
             }
         });
+        btnRegressar.setOnAction((e)->{
+            inicio.setVisible(true);
+            nomesJogadores.setVisible(false);
+            primeiroJogadorText.setText("");
+            segundoJogadorText.setText("");
+            segundoJogadorText.setDisable(false);
+        });
         SairButton.setOnAction((e)-> Platform.exit());
     }
 
     private void atualiza() {
         this.setVisible(observavel.getSituacao() == Inicio);
         if (observavel.getSituacao() == Inicio) {
+            observavel.leHistoricoFicheiro();
             inicio.setVisible(true);
             nomesJogadores.setVisible(false);
         }
