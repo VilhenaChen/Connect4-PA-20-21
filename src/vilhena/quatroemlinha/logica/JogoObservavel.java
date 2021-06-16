@@ -36,12 +36,16 @@ public class JogoObservavel {
         return Integer.toString(maquinaEstados.getTurno());
     }
 
-    public String getNrCreditos() {
+    public String getNrCreditosString() {
         return Integer.toString(maquinaEstados.getCreditos());
     }
 
-    public String getNrPecasEspeciais() {
+    public String getNrPecasEspeciaisString() {
         return Integer.toString(maquinaEstados.getPecaEspecial());
+    }
+
+    public int getNrPecasEspeciais() {
+        return maquinaEstados.getPecaEspecial();
     }
 
     public String getCorJogadorAtual() {
@@ -60,6 +64,11 @@ public class JogoObservavel {
 
     public void jogaPecaNormal() {
         maquinaEstados.jogaPecaNormal();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void jogaPecaEspecial() {
+        maquinaEstados.jogaPecaEspecial();
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
     }
 

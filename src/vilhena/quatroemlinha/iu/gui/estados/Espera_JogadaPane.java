@@ -48,18 +48,23 @@ public class Espera_JogadaPane extends VBox {
         nomeJogador.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,30));
         nrPecasEspeciais.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,15));
         nrCreditos.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,15));
+
+        //Botoes
         btnpecaNormal = new Button("Jogar Peca Normal");
         btnpecaEspecial = new Button("Jogar Peca Especial");
         btnCreditos = new Button("Usar creditos");
         Button btngravarJogo = new Button("Gravar Jogo");
         Button btnLogs = new Button("Ver Logs");
         Button btnSair = new Button("Sair");
+
+        //Boxes
         HBox turnoHBox = new HBox();
         HBox jogadorHBox = new HBox();
         HBox infoHBox = new HBox();
         VBox infoVBox = new VBox();
         VBox jogadorVBox = new VBox();
         VBox botoesVBox = new VBox();
+
         botoesVBox.setAlignment(Pos.CENTER);
         turnoHBox.setPadding(new Insets(30));
         jogadorVBox.setPadding(new Insets(30));
@@ -76,7 +81,19 @@ public class Espera_JogadaPane extends VBox {
         botoesVBox.getChildren().addAll(btnpecaNormal,btnpecaEspecial,btnCreditos,btngravarJogo,btnLogs,btnSair);
         botoesVBox.setSpacing(5);
         getChildren().addAll(turnoHBox,jogadorVBox,botoesVBox);
+
         btnpecaNormal.setOnAction((e)-> observavel.jogaPecaNormal());
+        btnpecaEspecial.setOnAction((e)->{
+            if(observavel.getNrPecasEspeciais() == 0) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Pecas Especiais");
+                a.setContentText("Nao tem pecas especiais");
+                a.showAndWait();
+            }
+            else {
+                observavel.jogaPecaEspecial();
+            }
+        });
     }
 
     private void atualiza() {
@@ -85,8 +102,8 @@ public class Espera_JogadaPane extends VBox {
         if (observavel.getSituacao() == Espera_Jogada) {
             turno.setText("Turno: " + observavel.getTurno());
             nomeJogador.setText("Jogador: " + observavel.getNomeJogadorAtual());
-            nrCreditos.setText("Creditos: " + observavel.getNrCreditos());
-            nrPecasEspeciais.setText("Pecas Especias: " + observavel.getNrPecasEspeciais());
+            nrCreditos.setText("Creditos: " + observavel.getNrCreditosString());
+            nrPecasEspeciais.setText("Pecas Especias: " + observavel.getNrPecasEspeciaisString());
             if (observavel.getCorJogadorAtual().equals(corJ1)) {
                 peca.setRadius(30);
                 peca.setFill(Color.RED);

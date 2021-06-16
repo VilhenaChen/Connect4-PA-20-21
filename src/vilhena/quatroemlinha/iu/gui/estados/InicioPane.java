@@ -13,14 +13,14 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import vilhena.quatroemlinha.logica.JogoObservavel;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import static vilhena.quatroemlinha.iu.gui.UtilsGui.QUATRO_EM_LINHA;
 import static vilhena.quatroemlinha.logica.Situacao.Inicio;
 import static vilhena.quatroemlinha.utils.Util.*;
 
 public class InicioPane extends VBox {
     private JogoObservavel observavel;
+    VBox inicio;
+    VBox nomesJogadores;
 
     public InicioPane(JogoObservavel observavel) {
         this.observavel = observavel;
@@ -47,13 +47,13 @@ public class InicioPane extends VBox {
         HBox segundoJogador = new HBox();
         //segundoJogador.setPadding(new Insets(0,20,10,0));
 
-        VBox nomesJogadores = new VBox();
+        nomesJogadores = new VBox();
         nomesJogadores.setVisible(false);
         nomesJogadores.setAlignment(Pos.CENTER);
         nomesJogadores.setPadding(new Insets(0,10,100,0));
         nomesJogadores.setSpacing(10);
 
-        VBox inicio = new VBox();
+        inicio = new VBox();
         inicio.setAlignment(Pos.CENTER);
 
         Label primeiroJogadorLabel = new Label("Nome do 1º Jogador: ");
@@ -134,6 +134,10 @@ public class InicioPane extends VBox {
 
     private void atualiza() {
         this.setVisible(observavel.getSituacao() == Inicio);
+        if (observavel.getSituacao() == Inicio) {
+            inicio.setVisible(true);
+            nomesJogadores.setVisible(false);
+        }
     }
 
 }
