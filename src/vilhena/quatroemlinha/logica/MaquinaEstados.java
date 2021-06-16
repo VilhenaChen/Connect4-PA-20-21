@@ -67,6 +67,7 @@ public class MaquinaEstados implements Util, Serializable {
     public void continuaHistorico(int num) {
         atual = atual.continuaHistorico(historico,num);
     }
+
     public void sairHistorico() {
         addLog(Situacao.Inicio.toString());
         data = new Dados();

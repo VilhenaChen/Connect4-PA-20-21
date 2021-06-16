@@ -68,4 +68,9 @@ public class JogoObservavel {
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
     }
 
+    public void jogaOutraVez() {
+        maquinaEstados.jogaOutraVez();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
 }

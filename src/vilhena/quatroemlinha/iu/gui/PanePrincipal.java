@@ -5,10 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import vilhena.quatroemlinha.iu.gui.estados.Espera_JogadaPane;
-import vilhena.quatroemlinha.iu.gui.estados.Espera_Peca_EspecialPane;
-import vilhena.quatroemlinha.iu.gui.estados.Espera_Peca_NormalPane;
-import vilhena.quatroemlinha.iu.gui.estados.InicioPane;
+import vilhena.quatroemlinha.iu.gui.estados.*;
 import vilhena.quatroemlinha.logica.JogoObservavel;
 
 import static vilhena.quatroemlinha.iu.gui.UtilsGui.*;
@@ -53,7 +50,8 @@ public class PanePrincipal extends BorderPane {
         Espera_JogadaPane espera_jogadaPane = new Espera_JogadaPane(observavel);
         Espera_Peca_NormalPane espera_peca_normalPane = new Espera_Peca_NormalPane(observavel);
         Espera_Peca_EspecialPane espera_peca_especialPane = new Espera_Peca_EspecialPane(observavel);
-        StackPane stackPane = new StackPane(inicioPane, espera_jogadaPane,espera_peca_normalPane,espera_peca_especialPane);
+        GameOverPane gameOverPane = new GameOverPane(observavel);
+        StackPane stackPane = new StackPane(inicioPane, espera_jogadaPane,espera_peca_normalPane,espera_peca_especialPane,gameOverPane);
         stackPane.setBackground(new Background(new BackgroundFill(Color.INDIANRED,new CornerRadii(40),null)));
         stackPane.setMinSize(INFO_BOX_X,INFO_BOX_Y);
         stackPane.setBorder(new Border(new BorderStroke(Color.LIGHTSKYBLUE, BorderStrokeStyle.SOLID,new CornerRadii(40),new BorderWidths(5))));
