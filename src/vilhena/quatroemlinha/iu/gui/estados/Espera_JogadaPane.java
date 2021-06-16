@@ -51,11 +51,23 @@ public class Espera_JogadaPane extends VBox {
 
         //Botoes
         btnpecaNormal = new Button("Jogar Peca Normal");
+        btnpecaNormal.setScaleX(1.2);
+        btnpecaNormal.setScaleY(1.2);
         btnpecaEspecial = new Button("Jogar Peca Especial");
+        btnpecaEspecial.setScaleX(1.2);
+        btnpecaEspecial.setScaleY(1.2);
         btnCreditos = new Button("Usar creditos");
+        btnCreditos.setScaleX(1.2);
+        btnCreditos.setScaleY(1.2);
         Button btngravarJogo = new Button("Gravar Jogo");
+        btngravarJogo.setScaleX(1.2);
+        btngravarJogo.setScaleY(1.2);
         Button btnLogs = new Button("Ver Logs");
+        btnLogs.setScaleX(1.2);
+        btnLogs.setScaleY(1.2);
         Button btnSair = new Button("Sair");
+        btnSair.setScaleX(1.2);
+        btnSair.setScaleY(1.2);
 
         //Boxes
         HBox turnoHBox = new HBox();
@@ -79,13 +91,14 @@ public class Espera_JogadaPane extends VBox {
         infoHBox.setPadding(new Insets(10,0,0,20));
         jogadorVBox.getChildren().addAll(jogadorHBox,infoHBox);
         botoesVBox.getChildren().addAll(btnpecaNormal,btnpecaEspecial,btnCreditos,btngravarJogo,btnLogs,btnSair);
-        botoesVBox.setSpacing(5);
+        botoesVBox.setSpacing(15);
         getChildren().addAll(turnoHBox,jogadorVBox,botoesVBox);
 
         btnpecaNormal.setOnAction((e)-> observavel.jogaPecaNormal());
         btnpecaEspecial.setOnAction((e)->{
             if(observavel.getNrPecasEspeciais() == 0) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText(null);
                 a.setTitle("Pecas Especiais");
                 a.setContentText("Nao tem pecas especiais");
                 a.showAndWait();
@@ -100,10 +113,13 @@ public class Espera_JogadaPane extends VBox {
         this.setVisible(observavel.getSituacao() == Espera_Jogada);
         //Por a cor da peca
         if (observavel.getSituacao() == Espera_Jogada) {
+
             turno.setText("Turno: " + observavel.getTurno());
             nomeJogador.setText("Jogador: " + observavel.getNomeJogadorAtual());
             nrCreditos.setText("Creditos: " + observavel.getNrCreditosString());
             nrPecasEspeciais.setText("Pecas Especias: " + observavel.getNrPecasEspeciaisString());
+
+            //Definir a cor da peca a apresentar
             if (observavel.getCorJogadorAtual().equals(corJ1)) {
                 peca.setRadius(30);
                 peca.setFill(Color.RED);
@@ -111,6 +127,7 @@ public class Espera_JogadaPane extends VBox {
                 peca.setRadius(30);
                 peca.setFill(Color.YELLOW);
             }
+
             //Por o Tipo de jogador
             if(!observavel.getTipoJogador()) {
                 btnpecaNormal.setText("Avancar");
@@ -121,6 +138,11 @@ public class Espera_JogadaPane extends VBox {
                 btnpecaNormal.setText("Jogar Peca Normal");
                 btnpecaEspecial.setVisible(true);
                 btnCreditos.setVisible(true);
+            }
+
+            //Ir para o minijogo
+            if(observavel.verificaMinijogo()) {
+                observavel.jogaMiniJogo();
             }
         }
     }

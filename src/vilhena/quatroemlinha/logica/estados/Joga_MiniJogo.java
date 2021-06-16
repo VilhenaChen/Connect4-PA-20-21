@@ -13,6 +13,7 @@ public class Joga_MiniJogo extends EstadoAdapter{
     public IEstado comecaMinijogo() {
         int mini;
         data.setBonusJogador(0);
+        data.setMinijogoJogado(2);
         switch (data.getMinijogoJogado()) {
             case 0 -> {
                 mini = (int) ((Math.random() * 2) + 1);
@@ -39,6 +40,12 @@ public class Joga_MiniJogo extends EstadoAdapter{
             }
         }
         return this;
+    }
+
+    @Override
+    public IEstado naoJogaMiniJogo() {
+        data.setBonusJogador(0);
+        return new Espera_Jogada(data);
     }
 
     @Override

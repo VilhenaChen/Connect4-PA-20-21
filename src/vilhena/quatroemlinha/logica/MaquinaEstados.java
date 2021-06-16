@@ -50,8 +50,8 @@ public class MaquinaEstados implements Util, Serializable {
     }
 
     public void naoJogaMiniJogo() {
-        addLog("Nao Joga Minijogo");
-        data.setBonusJogador(0);
+        addLog("Nao joga Minijogo");
+        atual = atual.naoJogaMiniJogo();
     }
 
     public void comecaMinijogo() {

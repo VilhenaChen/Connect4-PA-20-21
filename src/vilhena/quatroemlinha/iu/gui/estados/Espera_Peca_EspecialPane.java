@@ -34,9 +34,12 @@ public class Espera_Peca_EspecialPane extends VBox {
         info.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,25));
 
         Button btnSubmeter = new Button("Submeter");
-        btnSubmeter.setMinSize(50,50);;
+        btnSubmeter.setScaleX(1.2);
+        btnSubmeter.setScaleY(1.2);
 
         ComboBox comboBox = new ComboBox();
+        comboBox.setScaleX(1.2);
+        comboBox.setScaleY(1.2);
         for(int i = 1; i <= 7; i++)
             comboBox.getItems().add(i);
 

@@ -39,9 +39,15 @@ public class GameOverPane extends VBox {
         buttonsVBox.setAlignment(Pos.CENTER);
 
         Button repetirbtn = new Button("Jogar outra Vez");
+        repetirbtn.setScaleX(1.2);
+        repetirbtn.setScaleY(1.2);
         Button sairbtn = new Button("Sair");
+        sairbtn.setScaleX(1.2);
+        sairbtn.setScaleY(1.2);
+        buttonsVBox.setSpacing(15);
         buttonsVBox.getChildren().addAll(repetirbtn,sairbtn);
         getChildren().addAll(gameoverLabel,buttonsVBox);
+        setAlignment(Pos.CENTER);
         repetirbtn.setOnAction((e)-> observavel.jogaOutraVez());
         sairbtn.setOnAction((e)-> Platform.exit());
     }

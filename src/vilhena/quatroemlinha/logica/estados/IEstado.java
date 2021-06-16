@@ -19,6 +19,8 @@ public interface IEstado {
 
     IEstado comecaMinijogo();
 
+    IEstado naoJogaMiniJogo();
+
     IEstado submeterInput(String resposta);
 
     IEstado fimMiniJogo(Boolean ganhou);

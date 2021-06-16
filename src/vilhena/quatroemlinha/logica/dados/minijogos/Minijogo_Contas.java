@@ -15,7 +15,7 @@ public class Minijogo_Contas extends MiniJogos{
 
     @Override
     public void comecaTempo() {
-        inicio = System.currentTimeMillis();
+        inicio = System.currentTimeMillis() / 1000;
         atual = 0.0;
         fim = 30.0;
     }

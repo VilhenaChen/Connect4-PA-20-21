@@ -126,27 +126,12 @@ public class UITexto implements Util {
             System.out.println("Turno: " + maquinaEstados.getTurno());
             System.out.println("Jogador: " + maquinaEstados.getNomeJogadorAtual() + " cor: " + maquinaEstados.getCorJogador());
             maquinaEstados.jogaPecaNormal();
+            return;
         }
         else {
             if(maquinaEstados.getBonus() == 4) {
-                sc = new Scanner(System.in);
-                System.out.println(maquinaEstados.getNomeJogadorAtual() +" Deseja Jogar um Minijogo para ganhar uma peca especial?");
-                System.out.println("1 -> Sim");
-                System.out.println("2 -> Nao");
-                System.out.print("> ");
-                while (!sc.hasNextInt())
-                    sc.next();
-                op = sc.nextInt();
-                switch (op) {
-                    case 1:
-                        maquinaEstados.jogaMiniJogo();
-                        return;
-                    case 2:
-                        maquinaEstados.naoJogaMiniJogo();
-                        break;
-                    default:
-                        System.out.println("Insira uma opcao valida!!!!");
-                        break;
+                maquinaEstados.jogaMiniJogo();
+                return;
                 }
             }
             op = 0;
@@ -231,7 +216,6 @@ public class UITexto implements Util {
                     System.out.println("Insira uma opcao valida!!!!");
                     break;
             }
-        }
     }
 
     private void uiPecaNormal() {
@@ -299,9 +283,27 @@ public class UITexto implements Util {
     }
 
     private void uiMiniJogo() {
+        int op;
+        sc = new Scanner(System.in);
         System.out.println("-----------------------------------------");
-        maquinaEstados.comecaMinijogo();
-        //maquinaEstados.fimMinijogo();
+        System.out.println(maquinaEstados.getNomeJogadorAtual() +" Deseja Jogar um Minijogo para ganhar uma peca especial?");
+        System.out.println("1 -> Sim");
+        System.out.println("2 -> Nao");
+        System.out.print("> ");
+        while (!sc.hasNextInt())
+            sc.next();
+        op = sc.nextInt();
+        switch (op) {
+            case 1:
+                maquinaEstados.comecaMinijogo();
+                return;
+            case 2:
+                maquinaEstados.naoJogaMiniJogo();
+                break;
+            default:
+                System.out.println("Insira uma opcao valida!!!!");
+                break;
+        }
     }
 
     private void uiMiniJogoContas() {

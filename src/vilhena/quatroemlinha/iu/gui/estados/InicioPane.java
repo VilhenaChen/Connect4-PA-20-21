@@ -76,25 +76,44 @@ public class InicioPane extends VBox {
 
         //Alertas
         Alert alertaAmbosOsNomes = new Alert(Alert.AlertType.ERROR);
+        alertaAmbosOsNomes.setHeaderText(null);
         alertaAmbosOsNomes.setTitle("Erro");
         alertaAmbosOsNomes.setContentText("Por favor insira ambos os nomes");
         Alert alertaUnicoNome = new Alert(Alert.AlertType.ERROR);
+        alertaUnicoNome.setHeaderText(null);
         alertaUnicoNome.setTitle("Erro");
         alertaUnicoNome.setContentText("Por favor insira o nome do primeiro Jogador");
         Alert alertaNomeIguais = new Alert(Alert.AlertType.ERROR);
+        alertaNomeIguais.setHeaderText(null);
         alertaNomeIguais.setTitle("Erro");
         alertaNomeIguais.setContentText("Por favor insira nomes distintos para cada utilizador");
 
         Button HvsHButton = new Button("Humano vs Humano");
+        HvsHButton.setScaleX(1.2);
+        HvsHButton.setScaleY(1.2);
         Button HvsCButton = new Button("Humano vs CPU");
+        HvsCButton.setScaleX(1.2);
+        HvsCButton.setScaleY(1.2);
         Button CvsCButton = new Button("CPU vs CPU");
+        CvsCButton.setScaleX(1.2);
+        CvsCButton.setScaleY(1.2);
         Button btnHistorico = new Button("Historico");
+        btnHistorico.setScaleX(1.2);
+        btnHistorico.setScaleY(1.2);
         Button SairButton = new Button("Sair");
+        SairButton.setScaleX(1.2);
+        SairButton.setScaleY(1.2);
         Button btnComecar = new Button("Comecar");
+        btnComecar.setScaleX(1.2);
+        btnComecar.setScaleY(1.2);
         Button btnRegressar = new Button("Regressar");
+        btnRegressar.setScaleX(1.2);
+        btnRegressar.setScaleY(1.2);
         btnComecar.setMinSize(30,30);
         btnRegressar.setMinSize(30,30);
+        buttonsVBox.setSpacing(15);
         buttonsVBox.getChildren().addAll(HvsHButton,HvsCButton,CvsCButton,btnHistorico,SairButton);
+        BotoesJogo.setSpacing(20);
         BotoesJogo.getChildren().addAll(btnComecar,btnRegressar);
 
         titulo.getChildren().add(menuLabel);

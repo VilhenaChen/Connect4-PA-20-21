@@ -50,8 +50,14 @@ public class PanePrincipal extends BorderPane {
         Espera_JogadaPane espera_jogadaPane = new Espera_JogadaPane(observavel);
         Espera_Peca_NormalPane espera_peca_normalPane = new Espera_Peca_NormalPane(observavel);
         Espera_Peca_EspecialPane espera_peca_especialPane = new Espera_Peca_EspecialPane(observavel);
+        Joga_MinijogoPane joga_minijogoPane = new Joga_MinijogoPane(observavel);
+        Minijogo_ContasPane minijogo_contasPane = new Minijogo_ContasPane(observavel);
+        Minijogo_PalavrasPane minijogo_palavrasPane = new Minijogo_PalavrasPane(observavel);
         GameOverPane gameOverPane = new GameOverPane(observavel);
-        StackPane stackPane = new StackPane(inicioPane, espera_jogadaPane,espera_peca_normalPane,espera_peca_especialPane,gameOverPane);
+        StackPane stackPane = new StackPane(inicioPane, espera_jogadaPane,espera_peca_normalPane,
+                espera_peca_especialPane, joga_minijogoPane,minijogo_contasPane,minijogo_palavrasPane,
+                gameOverPane);
+
         stackPane.setBackground(new Background(new BackgroundFill(Color.INDIANRED,new CornerRadii(40),null)));
         stackPane.setMinSize(INFO_BOX_X,INFO_BOX_Y);
         stackPane.setBorder(new Border(new BorderStroke(Color.LIGHTSKYBLUE, BorderStrokeStyle.SOLID,new CornerRadii(40),new BorderWidths(5))));

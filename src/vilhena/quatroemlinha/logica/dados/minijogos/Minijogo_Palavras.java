@@ -51,7 +51,7 @@ public class Minijogo_Palavras extends MiniJogos {
         escritas_user = new String();
         jogou = false;
         leFicheiro();
-        inicio = System.currentTimeMillis();
+        inicio = System.currentTimeMillis() / 1000;
         atual = 0.0;
         fim = (sb.length() /2);
     }

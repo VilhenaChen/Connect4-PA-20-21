@@ -2,7 +2,6 @@ package vilhena.quatroemlinha.logica;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
 
 import static vilhena.quatroemlinha.iu.gui.UtilsGui.QUATRO_EM_LINHA;
 
@@ -56,6 +55,30 @@ public class JogoObservavel {
         return maquinaEstados.isHuman();
     }
 
+    public String getConta() {
+        return maquinaEstados.getConta();
+    }
+
+    //Minijogos
+    public void InputMinijogoContas(String result) {
+        maquinaEstados.InputMinijogoContas(result);
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public int isWinnerMInijogoContas() {
+        return maquinaEstados.isWinnerMinijogoContas();
+    }
+
+    //utils
+    public boolean verificaMinijogo() {
+        if(maquinaEstados.isHuman()) {
+            if(maquinaEstados.getBonus() == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //HISTORICO
     public void guardaEstado() {
         maquinaEstados.GuardaEstado();
@@ -94,9 +117,30 @@ public class JogoObservavel {
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
     }
 
+    public void jogaMiniJogo() {
+        maquinaEstados.jogaMiniJogo();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void comecaMinijogo() {
+        maquinaEstados.comecaMinijogo();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void naoJogaMinijogo() {
+        maquinaEstados.naoJogaMiniJogo();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void fimMinijogo(boolean ganhou) {
+        maquinaEstados.fimMinijogo(ganhou);
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
     public void jogaOutraVez() {
         maquinaEstados.jogaOutraVez();
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
     }
+
 
 }
