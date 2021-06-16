@@ -13,6 +13,8 @@ public class UtilsGui {
     public static int DIM_Y_FRAME = 720;
     public static int TABULEIRO_BOX_X = 840;
     public static int TABULEIRO_BOX_Y = 700;
+    public static int INFO_BOX_X = 300;
+    public static int INFO_BOX_Y = 700;
 
     public static int GAP_X_TABULEIRO = 20;
     public static int GAP_Y_TABULEIRO = 20;

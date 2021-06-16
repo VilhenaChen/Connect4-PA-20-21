@@ -4,6 +4,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
+import static vilhena.quatroemlinha.iu.gui.UtilsGui.QUATRO_EM_LINHA;
+
 public class JogoObservavel {
     private MaquinaEstados maquinaEstados;
     private final PropertyChangeSupport propertyChangeSupport;
@@ -26,5 +28,26 @@ public class JogoObservavel {
         return maquinaEstados.getSituacaoAtual();
     }
 
+    public String getNomeJogadorAtual() {
+        return maquinaEstados.getNomeJogadorAtual();
+    }
+
+    public String getTurno() {
+        return Integer.toString(maquinaEstados.getTurno());
+    }
+
+    public String getNrCreditos() {
+        return Integer.toString(maquinaEstados.getCreditos());
+    }
+
+    public String getNrPecasEspeciais() {
+        return Integer.toString(maquinaEstados.getPecaEspecial());
+    }
+
+    //Tansicoes
+    public void comeca(String nome1, String nome2,int gameMode) {
+        maquinaEstados.comeca(nome1,nome2,gameMode);
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
 
 }

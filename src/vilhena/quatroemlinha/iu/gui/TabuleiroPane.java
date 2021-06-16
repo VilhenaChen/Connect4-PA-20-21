@@ -34,7 +34,7 @@ public class TabuleiroPane extends GridPane {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         setPrefSize(TABULEIRO_BOX_X,TABULEIRO_BOX_Y);
-        setBorder(new Border(new BorderStroke(Color.DEEPSKYBLUE, BorderStrokeStyle.SOLID,new CornerRadii(40),new BorderWidths(1))));
+        setBorder(new Border(new BorderStroke(Color.LIGHTSKYBLUE, BorderStrokeStyle.SOLID,new CornerRadii(40),new BorderWidths(5))));
 
         setBackground(new Background(new BackgroundFill(Color.GOLDENROD,new CornerRadii(40),null)));
 
