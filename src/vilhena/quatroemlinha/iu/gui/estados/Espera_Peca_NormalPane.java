@@ -1,7 +1,9 @@
 package vilhena.quatroemlinha.iu.gui.estados;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,7 +17,10 @@ import static vilhena.quatroemlinha.logica.Situacao.Espera_Peca_Normal;
 
 public class Espera_Peca_NormalPane extends VBox {
     private JogoObservavel observavel;
-    Label nomeJogador, turno, nrCreditos, nrPecasEspeciais;
+    Label info, number;
+    Button btnSubmeter;
+    ComboBox comboBox;
+    int col;
 
     public Espera_Peca_NormalPane(JogoObservavel observavel) {
         this.observavel = observavel;
@@ -30,45 +35,43 @@ public class Espera_Peca_NormalPane extends VBox {
         });
     }
     private void criarLayoutERegistaListeners() {
-        nomeJogador = new Label("");
-        turno = new Label("");
-        nrCreditos = new Label("");
-        nrPecasEspeciais = new Label("");
-        turno.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,40));
-        nomeJogador.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,30));
-        nrPecasEspeciais.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,15));
-        nrCreditos.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,15));
-        Button btnpecaNormal = new Button("Jogar Peca Normal");
-        Button btnpecaEspecial = new Button("Jogar Peca Especial");
-        Button btnCreditos = new Button("Usar creditos");
-        Button btngravarJogo = new Button("Gravar Jogo");
-        Button btnLogs = new Button("Ver Logs");
-        Button btnSair = new Button("Sair");
-        HBox turnoHBox = new HBox();
-        HBox jogadorHBox = new HBox();
-        HBox especialHBox = new HBox();
-        HBox creditosHBox = new HBox();
-        VBox botoesVBox = new VBox();
-        botoesVBox.setAlignment(Pos.CENTER);
-        turnoHBox.setAlignment(Pos.CENTER);
-        turnoHBox.getChildren().addAll(turno);
-        jogadorHBox.setAlignment(Pos.CENTER);
-        jogadorHBox.getChildren().addAll(nomeJogador);
-        especialHBox.setAlignment(Pos.CENTER);
-        especialHBox.getChildren().addAll(nrPecasEspeciais);
-        creditosHBox.setAlignment(Pos.CENTER);
-        creditosHBox.getChildren().addAll(nrCreditos);
-        botoesVBox.getChildren().addAll(btnpecaNormal,btnpecaEspecial,btnCreditos,btngravarJogo,btnLogs,btnSair);
-        getChildren().addAll(turnoHBox,jogadorHBox,especialHBox,creditosHBox,botoesVBox);
+        info = new Label("Escolha a coluna:");
+        info.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,25));
+        number = new Label("");
+        number.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,25));
+
+        btnSubmeter = new Button("Submeter");
+        btnSubmeter.setMinSize(50,50);;
+
+        comboBox = new ComboBox();
+        for(int i = 1; i <= 7; i++)
+            comboBox.getItems().add(i);
+
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(info,number,comboBox,btnSubmeter);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(15);
+        vbox.setPadding(new Insets(200,0,0,0));
+
+        getChildren().addAll(vbox);
+        btnSubmeter.setOnAction((e)-> {
+            if(!observavel.getTipoJogador())
+                observavel.pecaJogada(col);
+            else
+                observavel.pecaJogada(((int)comboBox.getValue()) - 1);
+        });
     }
 
     private void atualiza() {
         this.setVisible(observavel.getSituacao() == Espera_Peca_Normal);
         if(observavel.getSituacao() == Espera_Peca_Normal) {
-            turno.setText("Turno: " + observavel.getTurno());
-            nomeJogador.setText("Jogador: " + observavel.getNomeJogadorAtual());
-            nrCreditos.setText("Nr Creditos: " +observavel.getNrCreditos());
-            nrPecasEspeciais.setText("Pecas Especias: " + observavel.getNrPecasEspeciais());
+            if(!observavel.getTipoJogador()) {
+                info.setText("Joguei na coluna");
+                col = (int)(Math.random() * 7);
+                number.setText(String.valueOf(col + 1)) ;
+                comboBox.setVisible(false);
+                btnSubmeter.setText("Avancar");
+            }
         }
     }
 }

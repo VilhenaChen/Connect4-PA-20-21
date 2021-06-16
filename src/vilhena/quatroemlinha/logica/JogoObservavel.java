@@ -44,9 +44,27 @@ public class JogoObservavel {
         return Integer.toString(maquinaEstados.getPecaEspecial());
     }
 
+    public String getCorJogadorAtual() {
+        return maquinaEstados.getCorJogador();
+    }
+
+    public Boolean getTipoJogador() {
+        return maquinaEstados.isHuman();
+    }
+
     //Tansicoes
     public void comeca(String nome1, String nome2,int gameMode) {
         maquinaEstados.comeca(nome1,nome2,gameMode);
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void jogaPecaNormal() {
+        maquinaEstados.jogaPecaNormal();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void pecaJogada(int col) {
+        maquinaEstados.pecaJogada(col);
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
     }
 

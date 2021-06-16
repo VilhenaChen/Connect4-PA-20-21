@@ -19,5 +19,5 @@ public class UtilsGui {
     public static int GAP_X_TABULEIRO = 20;
     public static int GAP_Y_TABULEIRO = 20;
 
-    public static Font LETRA = Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 14);
+    public static Font LETRA = Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR, 14);
 }
