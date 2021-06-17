@@ -20,7 +20,7 @@ import static vilhena.quatroemlinha.utils.Util.*;
 public class InicioPane extends VBox {
     private JogoObservavel observavel;
     VBox inicio;
-    VBox nomesJogadores;
+    VBox nomesJogadores, carregarVBox;
 
     public InicioPane(JogoObservavel observavel) {
         this.observavel = observavel;
@@ -37,6 +37,9 @@ public class InicioPane extends VBox {
     private void criarLayoutERegistaListeners() {
         Label menuLabel = new Label("Menu Principal");
         menuLabel.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,40));
+
+        TextField carregaField = new TextField();
+        carregaField.setPromptText("Insira o nome do ficheiro que pretende carregar");
 
         HBox titulo = new HBox();
         titulo.setAlignment(Pos.TOP_CENTER);
@@ -60,6 +63,11 @@ public class InicioPane extends VBox {
         HBox BotoesJogo = new HBox();
         BotoesJogo.setSpacing(10);
         BotoesJogo.setAlignment(Pos.CENTER);
+
+        carregarVBox = new VBox();
+        carregarVBox.setVisible(false);
+        carregarVBox.setSpacing(10);
+        carregarVBox.setAlignment(Pos.CENTER);
 
         inicio = new VBox();
         inicio.setAlignment(Pos.CENTER);
@@ -100,6 +108,9 @@ public class InicioPane extends VBox {
         Button btnHistorico = new Button("Historico");
         btnHistorico.setScaleX(1.2);
         btnHistorico.setScaleY(1.2);
+        Button btnCarregar = new Button("Carregar jogo");
+        btnCarregar.setScaleX(1.2);
+        btnCarregar.setScaleY(1.2);
         Button SairButton = new Button("Sair");
         SairButton.setScaleX(1.2);
         SairButton.setScaleY(1.2);
@@ -109,10 +120,13 @@ public class InicioPane extends VBox {
         Button btnRegressar = new Button("Regressar");
         btnRegressar.setScaleX(1.2);
         btnRegressar.setScaleY(1.2);
+        Button btnCarregarFile = new Button("Carregar");
+        btnCarregarFile.setScaleX(1.2);
+        btnCarregarFile.setScaleY(1.2);
         btnComecar.setMinSize(30,30);
         btnRegressar.setMinSize(30,30);
         buttonsVBox.setSpacing(15);
-        buttonsVBox.getChildren().addAll(HvsHButton,HvsCButton,CvsCButton,btnHistorico,SairButton);
+        buttonsVBox.getChildren().addAll(HvsHButton,HvsCButton,CvsCButton,btnHistorico,btnCarregar,SairButton);
         BotoesJogo.setSpacing(20);
         BotoesJogo.getChildren().addAll(btnComecar,btnRegressar);
 
@@ -120,9 +134,10 @@ public class InicioPane extends VBox {
         primeiroJogador.getChildren().addAll(primeiroJogadorLabel,primeiroJogadorText);
         segundoJogador.getChildren().addAll(segundoJogadorLabel,segundoJogadorText);
         nomesJogadores.getChildren().addAll(primeiroJogador,segundoJogador,BotoesJogo);
+        carregarVBox.getChildren().addAll(carregaField,btnCarregarFile);
         setAlignment(Pos.CENTER);
         inicio.getChildren().addAll(titulo,buttonsVBox);
-        getChildren().addAll(inicio, nomesJogadores);
+        getChildren().addAll(inicio, nomesJogadores,carregarVBox);
         HvsHButton.setOnAction((e)-> {
             inicio.setVisible(false);
             nomesJogadores.setVisible(true);
@@ -162,12 +177,43 @@ public class InicioPane extends VBox {
             segundoJogadorText.setText("");
             segundoJogadorText.setDisable(false);
         });
+        btnCarregar.setOnAction((e)-> {
+            carregarVBox.setVisible(true);
+        });
+        btnCarregarFile.setOnAction((e)-> {
+            if(!carregaField.getText().isEmpty()) {
+                if(observavel.carregaJogo(carregaField.getText())) {
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText(null);
+                    a.setTitle("Carregar");
+                    a.setContentText("Jogo carregado com sucesso");
+                    a.show();
+                    observavel.reload();
+                }
+                else
+                {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText(null);
+                    a.setTitle("Carregar");
+                    a.setContentText("Erro ao carregar o jogo");
+                    a.show();
+                }
+            }
+            else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText(null);
+                a.setTitle("Carregar");
+                a.setContentText("O nome do ficheiro nao pode estar vazio");
+                a.show();
+            }
+        });
         SairButton.setOnAction((e)-> Platform.exit());
     }
 
     private void atualiza() {
         this.setVisible(observavel.getSituacao() == Inicio);
         if (observavel.getSituacao() == Inicio) {
+            carregarVBox.setVisible(false);
             observavel.leHistoricoFicheiro();
             inicio.setVisible(true);
             nomesJogadores.setVisible(false);

@@ -105,6 +105,15 @@ public class JogoObservavel {
         return maquinaEstados.verificaColuna(col);
     }
 
+    //-------------------------------- Carregar/Gravar ---------------------------
+    public void gravaJogo(String filename) {
+        maquinaEstados.gravaJogo(filename);
+    }
+
+    public boolean carregaJogo(String filename) {
+        return maquinaEstados.carregaJogo(filename);
+    }
+
     //HISTORICO
     public void guardaEstado() {
         maquinaEstados.GuardaEstado();
@@ -165,6 +174,10 @@ public class JogoObservavel {
 
     public void jogaOutraVez() {
         maquinaEstados.jogaOutraVez();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void reload() {
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
     }
 

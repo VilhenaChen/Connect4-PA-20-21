@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,6 +26,8 @@ public class Espera_JogadaPane extends VBox {
     Button btnpecaNormal;
     Button btnpecaEspecial;
     Button btnCreditos;
+    TextField saveGameInput;
+    VBox saveGameVBox;
 
     public Espera_JogadaPane(JogoObservavel observavel) {
         this.observavel = observavel;
@@ -49,6 +52,9 @@ public class Espera_JogadaPane extends VBox {
         nrPecasEspeciais.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,15));
         nrCreditos.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,15));
 
+        saveGameInput = new TextField();
+        saveGameInput.setPromptText("Insira o nome do ficheiro");
+
         //Botoes
         btnpecaNormal = new Button("Jogar Peca Normal");
         btnpecaNormal.setScaleX(1.2);
@@ -68,6 +74,9 @@ public class Espera_JogadaPane extends VBox {
         Button btnSair = new Button("Sair");
         btnSair.setScaleX(1.2);
         btnSair.setScaleY(1.2);
+        Button btnLoad = new Button("Gravar");
+        btnLoad.setScaleX(1.2);
+        btnLoad.setScaleY(1.2);
 
         //Boxes
         HBox turnoHBox = new HBox();
@@ -76,6 +85,7 @@ public class Espera_JogadaPane extends VBox {
         VBox infoVBox = new VBox();
         VBox jogadorVBox = new VBox();
         VBox botoesVBox = new VBox();
+        saveGameVBox = new VBox();
 
         botoesVBox.setAlignment(Pos.CENTER);
         turnoHBox.setPadding(new Insets(30));
@@ -92,7 +102,11 @@ public class Espera_JogadaPane extends VBox {
         jogadorVBox.getChildren().addAll(jogadorHBox,infoHBox);
         botoesVBox.getChildren().addAll(btnpecaNormal,btnpecaEspecial,btnCreditos,btngravarJogo,btnLogs,btnSair);
         botoesVBox.setSpacing(15);
-        getChildren().addAll(turnoHBox,jogadorVBox,botoesVBox);
+        saveGameVBox.setVisible(false);
+        saveGameVBox.getChildren().addAll(saveGameInput,btnLoad);
+        saveGameVBox.setSpacing(15);
+        saveGameVBox.setAlignment(Pos.CENTER);
+        getChildren().addAll(turnoHBox,jogadorVBox,botoesVBox, saveGameVBox);
 
         btnpecaNormal.setOnAction((e)-> observavel.jogaPecaNormal());
         btnpecaEspecial.setOnAction((e)->{
@@ -107,13 +121,25 @@ public class Espera_JogadaPane extends VBox {
                 observavel.jogaPecaEspecial();
             }
         });
+        btngravarJogo.setOnAction((e)->{
+            saveGameVBox.setVisible(true);
+        });
+        btnSair.setOnAction((e)->observavel.jogaOutraVez());
+
+        btnLoad.setOnAction((e)->{
+            observavel.gravaJogo(saveGameInput.getText());
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText(null);
+            a.setTitle("Gravacao");
+            a.setContentText("Jogo Gravado com sucesso");
+            a.show();
+        });
     }
 
     private void atualiza() {
         this.setVisible(observavel.getSituacao() == Espera_Jogada);
-        //Por a cor da peca
         if (observavel.getSituacao() == Espera_Jogada) {
-
+            saveGameVBox.setVisible(false);
             turno.setText("Turno: " + observavel.getTurno());
             nomeJogador.setText("Jogador: " + observavel.getNomeJogadorAtual());
             nrCreditos.setText("Creditos: " + observavel.getNrCreditosString());
