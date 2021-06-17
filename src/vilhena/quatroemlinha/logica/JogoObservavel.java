@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import static vilhena.quatroemlinha.iu.gui.UtilsGui.QUATRO_EM_LINHA;
+import static vilhena.quatroemlinha.utils.Util.AVANCAR;
 
 public class JogoObservavel {
     private MaquinaEstados maquinaEstados;
@@ -135,7 +136,16 @@ public class JogoObservavel {
         maquinaEstados.leHistoricoFicheiro();
     }
 
-    //Tansicoes
+    public String getPosHistorico(int pos) {
+        return maquinaEstados.getPosHistorico(pos);
+    }
+
+    //--------------------------------- UNDO ---------------------------------
+    public boolean usarCreditos(int creditos) {
+        return maquinaEstados.usarCreditos(creditos);
+    }
+
+    //--------------------------------- Tansicoes ---------------------------
     public void comeca(String nome1, String nome2,int gameMode) {
         maquinaEstados.comeca(nome1,nome2,gameMode);
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
@@ -178,6 +188,22 @@ public class JogoObservavel {
 
     public void jogaOutraVez() {
         maquinaEstados.jogaOutraVez();
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void verHistorico(int jogo) {
+        maquinaEstados.verHistorico(jogo);
+        continuaHistorico(AVANCAR);
+        //propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void continuaHistorico(int num) {
+        maquinaEstados.continuaHistorico(num);
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public void sairHistorico() {
+        maquinaEstados.sairHistorico();
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
     }
 

@@ -28,6 +28,7 @@ public class Espera_JogadaPane extends VBox {
     Button btnCreditos;
     TextField saveGameInput;
     VBox saveGameVBox;
+    VBox creditosVbox;
 
     public Espera_JogadaPane(JogoObservavel observavel) {
         this.observavel = observavel;
@@ -54,6 +55,8 @@ public class Espera_JogadaPane extends VBox {
 
         saveGameInput = new TextField();
         saveGameInput.setPromptText("Insira o nome do ficheiro");
+        TextField creditosField = new TextField();
+        creditosField.setPromptText("Insira o numero de creditos");
 
         //Botoes
         btnpecaNormal = new Button("Jogar Peca Normal");
@@ -77,11 +80,15 @@ public class Espera_JogadaPane extends VBox {
         Button btnLoad = new Button("Gravar");
         btnLoad.setScaleX(1.2);
         btnLoad.setScaleY(1.2);
+        Button btnUsar = new Button("Usar");
+        btnLoad.setScaleX(1.2);
+        btnLoad.setScaleY(1.2);
 
         //Boxes
         HBox turnoHBox = new HBox();
         HBox jogadorHBox = new HBox();
         HBox infoHBox = new HBox();
+        creditosVbox = new VBox();
         VBox infoVBox = new VBox();
         VBox jogadorVBox = new VBox();
         VBox botoesVBox = new VBox();
@@ -90,7 +97,6 @@ public class Espera_JogadaPane extends VBox {
         botoesVBox.setAlignment(Pos.CENTER);
         turnoHBox.setPadding(new Insets(30));
         jogadorVBox.setPadding(new Insets(30));
-        botoesVBox.setAlignment(Pos.CENTER);
         turnoHBox.setAlignment(Pos.CENTER);
         turnoHBox.getChildren().addAll(turno);
         jogadorHBox.setAlignment(Pos.CENTER);
@@ -106,7 +112,10 @@ public class Espera_JogadaPane extends VBox {
         saveGameVBox.getChildren().addAll(saveGameInput,btnLoad);
         saveGameVBox.setSpacing(15);
         saveGameVBox.setAlignment(Pos.CENTER);
-        getChildren().addAll(turnoHBox,jogadorVBox,botoesVBox, saveGameVBox);
+        creditosVbox.getChildren().addAll(creditosField,btnUsar);
+        creditosVbox.setAlignment(Pos.CENTER);
+        creditosVbox.setSpacing(15);
+        getChildren().addAll(turnoHBox,jogadorVBox,botoesVBox, creditosVbox, saveGameVBox);
 
         btnpecaNormal.setOnAction((e)-> observavel.jogaPecaNormal());
         btnpecaEspecial.setOnAction((e)->{
@@ -124,9 +133,21 @@ public class Espera_JogadaPane extends VBox {
         btngravarJogo.setOnAction((e)->{
             saveGameVBox.setVisible(true);
         });
+        btnCreditos.setOnAction((e)-> creditosVbox.setVisible(true));
         btnLogs.setOnAction((e)->observavel.mostraLogs());
         btnSair.setOnAction((e)->observavel.jogaOutraVez());
-
+        btnUsar.setOnAction((e)-> {
+            if(observavel.usarCreditos(Integer.parseInt(creditosField.getText()))) {
+                observavel.reload();
+            }
+            else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText(null);
+                a.setTitle("Creditos Insuficientes");
+                a.setContentText("Nao dispoem de creditos suficientes");
+                a.show();
+            }
+        });
         btnLoad.setOnAction((e)->{
             observavel.gravaJogo(saveGameInput.getText());
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -141,6 +162,7 @@ public class Espera_JogadaPane extends VBox {
         this.setVisible(observavel.getSituacao() == Espera_Jogada);
         if (observavel.getSituacao() == Espera_Jogada) {
             saveGameVBox.setVisible(false);
+            creditosVbox.setVisible(false);
             turno.setText("Turno: " + observavel.getTurno());
             nomeJogador.setText("Jogador: " + observavel.getNomeJogadorAtual());
             nrCreditos.setText("Creditos: " + observavel.getNrCreditosString());

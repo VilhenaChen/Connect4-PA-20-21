@@ -14,21 +14,20 @@ public class Ver_Historico extends EstadoAdapter {
         super(data);
         this.jogoHistorico = jogo;
         this.turnoHistorico = 0;;
-
     }
 
     @Override
     public IEstado continuaHistorico(ArrayList<ArrayList<Dados>> historico, int num) {
-        try{
-            copia(historico);
-        }catch (IndexOutOfBoundsException e) {
-            throw e;
-        }
         if(num == AVANCAR) {
             turnoHistorico++;
         }
         else if(num == RECUAR && turnoHistorico != -1) {
             turnoHistorico--;
+        }
+        try{
+            copia(historico);
+        }catch (IndexOutOfBoundsException e) {
+            throw e;
         }
         return this;
     }
@@ -38,7 +37,6 @@ public class Ver_Historico extends EstadoAdapter {
         data.setTurno(historico.get(jogoHistorico).get(turnoHistorico).getTurno());
         data.setJogadores(historico.get(jogoHistorico).get(turnoHistorico).getJogadores());
         data.setTabuleiro(historico.get(jogoHistorico).get(turnoHistorico).getTabbuleiro());
-
     }
 
     @Override

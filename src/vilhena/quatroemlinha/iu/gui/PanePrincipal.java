@@ -59,10 +59,11 @@ public class PanePrincipal extends BorderPane {
         Joga_MinijogoPane joga_minijogoPane = new Joga_MinijogoPane(observavel);
         Minijogo_ContasPane minijogo_contasPane = new Minijogo_ContasPane(observavel);
         Minijogo_PalavrasPane minijogo_palavrasPane = new Minijogo_PalavrasPane(observavel);
+        Ver_HistoricoPane historicoPane = new Ver_HistoricoPane(observavel);
         GameOverPane gameOverPane = new GameOverPane(observavel);
         StackPane stackPane = new StackPane(inicioPane, espera_jogadaPane,espera_peca_normalPane,
                 espera_peca_especialPane, joga_minijogoPane,minijogo_contasPane,minijogo_palavrasPane,
-                gameOverPane);
+                historicoPane, gameOverPane);
 
         stackPane.setBackground(new Background(new BackgroundFill(Color.INDIANRED,new CornerRadii(40),null)));
         stackPane.setMinSize(INFO_BOX_X,INFO_BOX_Y);

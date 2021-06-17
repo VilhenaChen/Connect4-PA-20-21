@@ -168,6 +168,12 @@ public class MaquinaEstados implements Util, Serializable {
         return hist.toString();
     }
 
+    public String getPosHistorico(int i) { //Mostarr a lista de jogos guardados
+        StringBuilder hist = new StringBuilder();
+        hist.append("Jogo " + (i + 1) + " " + getJogoHistorico(i) + "\n");
+        return hist.toString();
+    }
+
     public void GuardaEstado() {
         temporario.add((Dados) data.clone());
     } //Guardar no temporario a cada iteracao do jogo
@@ -273,7 +279,7 @@ public class MaquinaEstados implements Util, Serializable {
             return false;
         }
         try {
-            dataTemp = (Dados) temporario.get(temporario.size() - 1 - creditos).clone();
+            dataTemp = (Dados) temporario.get(temporario.size() - creditos).clone();
         }catch (IndexOutOfBoundsException e) {
             return false;
         }

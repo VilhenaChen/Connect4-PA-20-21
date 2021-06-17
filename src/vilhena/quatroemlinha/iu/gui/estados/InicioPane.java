@@ -3,10 +3,7 @@ package vilhena.quatroemlinha.iu.gui.estados;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -21,6 +18,8 @@ public class InicioPane extends VBox {
     private JogoObservavel observavel;
     VBox inicio;
     VBox nomesJogadores, carregarVBox;
+    ListView Historico;
+    VBox historicoVBox;
 
     public InicioPane(JogoObservavel observavel) {
         this.observavel = observavel;
@@ -49,6 +48,13 @@ public class InicioPane extends VBox {
 
         HBox segundoJogador = new HBox();
         //segundoJogador.setPadding(new Insets(0,20,10,0));
+
+        Historico = new ListView();
+
+        historicoVBox = new VBox();
+        historicoVBox.setVisible(false);
+        historicoVBox.setAlignment(Pos.CENTER);
+        historicoVBox.setSpacing(10);
 
         nomesJogadores = new VBox();
         nomesJogadores.setVisible(false);
@@ -120,6 +126,9 @@ public class InicioPane extends VBox {
         Button btnRegressar = new Button("Regressar");
         btnRegressar.setScaleX(1.2);
         btnRegressar.setScaleY(1.2);
+        Button btnRegressarHistorico = new Button("Regressar");
+        btnRegressar.setScaleX(1.2);
+        btnRegressar.setScaleY(1.2);
         Button btnCarregarFile = new Button("Carregar");
         btnCarregarFile.setScaleX(1.2);
         btnCarregarFile.setScaleY(1.2);
@@ -129,6 +138,7 @@ public class InicioPane extends VBox {
         buttonsVBox.getChildren().addAll(HvsHButton,HvsCButton,CvsCButton,btnHistorico,btnCarregar,SairButton);
         BotoesJogo.setSpacing(20);
         BotoesJogo.getChildren().addAll(btnComecar,btnRegressar);
+        historicoVBox.getChildren().addAll(Historico,btnRegressarHistorico);
 
         titulo.getChildren().add(menuLabel);
         primeiroJogador.getChildren().addAll(primeiroJogadorLabel,primeiroJogadorText);
@@ -137,7 +147,7 @@ public class InicioPane extends VBox {
         carregarVBox.getChildren().addAll(carregaField,btnCarregarFile);
         setAlignment(Pos.CENTER);
         inicio.getChildren().addAll(titulo,buttonsVBox);
-        getChildren().addAll(inicio, nomesJogadores,carregarVBox);
+        getChildren().addAll(inicio,historicoVBox, nomesJogadores,carregarVBox);
         HvsHButton.setOnAction((e)-> {
             inicio.setVisible(false);
             nomesJogadores.setVisible(true);
@@ -170,12 +180,27 @@ public class InicioPane extends VBox {
                 }
             }
         });
+        btnHistorico.setOnAction((e)-> {
+            inicio.setVisible(false);
+            historicoVBox.setVisible(true);
+        });
         btnRegressar.setOnAction((e)->{
             inicio.setVisible(true);
             nomesJogadores.setVisible(false);
             primeiroJogadorText.setText("");
             segundoJogadorText.setText("");
             segundoJogadorText.setDisable(false);
+            historicoVBox.setVisible(false);
+            carregarVBox.setVisible(false);
+        });
+        btnRegressarHistorico.setOnAction((e)->{
+            inicio.setVisible(true);
+            nomesJogadores.setVisible(false);
+            primeiroJogadorText.setText("");
+            segundoJogadorText.setText("");
+            segundoJogadorText.setDisable(false);
+            historicoVBox.setVisible(false);
+            carregarVBox.setVisible(false);
         });
         btnCarregar.setOnAction((e)-> {
             carregarVBox.setVisible(true);
@@ -207,16 +232,24 @@ public class InicioPane extends VBox {
                 a.show();
             }
         });
+        Historico.setOnMouseClicked((e)->{
+            observavel.verHistorico(Historico.getSelectionModel().getSelectedIndex());
+        });
         SairButton.setOnAction((e)-> Platform.exit());
     }
 
     private void atualiza() {
         this.setVisible(observavel.getSituacao() == Inicio);
         if (observavel.getSituacao() == Inicio) {
+            historicoVBox.setVisible(false);
             carregarVBox.setVisible(false);
             observavel.leHistoricoFicheiro();
             inicio.setVisible(true);
             nomesJogadores.setVisible(false);
+            Historico.getItems().clear();
+            for(int i = 0; i < 5; i++) {
+                Historico.getItems().add(observavel.getPosHistorico(i));
+            }
         }
     }
 
