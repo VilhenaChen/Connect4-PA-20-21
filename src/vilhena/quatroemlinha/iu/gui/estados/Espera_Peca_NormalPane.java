@@ -42,7 +42,6 @@ public class Espera_Peca_NormalPane extends VBox {
         number.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,25));
 
         btnSubmeter = new Button("Submeter");
-        //btnSubmeter.setMinSize(50,50);;
         btnSubmeter.setScaleX(1.2);
         btnSubmeter.setScaleY(1.2);
 

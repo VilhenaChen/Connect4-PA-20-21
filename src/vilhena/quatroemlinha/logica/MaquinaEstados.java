@@ -283,8 +283,14 @@ public class MaquinaEstados implements Util, Serializable {
         }catch (IndexOutOfBoundsException e) {
             return false;
         }
-        dataTemp.tiraCreditos(creditos);
-        dataTemp.setBonusJogador(0); //Reset ao contador de Minijogos
+        if(creditos == 1 || creditos == 3 || creditos == 5) {
+            dataTemp.tiraCreditosAoOutroJogador(creditos);
+            dataTemp.resetBonusJogadorCreditos();
+        }
+        else {
+            dataTemp.tiraCreditos(creditos);
+            dataTemp.setBonusJogador(0); //Reset ao contador de Minijogos
+        }
         data = dataTemp;
         data.resetTurnosCreditos();
         atual = new Espera_Jogada(data);

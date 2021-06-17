@@ -92,6 +92,15 @@ public class Dados implements Util, Cloneable, Serializable {
         jogadores.get(joga).setBonus(bonus);
     }
 
+    public void resetBonusJogadorCreditos() {
+        if(joga == J1) {
+            jogadores.get(1).setBonus(0);
+        }
+        else {
+            jogadores.get(0).setBonus(0);
+        }
+    }
+
     public void setBonusTodos(int bonus) {
         jogadores.get(J1).setBonus(bonus);
         jogadores.get(J2).setBonus(bonus);
@@ -147,6 +156,15 @@ public class Dados implements Util, Cloneable, Serializable {
 
     public void tiraCreditos(int nr) {
         jogadores.get(joga).setCreditos(jogadores.get(joga).getCreditos() - nr);
+    }
+
+    public void tiraCreditosAoOutroJogador(int nr) {
+        if(joga == J1) {
+            jogadores.get(1).setCreditos(jogadores.get(joga).getCreditos() - nr);
+        }
+        else {
+            jogadores.get(0).setCreditos(jogadores.get(joga).getCreditos() - nr);
+        }
     }
 
     public void setGanhou() {

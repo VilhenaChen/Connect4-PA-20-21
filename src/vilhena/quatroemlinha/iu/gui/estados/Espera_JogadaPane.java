@@ -29,6 +29,7 @@ public class Espera_JogadaPane extends VBox {
     TextField saveGameInput;
     VBox saveGameVBox;
     VBox creditosVbox;
+    VBox infoVBox;
 
     public Espera_JogadaPane(JogoObservavel observavel) {
         this.observavel = observavel;
@@ -89,7 +90,7 @@ public class Espera_JogadaPane extends VBox {
         HBox jogadorHBox = new HBox();
         HBox infoHBox = new HBox();
         creditosVbox = new VBox();
-        VBox infoVBox = new VBox();
+        infoVBox = new VBox();
         VBox jogadorVBox = new VBox();
         VBox botoesVBox = new VBox();
         saveGameVBox = new VBox();
@@ -181,10 +182,12 @@ public class Espera_JogadaPane extends VBox {
             if(!observavel.getTipoJogador()) {
                 btnpecaNormal.setText("Avancar");
                 btnpecaEspecial.setVisible(false);
+                infoVBox.setVisible(false);
                 btnCreditos.setVisible(false);
             }
             else {
                 btnpecaNormal.setText("Jogar Peca Normal");
+                infoVBox.setVisible(true);
                 btnpecaEspecial.setVisible(true);
                 btnCreditos.setVisible(true);
             }
