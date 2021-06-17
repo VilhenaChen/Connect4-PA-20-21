@@ -58,7 +58,7 @@ public class Minijogo_Palavras extends MiniJogos {
 
     @Override
     public boolean verificaTempo() {
-        atual = ((System.currentTimeMillis() / 1000)- inicio);
+        atual =((System.currentTimeMillis() / 1000)- inicio);
         return atual >= fim;
     }
 

@@ -55,11 +55,14 @@ public class JogoObservavel {
         return maquinaEstados.isHuman();
     }
 
+
+    //--------------------- Minijogos ---------------------------
+    //Contas
+
     public String getConta() {
         return maquinaEstados.getConta();
     }
 
-    //Minijogos
     public void InputMinijogoContas(String result) {
         maquinaEstados.InputMinijogoContas(result);
         propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
@@ -67,6 +70,21 @@ public class JogoObservavel {
 
     public int isWinnerMInijogoContas() {
         return maquinaEstados.isWinnerMinijogoContas();
+    }
+
+    //Palavras
+
+    public String getFrase() {
+        return maquinaEstados.getPalavras();
+    }
+
+    public void InputMinijogoPalavras(String result) {
+        maquinaEstados.InputMinijogoPalavras(result);
+        propertyChangeSupport.firePropertyChange(QUATRO_EM_LINHA,null,null);
+    }
+
+    public int isWinnerMInijogoPalavras() {
+        return maquinaEstados.isWinnerMinijogoPalavras();
     }
 
     //utils
@@ -77,6 +95,10 @@ public class JogoObservavel {
             }
         }
         return false;
+    }
+
+    public boolean verificaColuna(int col) {
+        return maquinaEstados.verificaColuna(col);
     }
 
     //HISTORICO

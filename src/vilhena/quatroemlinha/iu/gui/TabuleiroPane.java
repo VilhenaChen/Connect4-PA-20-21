@@ -2,11 +2,16 @@ package vilhena.quatroemlinha.iu.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import vilhena.quatroemlinha.logica.JogoObservavel;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static vilhena.quatroemlinha.iu.gui.UtilsGui.*;

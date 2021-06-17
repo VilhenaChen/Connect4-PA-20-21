@@ -2,6 +2,7 @@ package vilhena.quatroemlinha.iu.gui.estados;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -64,8 +65,18 @@ public class Espera_Peca_NormalPane extends VBox {
                 observavel.pecaJogada(col);
             }
             else {
-                observavel.guardaEstado();
-                observavel.pecaJogada(((int) comboBox.getValue()) - 1);
+                if(observavel.verificaColuna(((int)(comboBox.getValue()) - 1))) {
+                    observavel.guardaEstado();
+                    observavel.pecaJogada(((int) comboBox.getValue()) - 1);
+                }
+                else {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText(null);
+                    a.setTitle("Erro ao jogar peca");
+                    a.setContentText("A coluna em que pretende jogar encontra se cheia, por favor" +
+                            " escolha outra");
+                    a.show();
+                }
             }
         });
     }
@@ -75,7 +86,9 @@ public class Espera_Peca_NormalPane extends VBox {
         if(observavel.getSituacao() == Espera_Peca_Normal) {
             if(!observavel.getTipoJogador()) {
                 info.setText("Joguei na coluna");
-                col = (int)(Math.random() * 7);
+                do {
+                    col = (int) (Math.random() * 7);
+                }while(!observavel.verificaColuna(col));
                 number.setText(String.valueOf(col + 1)) ;
                 comboBox.setVisible(false);
                 btnSubmeter.setText("Avancar");

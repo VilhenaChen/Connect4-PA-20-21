@@ -5,6 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import vilhena.quatroemlinha.iu.gui.estados.*;
 import vilhena.quatroemlinha.logica.JogoObservavel;
 
@@ -12,7 +15,7 @@ import static vilhena.quatroemlinha.iu.gui.UtilsGui.*;
 
 public class PanePrincipal extends BorderPane {
     private JogoObservavel observavel;
-    private Label tabuleiroLabel;
+    private Label quatroEmLinhaLabel;
     private Label cenasLabel;
 
     public PanePrincipal(JogoObservavel jogoObservavel) {
@@ -31,18 +34,21 @@ public class PanePrincipal extends BorderPane {
     private void criarLayout() {
         setPrefSize(DIM_X_FRAME,DIM_Y_FRAME);
         setMinSize(DIM_X_FRAME,DIM_Y_FRAME);
+        quatroEmLinhaLabel = new Label("Quatro em Linha");
+        quatroEmLinhaLabel.setFont(Font.font("comic sans", FontWeight.NORMAL, FontPosture.REGULAR,30));
+
+        HBox labelHBox = new HBox();
+        labelHBox.getChildren().add(quatroEmLinhaLabel);
+        labelHBox.setAlignment(Pos.CENTER);
 
         //Tabuleiro
-        tabuleiroLabel = new Label("TABULEIRO");
-        tabuleiroLabel.setFont(LETRA);
-
         TabuleiroPane tabuleiroPane = new TabuleiroPane(observavel);
 
         VBox leftbox = new VBox(10);
         leftbox.setPrefSize(TABULEIRO_BOX_X,TABULEIRO_BOX_Y);
         leftbox.setMinSize(TABULEIRO_BOX_X,TABULEIRO_BOX_Y);
         leftbox.setPadding(new Insets(10,10,10,10));
-        leftbox.getChildren().addAll(tabuleiroLabel,tabuleiroPane);
+        leftbox.getChildren().addAll(labelHBox,tabuleiroPane);
 
         //StackPane
         //Iniciar as panes
