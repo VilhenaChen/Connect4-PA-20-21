@@ -45,7 +45,6 @@ public class MaquinaEstados implements Util, Serializable {
     }
 
     public void jogaMiniJogo() {
-        addLog("Jogou Minijogo");
         atual = atual.jogaMiniJogo();
     }
 
@@ -55,6 +54,7 @@ public class MaquinaEstados implements Util, Serializable {
     }
 
     public void comecaMinijogo() {
+        addLog("Jogou Minijogo");
         atual = atual.comecaMinijogo();
     }
 

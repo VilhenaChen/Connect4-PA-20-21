@@ -124,6 +124,7 @@ public class Espera_JogadaPane extends VBox {
         btngravarJogo.setOnAction((e)->{
             saveGameVBox.setVisible(true);
         });
+        btnLogs.setOnAction((e)->observavel.mostraLogs());
         btnSair.setOnAction((e)->observavel.jogaOutraVez());
 
         btnLoad.setOnAction((e)->{

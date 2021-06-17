@@ -105,7 +105,11 @@ public class JogoObservavel {
         return maquinaEstados.verificaColuna(col);
     }
 
-    //-------------------------------- Carregar/Gravar ---------------------------
+    public void mostraLogs() {
+        System.out.println(maquinaEstados.getLog());
+    }
+
+    //-------------------------------- Carregar/Gravar--------------------------------
     public void gravaJogo(String filename) {
         maquinaEstados.gravaJogo(filename);
     }
@@ -114,7 +118,7 @@ public class JogoObservavel {
         return maquinaEstados.carregaJogo(filename);
     }
 
-    //HISTORICO
+    //-------------------------------- HISTORICO--------------------------------
     public void guardaEstado() {
         maquinaEstados.GuardaEstado();
     }
