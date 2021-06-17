@@ -55,6 +55,10 @@ public class JogoObservavel {
         return maquinaEstados.isHuman();
     }
 
+    public boolean verSeGanhou() {
+        return maquinaEstados.veSeGanhou();
+    }
+
 
     //--------------------- Minijogos ---------------------------
     //Contas
